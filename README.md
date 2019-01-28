@@ -1,6 +1,6 @@
 # Welcome
 
-A hotel reservation system. 
+A hotel reservation portal for client with extra services
 
 ## Tools
 
@@ -18,5 +18,6 @@ Note: if your ```python``` command shows v2.7 then use ```python3``` instead
 
 ## Resources
 
+* [git](http://git-scm.com)
 * [explore flask](http://exploreflask.com)
 * [jinja](http://jinja.pocoo.org)
