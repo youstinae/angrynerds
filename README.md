@@ -11,8 +11,10 @@ A hotel reservation portal for client with extra services
 
 * install pipenv
 * clone the repo
-* run: ```pipenv install``` to install dependencies
-* run: ```pipenv run python main.py``` to run the web server
+* run: ```pipenv sync``` to install dependencies
+* run: ```pipenv shell``` to start a virtual shell
+* run: ```pipenv run python -m flask run``` to run the web server
+* go to the url and port that the server shows in the console
 
 Note: if your ```python``` command shows v2.7 then use ```python3``` instead
 
