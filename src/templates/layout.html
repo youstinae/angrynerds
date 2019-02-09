@@ -7,17 +7,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="icon" href="../static/image/favicon.png" type="../static/image/png">
         <title>{% block title %}{% endblock %}</title>
+        
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="../static/css/bootstrap.css">
-        <link rel="stylesheet" href="../static/vendors/linericon/style.css">
         <link rel="stylesheet" href="../static/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../static/vendors/owl-carousel/owl.carousel.min.css">
         <link rel="stylesheet" href="../static/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="../static/vendors/linericon/style.css">
         <link rel="stylesheet" href="../static/vendors/nice-select/css/nice-select.css">
         <link rel="stylesheet" href="../static/vendors/owl-carousel/owl.carousel.min.css">
+        
         <!-- main css -->
-        <link rel="stylesheet" href="../static/css/style.css">
         <link rel="stylesheet" href="../static/css/responsive.css">
+        <link rel="stylesheet" href="../static/css/style.css">
         {% endblock %}
     </head>
     <body>
@@ -43,7 +44,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/blog-single">Blog Details</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="/blog/details">Blog Details</a></li>
                                 </ul>
                             </li> 
                             <li class="nav-item"><a class="nav-link" href="/elements">Elemests</a></li>
@@ -142,18 +143,17 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         {% block scripts %}
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="../static/js/jquery-3.2.1.min.js"></script>
-        <script src="../static/js/popper.js"></script>
         <script src="../static/js/bootstrap.min.js"></script>
-        <script src="../static/vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="../static/js/custom.js"></script>
+        <script src="../static/js/jquery-3.2.1.min.js"></script>
         <script src="../static/js/jquery.ajaxchimp.min.js"></script>
         <script src="../static/js/mail-script.js"></script>
-        <script src="../static/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
-        <script src="../static/vendors/nice-select/js/jquery.nice-select.js"></script>
-        <script src="../static/js/mail-script.js"></script>
+        <script src="../static/js/popper.js"></script>
         <script src="../static/js/stellar.js"></script>
+        <script src="../static/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
         <script src="../static/vendors/lightbox/simpleLightbox.min.js"></script>
-        <script src="../static/js/custom.js"></script>
+        <script src="../static/vendors/nice-select/js/jquery.nice-select.js"></script>
+        <script src="../static/vendors/owl-carousel/owl.carousel.min.js"></script>
         {% endblock %}
     </body>
 </html>

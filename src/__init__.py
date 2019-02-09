@@ -34,6 +34,10 @@ def gallery():
 def blog():
     return render_template('blog.html')
 
+@app.route('/blog/details')
+def blog_details():
+    return render_template('blog-details.html')
+
 @app.route('/elements')
 def elements():
     return render_template('elements.html')

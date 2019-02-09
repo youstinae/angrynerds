@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
-{% block title %}About{% endblock %}
+{% block title %}Gallery{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="../static/vendors/lightbox/simpleLightbox.css">
+{% endblock %}
 
 {% block content %}
 
@@ -104,4 +109,10 @@
 </section>
 <!--================Breadcrumb Area =================-->
 
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="../static/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="../static/vendors/isotope/isotope-min.js"></script>
 {% endblock %}
