@@ -16,31 +16,31 @@ app.config.from_object('config.development')
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('views/index.html')
+    return render_template('index.html')
 
 @app.route('/about')
 def about():
-    return render_template('views/about.html')
+    return render_template('about.html')
 
 @app.route('/accomodation')
 def accomodation():
-    return render_template('views/accomodation.html')
+    return render_template('accomodation.html')
 
 @app.route('/gallery')
 def gallery():
-    return render_template('views/gallery.html')
+    return render_template('gallery.html')
 
 @app.route('/blog')
 def blog():
-    return render_template('views/blog.html')
+    return render_template('blog.html')
 
 @app.route('/elements')
 def elements():
-    return render_template('views/elements.html')
+    return render_template('elements.html')
 
 @app.route('/contact')
 def contact():
-    return render_template('views/contact.html')
+    return render_template('contact.html')
 
 if __name__ == "__main__":
     app.run()

@@ -15,6 +15,8 @@ A hotel reservation portal for client with extra services
 * run: ```pipenv shell``` to start a virtual shell
 * run: ```pipenv run python -m flask run``` to run the web server
 * go to the url and port that the server shows in the console
+* to install a package run: ```pipenv install <package>```
+* to see what you can do with pipenv run: ```pipenv```
 
 Note: if your ```python``` command shows v2.7 then use ```python3``` instead
 
