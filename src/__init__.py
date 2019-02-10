@@ -1,7 +1,7 @@
-from flask import Flask
-from flask import render_template
+from flask import Flask, request, render_template, redirect, url_for
 
 app = Flask(__name__, instance_relative_config=True)
+app.secret_key = b'\xbb.@\xb7S<\x9a\xd7\x8a\x0cz/\xb5\xce\xc1\xee\xc7\xd8v\xa1)\xec\xdd\x07'
 
 # Load the default configuration
 app.config.from_object('config.default')
@@ -12,6 +12,10 @@ app.config.from_object('config.default')
 # Load the file specified by the APP_CONFIG_FILE environment variable
 # Variables defined here will override those in the default configuration
 app.config.from_object('config.development')
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
 
 @app.route('/')
 @app.route('/home')
@@ -45,6 +49,20 @@ def elements():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/login', methods=["POST"])
+def login_post():
+    #login()
+    return redirect(url_for('index'))
+
+@app.route('/logout', methods=["POST"])
+def logout():
+    # logout the user and redirect to home page
+    return render_template('login.html')
 
 if __name__ == "__main__":
     app.run()

@@ -1,2 +1,3 @@
+# configurations for the prod env
+
 DEBUG = False
-EMAIL = 'gharzedd@mail.usf.edu'
