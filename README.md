@@ -27,3 +27,5 @@ Note: if your ```python``` command shows v2.7 then use ```python3``` instead
 * [git the simple guide](http://rogerdudler.github.io/git-guide/)
 * [explore flask](http://exploreflask.com)
 * [jinja](http://jinja.pocoo.org)
+* [bootstrap](url://something)
+
