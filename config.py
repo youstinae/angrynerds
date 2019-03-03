@@ -15,6 +15,9 @@ class Base():
 
     SECRET_KEY = b'\x01>\x18\xc4^\xd8X\x1dT{\x1f\x16*\xf4\xba\xbd|W\x0e\x83\xb6\x8e\xc3\x13'
     SECURITY_PASSWORD_SALT = 'angry813nerds'
+    SECURITY_REGISTERABLE = True
+    SECURITY_CONFIRMABLE = True
+    SECURITY_RECOVERABLE = True
 
     CACHE_TYPE = 'simple'
 

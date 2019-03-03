@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% set active_page = "login" %}
+<!-- {% from "security/_macros.html" import render_field_with_errors, render_field %} -->
 
 {% block title %}About{% endblock %}
 {% block content %}
+<!-- {% include "security/_messages.html" %} -->
+
 <!--================Breadcrumb Area =================-->
 <section class="breadcrumb_area">
     <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
@@ -57,5 +60,14 @@
     </div>
 </section>
 <!--================ About History Area  =================-->
+<!-- <form action="{{ url_for_security('login') }}" method="POST" name="login_form">
+    {{ login_form.hidden_tag() }}
+    {{ render_field_with_errors(login_form.email) }}
+    {{ render_field_with_errors(login_form.password) }}
+    {{ render_field_with_errors(login_form.remember) }}
+    {{ render_field(login_form.next) }}
+    {{ render_field(login_form.submit) }}
+</form> -->
+<!-- {% include "security/_menu.html" %} -->
 
 {% endblock %}

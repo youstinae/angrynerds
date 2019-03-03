@@ -21,6 +21,7 @@ flask-principal = "*"
 flask-security = "*"
 flask-wtf = "*"
 flask-sqlalchemy = "*"
+bcrypt = "*"
 
 [requires]
 python_version = "3.7"
