@@ -30,8 +30,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <a class="navbar-brand logo_h" href="{{ url_for('home') }}"><img
-                        src="{{ url_for('static', filename='image/Logo.png')}}" alt=""></a>
+                <a class="navbar-brand logo_h" href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='image/Logo.png')}}" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -42,23 +41,22 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto">
-                        <li class="nav-item active"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('accomodation') }}">Accomodation</a>
+                        <li class="nav-item {{ 'active' if active_page == 'home' else '' }}"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                        <li class="nav-item {{ 'active' if active_page == 'about' else '' }}"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
+                        <li class="nav-item {{ 'active' if active_page == 'accomodation' else '' }}"><a class="nav-link" href="{{ url_for('accomodation') }}">Accomodation</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('gallery') }}">Gallery</a></li>
-                        <li class="nav-item submenu dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-haspopup="true" aria-expanded="false">Blog</a>
+                        <li class="nav-item {{ 'active' if active_page == 'gallery' else '' }}"><a class="nav-link" href="{{ url_for('gallery') }}">Gallery</a></li>
+                        <li class="nav-item submenu dropdown {{ 'active' if active_page == 'blog' else '' }}">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item"><a class="nav-link" href="{{ url_for('blog') }}">Blog</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ url_for('blog_details') }}">Blog
+                                <li class="nav-item {{ 'active' if active_page == 'blog' else '' }}"><a class="nav-link" href="{{ url_for('blog') }}">Blog</a></li>
+                                <li class="nav-item {{ 'active' if active_page == 'blog_details' else '' }}"><a class="nav-link" href="{{ url_for('blog_details') }}">Blog
                                         Details</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('elements') }}">Elemests</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                        <li class="nav-item {{ 'active' if active_page == 'elements' else '' }}"><a class="nav-link" href="{{ url_for('elements') }}">Elemests</a></li>
+                        <li class="nav-item {{ 'active' if active_page == 'contact' else '' }}"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+                        <li class="nav-item {{ 'active' if active_page == 'login' else '' }}"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
                     </ul>
                 </div>
             </nav>

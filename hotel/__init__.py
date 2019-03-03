@@ -21,12 +21,6 @@ csrf = CsrfProtect(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
-@login_manager.user_loader
-def load_user(username):
-    return user.get_user(username)
-
-
 @app.route('/')
 @app.route('/home')
 def home():

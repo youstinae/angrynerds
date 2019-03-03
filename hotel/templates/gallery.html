@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
-{% block title %}Gallery{% endblock %}
+{% set active_page = "gallery" %}
 
+{% block title %}Gallery{% endblock %}
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="../static/vendors/lightbox/simpleLightbox.css">
