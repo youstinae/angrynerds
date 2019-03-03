@@ -1,26 +1,35 @@
 import os
 
 from flask import (Flask, abort, flash, redirect, render_template, request,
-                   url_for)
-from flask_login import (LoginManager, UserMixin, current_user, login_required,
-                         login_user, logout_user)
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import Form
-from flask_wtf.csrf import CSRFError, CsrfProtect, urlparse
-from wtforms import (BooleanField, PasswordField, TextAreaField, TextField,
-                     validators)
+                   url_for, current_app)
+from flask_security import Security, SQLAlchemyUserDatastore
+from flask_mail import Mail
+from cache import cache
 
 from hotel.forms.account import LoginForm, RegisterForm
+from hotel.models import db, User, Role
+from hotel.auth import auth
+from hotel.blog import blog
 
 
 app = Flask(__name__)
 app.config.from_object('config.Develop')
-db = SQLAlchemy(app)
 
-csrf = CsrfProtect(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
+# apply the blueprints to the app
+app.register_blueprint(auth.bp)
+app.register_blueprint(blog.bp)
+app.add_url_rule('/', endpoint='index')
 
+cache.init_app(app)
+db.init_app(app)
+mail = Mail(app)
+
+# Setup Flask-Security
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+security = Security(app, user_datastore)
+
+
+@cache.cached(300)
 @app.route('/')
 @app.route('/home')
 def home():
@@ -42,16 +51,6 @@ def gallery():
     return render_template('gallery.html')
 
 
-@app.route('/blog')
-def blog():
-    return render_template('blog.html')
-
-
-@app.route('/blog/details')
-def blog_details():
-    return render_template('blog-details.html')
-
-
 @app.route('/elements')
 def elements():
     return render_template('elements.html')
@@ -62,47 +61,30 @@ def contact():
     return render_template('contact.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
-    form = LoginForm(request.form)
-    if request.method == 'POST' and form.validate():
-        usr = user.get_user(username=form.username.data)
-        if usr is None or not user.check_password2(form.password.data):
-            flash('Invalid username or password')
-            return redirect(url_for('login'))
-        login_user(usr, remember=form.remember.data)
-        return redirect(url_for('index'))
-    return render_template('login.html', title='Login', form=form)
-
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(home())
-
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = account.RegisterForm(request.form)
-    if request.method == 'POST' and form.validate():
-        user.save_user(username=form.username.data,
-                       password=form.password.data)
-        return login()
-    else:
-        return render_template('register.html', title='Register', form=form)
-
-
 @app.errorhandler(404)
 def not_found(error):
-    return render_template('404.html'), 404
+    current_app.logger.error('Page not found: %s', (request.path, error))
+    return render_template('error_404.html'), 404
 
 
-@app.errorhandler(CSRFError)
-def handle_csrf_error(e):
-    return render_template('csrf_error.html', reason=e.descriptionc
-                           ), 400
+@app.errorhandler(500)
+def internal_server_error(error):
+    current_app.logger.error('Server Error: %s', (error))
+    return render_template('500.htm'), 500
+
+
+@app.errorhandler(Exception)
+def unhandled_exception(error):
+    current_app.logger.error('Unhandled Exception: %s', (error))
+    return render_template('error_500.htm'), 500
+
+
+# Create a user to test with
+@app.before_first_request
+def create_user():
+    db.create_all()
+    user_datastore.create_user(email='admin@mail.usf.edu', password='letmein')
+    db.session.commit()
 
 
 if __name__ == "__main__":

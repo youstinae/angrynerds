@@ -10,9 +10,6 @@ autopep8 = "*"
 [packages]
 flask = "*"
 jinja2 = "*"
-<<<<<<< Updated upstream
-zodb = "*"
-=======
 werkzeug = "*"
 wtforms = "*"
 sqlalchemy = "*"
@@ -24,7 +21,6 @@ flask-principal = "*"
 flask-security = "*"
 flask-wtf = "*"
 flask-sqlalchemy = "*"
->>>>>>> Stashed changes
 
 [requires]
 python_version = "3.7"
