@@ -76,7 +76,7 @@ def create():
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
-def update(id):
+def update():
     """Update a post if the current user is the author."""
     post = get_post(id)
 
