@@ -5,12 +5,26 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
-livereload = "*"
+autopep8 = "*"
 
 [packages]
 flask = "*"
 jinja2 = "*"
+<<<<<<< Updated upstream
 zodb = "*"
+=======
+werkzeug = "*"
+wtforms = "*"
+sqlalchemy = "*"
+flask-caching = "*"
+flask-compress = "*"
+flask-login = "*"
+flask-mail = "*"
+flask-principal = "*"
+flask-security = "*"
+flask-wtf = "*"
+flask-sqlalchemy = "*"
+>>>>>>> Stashed changes
 
 [requires]
 python_version = "3.7"

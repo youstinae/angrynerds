@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "/Users/mghz/.local/share/virtualenvs/angrynerds-1tavnD98/bin/python"
+    "python.pythonPath": "/Users/mghz/.local/share/virtualenvs/angrynerds-1tavnD98/bin/python",
+    "files.exclude": {
+        "**/__pycache__": true
+    }
 }
