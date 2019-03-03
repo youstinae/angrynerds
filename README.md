@@ -14,7 +14,7 @@ A hotel reservation portal for client with extra services
 * run: ```pipenv install``` to install dependencies
 * run: ```pipenv install --dev``` to install dev dependencies
 * run: ```pipenv shell``` to start a virtual shell
-* run: ```flask run``` to run the web server
+* run: ```python3 run.py``` to run the web server
 * go to the url and port that the server shows in the console
 * to install a package run: ```pipenv install <package>```
 * to see what you can do with pipenv run: ```pipenv```
