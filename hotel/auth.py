@@ -99,3 +99,7 @@ def logout():
     """Clear the current session, including the stored user id."""
     session.clear()
     return redirect(url_for('home'))
+
+@bp.route('/pass/reset')
+def pass_reset():
+    return render_template('pass_reset.html')

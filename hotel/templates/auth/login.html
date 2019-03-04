@@ -1,10 +1,8 @@
 {% extends "layout.html" %}
 {% set active_page = "login" %}
-<!-- {% from "security/_macros.html" import render_field_with_errors, render_field %} -->
 
-{% block title %}About{% endblock %}
+{% block title %}Login{% endblock %}
 {% block content %}
-<!-- {% include "security/_messages.html" %} -->
 
 <!--================Breadcrumb Area =================-->
 <section class="breadcrumb_area">
@@ -13,7 +11,7 @@
         <div class="page-cover text-center">
             <h2 class="page-cover-tittle">Login</h2>
             <ol class="breadcrumb">
-                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li class="active">Login</li>
             </ol>
         </div>
@@ -32,11 +30,10 @@
                     <div class="col-md-12 col-lg-12 mx-auto">
                         <h3>Welcome back!</h3> 
                         <div>
-                            <a href="/register">Register account</a> | <a href="/recover/pass">Forgot password</a>
+                            <a href="{{ url_for('auth.register') }}">Register account</a> | <a href="{{ url_for('auth.pass_reset') }}">Forgot password</a>
                         </div>
                         <br />
                         <form method="POST" action="/login">
-                            {{ form.csrf_token }}
                             <div class="form-group">
                                 <label for="emailAddress">Email address</label>
                                 <input type="email" class="form-control" id="emailAddress" name="username"
@@ -60,14 +57,5 @@
     </div>
 </section>
 <!--================ About History Area  =================-->
-<!-- <form action="{{ url_for_security('login') }}" method="POST" name="login_form">
-    {{ login_form.hidden_tag() }}
-    {{ render_field_with_errors(login_form.email) }}
-    {{ render_field_with_errors(login_form.password) }}
-    {{ render_field_with_errors(login_form.remember) }}
-    {{ render_field(login_form.next) }}
-    {{ render_field(login_form.submit) }}
-</form> -->
-<!-- {% include "security/_menu.html" %} -->
 
 {% endblock %}

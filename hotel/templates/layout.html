@@ -55,11 +55,11 @@
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                 aria-haspopup="true" aria-expanded="false">Blog</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item {{ 'active' if active_page == 'blog' else '' }}"><a class="nav-link"
-                                        href="{{ url_for('blog.index') }}">Blog</a></li>
-                                <li class="nav-item {{ 'active' if active_page == 'blog_details' else '' }}"><a
-                                        class="nav-link" href="{{ url_for('blog.update', id=1) }}">Blog
-                                        Details</a></li>
+                                <li class="nav-item {{ 'active' if active_page == 'blog' else '' }}">
+                                    <a class="nav-link" href="{{ url_for('blog.index') }}">Blog</a></li>
+                                <li class="nav-item {{ 'active' if active_page == 'blog_details' else '' }}">
+                                    <a class="nav-link" href="{{ url_for('blog.update', id=1) }}">Blog Details</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item {{ 'active' if active_page == 'elements' else '' }}"><a class="nav-link"
@@ -68,13 +68,6 @@
                                 href="{{ url_for('contact') }}">Contact</a></li>
                         <li class="nav-item {{ 'active' if active_page == 'login' else '' }}"><a class="nav-link"
                                 href="{{ url_for('auth.login') }}">Login</a></li>
-                        {% if current_user.is_authenticated %}
-                        <li>Hello {{ current_user.email }}</li>
-                        <li><a href="{{ url_for('security.logout') }}">Logout</a></li>
-                        {% else %}
-                        <li><a href="{{ url_for('security.login') }}">Login</a></li>
-                        <li><a href="{{ url_for('security.register') }}">Register</a></li>
-                        {% endif %}
                     </ul>
                 </div>
             </nav>

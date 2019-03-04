@@ -1,20 +1,17 @@
 import os
+import bcrypt
 from datetime import datetime
 
-import bcrypt
 from flask import (Flask, abort, flash, redirect, render_template, request,
                    url_for, current_app)
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin, login_required
 from flask_security.utils import hash_password
-
 from flask_mail import Mail
-from cache import cache
 
+from hotel.forms.account import LoginForm, RegisterForm
 from hotel import auth
 from hotel import blog
-# from hotel.models import User, Role
-from hotel.forms.account import LoginForm, RegisterForm
 
 app = Flask(__name__)
 app.config.from_object('config.Develop')
@@ -22,11 +19,8 @@ app.config.from_object('config.Develop')
 # apply the blueprints to the app
 app.register_blueprint(auth.bp)
 app.register_blueprint(blog.bp)
-app.add_url_rule('/', endpoint='index')
 
 db = SQLAlchemy(app)
-cache.init_app(app)
-# db.init_app(app)
 mail = Mail(app)
 
 # Define models
@@ -78,7 +72,6 @@ def create_user():
     db.session.commit()
 
 
-@cache.cached(300)
 @app.route('/')
 @app.route('/home')
 def home():
@@ -116,16 +109,16 @@ def not_found(error):
     return render_template('error_404.html'), 404
 
 
-@app.errorhandler(500)
-def internal_server_error(error):
-    current_app.logger.error('Server Error: %s', (error))
-    return render_template('500.html'), 500
+# @app.errorhandler(500)
+# def internal_server_error(error):
+#     current_app.logger.error('Server Error: %s', (error))
+#     return render_template('500.html'), 500
 
 
-@app.errorhandler(Exception)
-def unhandled_exception(error):
-    current_app.logger.error('Unhandled Exception: %s', (error))
-    return render_template('error_500.html'), 500
+# @app.errorhandler(Exception)
+# def unhandled_exception(error):
+#     current_app.logger.error('Unhandled Exception: %s', (error))
+#     return render_template('error_500.html'), 500
 
 
 if __name__ == "__main__":
