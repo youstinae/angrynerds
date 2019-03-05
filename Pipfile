@@ -4,7 +4,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pylint = "*"
 autopep8 = "*"
 
 [packages]
@@ -22,6 +21,7 @@ jinja2 = "*"
 sqlalchemy = "*"
 werkzeug = "*"
 wtforms = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.7"

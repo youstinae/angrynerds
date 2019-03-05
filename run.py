@@ -1,9 +1,4 @@
-from hotel import app
-
-
-def main():
-    app.run(debug=True)
-
+from hotel.app import app
 
 if __name__ == '__main__':
-    main()
+    app.run(debug=True)

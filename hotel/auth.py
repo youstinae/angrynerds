@@ -1,9 +1,11 @@
 import functools
 
-from flask import (Blueprint, flash, g, redirect,
-                   render_template, request, session, url_for)
+from flask import (Blueprint, flash, g, redirect, render_template, request,
+                   session, url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
-from hotel.db import get_db
+
+from .database import db_session
+from .models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -27,7 +29,7 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = get_db().execute('SELECT * FROM user WHERE id = ?', (user_id,)).fetchone()
+        g.user = User.query.filter_by(user_id=user_id).first()
 
 
 @bp.route('/register', methods=('GET', 'POST'))
@@ -39,26 +41,24 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        db = get_db()
         error = None
 
         if not username:
             error = 'Username is required.'
         elif not password:
             error = 'Password is required.'
-        elif db.execute(
-            'SELECT id FROM user WHERE username = ?', (username,)
-        ).fetchone() is not None:
+        elif User.query.filter_by(username=username).first() is not None:
             error = 'User {0} is already registered.'.format(username)
 
         if error is None:
             # the name is available, store it in the database and go to
             # the login page
-            db.execute(
-                'INSERT INTO user (username, password) VALUES (?, ?)',
-                (username, generate_password_hash(password))
-            )
-            db.commit()
+            user = User(username=username,
+                        email=username,
+                        password=generate_password_hash(password),
+                        roles=['user'])
+            db_session.add(user)
+            db_session.commit()
             return redirect(url_for('auth.login'))
 
         flash(error)
@@ -72,11 +72,8 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        db = get_db()
         error = None
-        user = db.execute(
-            'SELECT * FROM user WHERE username = ?', (username,)
-        ).fetchone()
+        user = User.query.filter_by(username=username).first()
 
         if user is None:
             error = 'Incorrect username.'
@@ -99,6 +96,7 @@ def logout():
     """Clear the current session, including the stored user id."""
     session.clear()
     return redirect(url_for('home'))
+
 
 @bp.route('/pass/reset')
 def pass_reset():

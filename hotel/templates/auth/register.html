@@ -11,7 +11,7 @@
         <div class="page-cover text-center">
             <h2 class="page-cover-tittle">Register</h2>
             <ol class="breadcrumb">
-                <li><a href="/">Home</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li class="active">Register</li>
             </ol>
         </div>
@@ -30,7 +30,6 @@
                     <div class="col-md-12 col-lg-12 mx-auto">
                         <h3>Create Account!</h3>
                         <form method="POST" action="/register">
-                            {{ form.csrf_token }}
                             <div class="form-group">
                                 <label for="emailAddress">Email address</label>
                                 <input type="email" class="form-control" id="emailAddress" name="username"

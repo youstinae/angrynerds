@@ -2,5 +2,8 @@
     "python.pythonPath": "/Users/mghz/.local/share/virtualenvs/angrynerds-1tavnD98/bin/python",
     "files.exclude": {
         "**/__pycache__": true
-    }
+    },
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
 }
