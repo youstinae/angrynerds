@@ -7,7 +7,7 @@ from hotel import auth
 from hotel import blog
 from hotel.data.user import User
 from hotel.data.role import Role
-from hotel.data.seed import init_data
+from hotel.data.seed import init_data, init_posts
 
 app = Flask(__name__)
 app.config.from_object('config.Develop')
@@ -30,6 +30,7 @@ def initialize_database():
     """ Create all tables """
     db.create_all()
     init_data()
+    init_posts()
 
 
 @app.teardown_appcontext

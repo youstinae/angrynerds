@@ -5,7 +5,7 @@ from werkzeug.exceptions import abort
 
 from hotel.data.base import Session
 from hotel.data.post import Post
-from hotel.auth import login_required
+# from hotel.auth import login_required
 
 bp = Blueprint('blog', __name__, url_prefix='/blog')
 session = Session()
@@ -39,7 +39,7 @@ def get_post(id, check_author=True):
 
 
 @bp.route('/create', methods=('GET', 'POST'))
-@login_required
+# @login_required
 def create():
     """Create a new post for the current user."""
     if request.method == 'POST':
@@ -63,7 +63,7 @@ def create():
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
-@login_required
+# @login_required
 def update():
     """Update a post if the current user is the author."""
     post = get_post(id)
@@ -91,7 +91,7 @@ def update():
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
-@login_required
+# @login_required
 def delete(id):
     """Delete a post.
     Ensures that the post exists and that the logged in user is the

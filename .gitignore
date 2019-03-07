@@ -376,5 +376,4 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/emacs,git,linux,macos,python,sublimetext,vim,visualstudiocode,windows,diff,flask
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
-
 hotel.db
