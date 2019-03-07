@@ -10,9 +10,8 @@ class Base():
     IMAGES_DIR = os.path.join(STATIC_DIR, 'images')
 
     SECRET_KEY = b'\x01>\x18\xc4^\xd8X\x1dT{\x1f\x16*\xf4\xba\xbd|W\x0e\x83\xb6\x8e\xc3\x13'
-
-    DATABASE = '%s/db/hotel.db' % APPLICATION_DIR
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///%s' % DATABASE
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///db/hotel.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECURITY_PASSWORD_SALT = 'angry813nerds'
 
     MAIL_SERVER = 'smtp.example.com'

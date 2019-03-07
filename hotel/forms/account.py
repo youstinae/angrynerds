@@ -1,53 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import Form, BooleanField, StringField, PasswordField, HiddenField, TextField, SubmitField, validators
+from wtforms import (TextField, BooleanField, PasswordField)
+from wtforms.validators import Email, Required, EqualTo, Length
 
 
 class RegisterForm(FlaskForm):
-    username = StringField('Username', [
-        validators.Email('Email Address'),
-        validators.Length(min=6, max=50)
+    username = TextField(
+        'Username', [Email(), Required(), Length(min=6, max=50)])
+    password = PasswordField('Password', [Required()])
+    confirm = PasswordField('Repeat Password', [
+        Required(),
+        EqualTo('password', message='Passwords must match')
     ])
-    password = PasswordField('New Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords must match')
-    ])
-    confirm = PasswordField('Repeat Password')
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', [
-        validators.DataRequired(),
-        validators.Length(min=6, max=50)
-    ])
-    password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.Length(min=5, max=15)
-    ])
+    username = TextField('Username', [Required(), Email()])
+    password = PasswordField('Password', [Required()])
     remember = BooleanField('Remember me')
-
-
-class SignupForm(FlaskForm):
-
-    next = HiddenField()
-
-    username = StringField('Email Address', [
-        validators.DataRequired(),
-        validators.Length(min=6, max=35)
-    ])
-
-    password = PasswordField('New Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords must match')
-    ])
-
-    password = PasswordField('Password again', [
-        validators.DataRequired(),
-        validators.EqualTo('password', message='Passwords don\'t match')
-    ])
-
-    email = StringField('Email Address', [
-        validators.DataRequired(),
-        validators.email('A valid email address is required.')
-    ])
-
-    submit = SubmitField('Register')

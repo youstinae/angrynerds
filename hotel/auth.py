@@ -1,13 +1,14 @@
 import functools
 
 from flask import (Blueprint, flash, g, redirect, render_template, request,
-                   session, url_for)
+                   url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from .database import db_session
-from .models import User
+from hotel.data.base import Session
+from hotel.data.user import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+session = Session()
 
 
 def login_required(view):
@@ -57,8 +58,9 @@ def register():
                         email=username,
                         password=generate_password_hash(password),
                         roles=['user'])
-            db_session.add(user)
-            db_session.commit()
+            session.add(user)
+            session.commit()
+            session.close()
             return redirect(url_for('auth.login'))
 
         flash(error)
@@ -83,7 +85,7 @@ def login():
         if error is None:
             # store the user id in a new session and return to the index
             session.clear()
-            session['user_id'] = user['id']
+            session['user_id'] = user.id
             return redirect(url_for('home'))
 
         flash(error)

@@ -1,19 +1,20 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for)
-    
+
 from werkzeug.exceptions import abort
 
-from .database import db_session
-from .models import Blog
+from hotel.data.base import Session
+from hotel.data.post import Post
 from hotel.auth import login_required
 
 bp = Blueprint('blog', __name__, url_prefix='/blog')
+session = Session()
 
 
 @bp.route('/')
 def index():
     """Show all the posts, most recent first."""
-    posts = Blog.query.all()
+    posts = Post.query.all()
     return render_template('blog/index.html', posts=posts)
 
 
@@ -27,7 +28,7 @@ def get_post(id, check_author=True):
     :raise 404: if a post with the given id doesn't exist
     :raise 403: if the current user isn't the author
     """
-    post = Blog.query.filter_by(id=id).first()
+    post = Post.query.filter_by(id=id).first()
     if post is None:
         abort(404, "Post id {0} doesn't exist.".format(id))
 
@@ -52,9 +53,10 @@ def create():
         if error is not None:
             flash(error)
         else:
-            post = Blog(title=title, bogy=body, author_id=g.user['id'])
-            db_session.add(post)
-            db_session.commit()
+            post = Post(title=title, bogy=body, author_id=g.user['id'])
+            session.add(post)
+            session.commit()
+            session.close()
             return redirect(url_for('blog.index'))
 
     return render_template('blog/create.html')
@@ -80,8 +82,9 @@ def update():
             post = get_post(id)
             post.title = title
             post.body = body
-            db_session.update(post)
-            db_session.commit()
+            session.update(post)
+            session.commit()
+            session.close()
             return redirect(url_for('blog.index'))
 
     return render_template('blog/update.html', post=post)
@@ -95,5 +98,7 @@ def delete(id):
     author of the post.
     """
     post = get_post(id)
-    db_session.delete(post)
+    session.delete(post)
+    session.commit()
+    session.close()
     return redirect(url_for('blog.index'))

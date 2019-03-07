@@ -1,44 +1,40 @@
-from datetime import datetime
-
+from flask_sqlalchemy import SQLAlchemy
 from flask import (Flask, render_template, request, current_app)
 from flask_security import Security, SQLAlchemyUserDatastore
-from flask_security.utils import hash_password
 from flask_mail import Mail
 
-from .database import db_session, init_db
-from .models import User, Role
 from hotel import auth
 from hotel import blog
+from hotel.data.user import User
+from hotel.data.role import Role
+from hotel.data.seed import init_data
 
 app = Flask(__name__)
 app.config.from_object('config.Develop')
 
-# apply the blueprints to the app
+# blueprints
 app.register_blueprint(auth.bp)
 app.register_blueprint(blog.bp)
 mail = Mail(app)
 
+# database
+db = SQLAlchemy(app)
 
 # Setup Flask-Security
-user_datastore = SQLAlchemyUserDatastore(db_session, User, Role)
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
 
-# Create data to test with
+
 @app.before_first_request
-def seed_data():
-    init_db()
-    user_datastore.find_or_create_role(
-        name='admin', description='an admin role')
-    user_datastore.find_or_create_role(name='user', description='a user role')
+def initialize_database():
+    """ Create all tables """
+    db.create_all()
+    init_data()
 
-    if not user_datastore.get_user('gharzedd@mail.usf.edu'):
-        user_datastore.create_user(email='gharzedd@mail.usf.edu',
-                                   password=hash_password('letmein'),
-                                   active=True,
-                                   confirmed_at=datetime.utcnow())
 
-    user_datastore.add_role_to_user('gharzedd@mail.usf.edu', 'admin')
-    db_session.commit()
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.session.remove()
 
 
 @app.route('/')
