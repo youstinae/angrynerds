@@ -28,4 +28,6 @@ Note: if your ```python``` command shows v2.7 then use ```python3``` instead
 * [explore flask](http://exploreflask.com)
 * [jinja](http://jinja.pocoo.org)
 * [bootstrap](url://something)
-
+* [sqlalchemy](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html)
+* [flask-sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)
+* [flask-security](https://pythonhosted.org/Flask-Security/index.html)
