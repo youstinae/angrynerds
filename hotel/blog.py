@@ -3,12 +3,10 @@ from flask import (
 
 from werkzeug.exceptions import abort
 
-from hotel.data.base import Session
-from hotel.data.post import Post
-# from hotel.auth import login_required
+from hotel.database import session
+from hotel.models import Post
 
 bp = Blueprint('blog', __name__, url_prefix='/blog')
-session = Session()
 
 
 @bp.route('/')

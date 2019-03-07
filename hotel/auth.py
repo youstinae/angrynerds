@@ -4,11 +4,10 @@ from flask import (Blueprint, flash, g, redirect, render_template, request,
                    url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from hotel.data.base import Session
-from hotel.data.user import User
+from hotel.database import session
+from hotel.models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
-session = Session()
 
 
 def login_required(view):
@@ -25,7 +24,8 @@ def login_required(view):
 def load_logged_in_user():
     """If a user id is stored in the session, load the user object from
     the database into ``g.user``."""
-    user_id = session.get('user_id')
+    # user_id = session.get('user_id')
+    user_id = None
 
     if user_id is None:
         g.user = None

@@ -1,13 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import (Flask, render_template, request, current_app)
-from flask_security import Security, SQLAlchemyUserDatastore
+from flask_security import Security, SQLAlchemySessionUserDatastore
 from flask_mail import Mail
 
-from hotel import auth
-from hotel import blog
-from hotel.data.user import User
-from hotel.data.role import Role
-from hotel.data.seed import init_data, init_posts
+from hotel import auth, blog
+from hotel.database import session, init_db
+from hotel.models import User, Role
 
 app = Flask(__name__)
 app.config.from_object('config.Develop')
@@ -21,21 +19,21 @@ mail = Mail(app)
 db = SQLAlchemy(app)
 
 # Setup Flask-Security
-user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+user_datastore = SQLAlchemySessionUserDatastore(session, User, Role)
 security = Security(app, user_datastore)
 
-
+# Create a user to test with
 @app.before_first_request
-def initialize_database():
-    """ Create all tables """
-    db.create_all()
-    init_data()
-    init_posts()
+def create_user():
+    init_db()
+    user_datastore.create_user(
+        username='gharzedd@mail.usf.edu', password='letmein', email='gharzedd@mail.usf.edu')
+    session.commit()
 
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
-    db.session.remove()
+    session.remove()
 
 
 @app.route('/')
