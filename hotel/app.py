@@ -1,6 +1,5 @@
 from werkzeug.security import generate_password_hash
 
-
 from flask_sqlalchemy import SQLAlchemy
 from flask import (Flask, render_template, request, current_app)
 from flask_security import Security, SQLAlchemySessionUserDatastore
@@ -28,8 +27,14 @@ security = Security(app, user_datastore)
 # Create a user to test with
 @app.before_first_request
 def create_user():
+    # drop database
+    db.reflect()
     db.drop_all()
+
+    # reinitialize db
     init_db()
+
+    # seed data
     user_datastore.find_or_create_role(name='admin')
     user_datastore.find_or_create_role(name='user')
     user_datastore.commit()
@@ -83,16 +88,16 @@ def not_found(error):
     return render_template('error_404.html'), 404
 
 
-# @app.errorhandler(500)
-# def internal_server_error(error):
-#     current_app.logger.error('Server Error: %s', (error))
-#     return render_template('500.html'), 500
+@app.errorhandler(500)
+def internal_server_error(error):
+    current_app.logger.error('Server Error: %s', (error))
+    return render_template('500.html'), 500
 
 
-# @app.errorhandler(Exception)
-# def unhandled_exception(error):
-#     current_app.logger.error('Unhandled Exception: %s', (error))
-#     return render_template('error_500.html'), 500
+@app.errorhandler(Exception)
+def unhandled_exception(error):
+    current_app.logger.error('Unhandled Exception: %s', (error))
+    return render_template('error_500.html'), 500
 
 
 if __name__ == "__main__":
