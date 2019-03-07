@@ -1,3 +1,6 @@
+from werkzeug.security import generate_password_hash
+
+
 from flask_sqlalchemy import SQLAlchemy
 from flask import (Flask, render_template, request, current_app)
 from flask_security import Security, SQLAlchemySessionUserDatastore
@@ -25,10 +28,17 @@ security = Security(app, user_datastore)
 # Create a user to test with
 @app.before_first_request
 def create_user():
+    db.drop_all()
     init_db()
-    user_datastore.create_user(
-        username='gharzedd@mail.usf.edu', password='letmein', email='gharzedd@mail.usf.edu')
-    session.commit()
+    user_datastore.find_or_create_role(name='admin')
+    user_datastore.find_or_create_role(name='user')
+    user_datastore.commit()
+
+    user_datastore.create_user(username='gharzedd@mail.usf.edu',
+                               password=generate_password_hash('admin'),
+                               email='gharzedd@mail.usf.edu',
+                               roles=['admin'])
+    user_datastore.commit()
 
 
 @app.teardown_appcontext

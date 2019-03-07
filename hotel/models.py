@@ -46,6 +46,18 @@ class Post(Base):
         'user.id'), nullable=False, index=True)
     author = relationship('User', backref="user_posts",
                           foreign_keys=[author_id])
-
+                          
     def __repr__(self):
         return '<Post %r>' % (self.title)
+
+
+class Room(Base):
+    # class Rooom(Base, RoleMixin): **(if it requires security)**
+    __tablename__ = 'room'
+    id = Column(Integer, primary_key=True)
+    open = Column(Boolean, unique=False, default=True)
+    tenant_id = Column(Integer, ForeignKey('user.id'))
+    # Everything else about the room can go here
+    # capacity = ...
+    # beds = ...
+    # just practicing with this, still new to it.
