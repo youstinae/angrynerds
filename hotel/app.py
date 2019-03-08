@@ -1,11 +1,11 @@
-from werkzeug.security import generate_password_hash
+# from werkzeug.security import generate_password_hash
 
 from flask_sqlalchemy import SQLAlchemy
 from flask import (Flask, render_template, request, current_app)
 from flask_mail import Mail
 
 from hotel import auth, blog
-from hotel.models import User, Role
+# from hotel.models import User, Role
 
 app = Flask(__name__)
 app.config.from_object('config.Develop')
@@ -22,20 +22,19 @@ db = SQLAlchemy(app)
 @app.before_first_request
 def create_user():
     db.create_all()
-    db.session.commit()
 
-    role_admin = Role(name='admin')
-    role_user = Role(name='user')
-    db.session.add(role_admin)
-    db.session.add(role_user)
-    db.session.commit()
+    # role_admin = Role(name='admin')
+    # role_user = Role(name='user')
+    # db.session.add(role_admin)
+    # db.session.add(role_user)
+    # db.session.commit()
 
-    user_marwan = User(username='gharzedd@mail.usf.edu',
-                       password=generate_password_hash('admin'),
-                       email='gharzedd@mail.usf.edu',
-                       roles=['admin'])
-    db.session.add(user_marwan)
-    db.session.commit()
+    # user_marwan = User(username='gharzedd@mail.usf.edu',
+    #                    password=generate_password_hash('admin'),
+    #                    email='gharzedd@mail.usf.edu',
+    #                    roles=['admin'])
+    # db.session.add(user_marwan)
+    # db.session.commit()
 
 
 @app.teardown_appcontext
