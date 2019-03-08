@@ -2,11 +2,9 @@ from werkzeug.security import generate_password_hash
 
 from flask_sqlalchemy import SQLAlchemy
 from flask import (Flask, render_template, request, current_app)
-from flask_security import Security, SQLAlchemySessionUserDatastore
 from flask_mail import Mail
 
 from hotel import auth, blog
-from hotel.database import session, init_db
 from hotel.models import User, Role
 
 app = Flask(__name__)
@@ -20,35 +18,29 @@ mail = Mail(app)
 # database
 db = SQLAlchemy(app)
 
-# Setup Flask-Security
-user_datastore = SQLAlchemySessionUserDatastore(session, User, Role)
-security = Security(app, user_datastore)
-
 # Create a user to test with
 @app.before_first_request
 def create_user():
-    # drop database
-    db.reflect()
-    db.drop_all()
+    db.create_all()
+    db.session.commit()
 
-    # reinitialize db
-    init_db()
+    role_admin = Role(name='admin')
+    role_user = Role(name='user')
+    db.session.add(role_admin)
+    db.session.add(role_user)
+    db.session.commit()
 
-    # seed data
-    user_datastore.find_or_create_role(name='admin')
-    user_datastore.find_or_create_role(name='user')
-    user_datastore.commit()
-
-    user_datastore.create_user(username='gharzedd@mail.usf.edu',
-                               password=generate_password_hash('admin'),
-                               email='gharzedd@mail.usf.edu',
-                               roles=['admin'])
-    user_datastore.commit()
+    user_marwan = User(username='gharzedd@mail.usf.edu',
+                       password=generate_password_hash('admin'),
+                       email='gharzedd@mail.usf.edu',
+                       roles=['admin'])
+    db.session.add(user_marwan)
+    db.session.commit()
 
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
-    session.remove()
+    db.session.remove()
 
 
 @app.route('/')
