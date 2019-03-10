@@ -7,17 +7,17 @@ from hotel import db, login_manager
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer(), primary_key=True)
-    email = db.Column(db.String(), unique=True)
-    username = db.Column(db.String())
-    password = db.Column(db.String())
+    username = db.Column(db.String(), unique=True)
+    email = db.Column(db.String(), nullable=False)
+    password = db.Column(db.String(), nullable=False)
     last_login_at = db.Column(db.DateTime())
     current_login_at = db.Column(db.DateTime())
     last_login_ip = db.Column(db.String())
     current_login_ip = db.Column(db.String())
     login_count = db.Column(db.Integer())
-    active = db.Column(db.Boolean())
+    active = db.Column(db.Boolean(), default=False)
     confirmed_at = db.Column(db.DateTime())
-    role_id = db.Column(db.Integer(), db.ForeignKey('roles.id'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('role.id'))
 
     @property
     def password(self):
