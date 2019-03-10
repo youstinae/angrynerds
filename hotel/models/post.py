@@ -8,6 +8,7 @@ class Post(db.Model):
     image = db.Column(db.String())
     author_id = db.Column(
         db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User')
 
     def __repr__(self):
         return '<Post %r>' % (self.title)

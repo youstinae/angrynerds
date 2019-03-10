@@ -1,5 +1,5 @@
 
-from app import db
+from hotel import db
 
 
 class Room(db.Model):

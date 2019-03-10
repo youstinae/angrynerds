@@ -1,16 +1,17 @@
 from flask import Flask
+from flask_bootstrap import Bootstrap
+from hotel.config import configure_app
+
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from flask_bootstrap import Bootstrap
 
-# db variable initialization
 db = SQLAlchemy()
 login_manager = LoginManager()
 
 
-def create_app(config_name):
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object('config.Develop')
+def create_app():
+    app = Flask(__name__)
+    configure_app(app)
     db.init_app(app)
 
     login_manager.init_app(app)
@@ -18,19 +19,19 @@ def create_app(config_name):
     login_manager.login_view = "auth.login"
 
     Bootstrap(app)
-
     from hotel.routes import public as public_blueprint
     from hotel.routes import auth as auth_blueprint
     from hotel.routes import admin as admin_blueprint
     from hotel.routes import blog as blog_blueprint
-
     app.register_blueprint(public_blueprint.public)
     app.register_blueprint(admin_blueprint.admin)
     app.register_blueprint(auth_blueprint.auth)
     app.register_blueprint(blog_blueprint.blog)
-
-    # Recreate database each time for demo
-    app.app_context().push()
-    db.drop_all()
-    db.create_all()
     return app
+
+
+if __name__ == '__main__':
+    app = create_app()
+    # app.app_context().push()
+    db.create_all()
+    app.run()
