@@ -1,52 +1,53 @@
-from flask import request, render_template
+from flask import render_template, request
+from flask import Blueprint
 
-from . import home
+public = Blueprint('public', __name__, url_prefix='/')
 
 
-@home.route('/')
-@home.route('/home')
-def home():
+@public.route('/')
+@public.route('/home')
+def index():
     return render_template('index.html')
 
 
-@home.route('/about')
+@public.route('/about')
 def about():
     return render_template('about.html')
 
 
-@home.route('/accomodation')
+@public.route('/accomodation')
 def accomodation():
     return render_template('accomodation.html')
 
 
-@home.route('/gallery')
+@public.route('/gallery')
 def gallery():
     return render_template('gallery.html')
 
 
-@home.route('/elements')
+@public.route('/elements')
 def elements():
     return render_template('elements.html')
 
 
-@home.route('/contact')
+@public.route('/contact')
 def contact():
     return render_template('contact.html')
 
 
-@home.errorhandler(404)
+@public.errorhandler(404)
 def not_found(error):
-    home.logger.error('Page not found: %s', (request.path, error))
+    # logger.error('Page not found: %s', (request.path, error))
     return render_template('error_404.html'), 404
 
 
-@home.errorhandler(500)
+@public.errorhandler(500)
 def internal_server_error(error):
-    home.logger.error('Server Error: %s', (error))
+    # logger.error('Server Error: %s', (error))
     return render_template('500.html'), 500
 
 
-@home.errorhandler(Exception)
+@public.errorhandler(Exception)
 def unhandled_exception(error):
-    home.logger.error('Unhandled Exception: %s', (error))
+    # @public.logger.error('Unhandled Exception: %s', (error))
     return render_template('error_500.html'), 500

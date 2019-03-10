@@ -22,6 +22,7 @@ jinja2 = "*"
 sqlalchemy = "*"
 werkzeug = "*"
 wtforms = "*"
+flask-bootstrap = "*"
 
 [requires]
 python_version = "3.7"

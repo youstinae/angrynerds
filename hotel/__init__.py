@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_bootstrap import Bootstrap
 
 # db variable initialization
 db = SQLAlchemy()
@@ -17,17 +17,14 @@ def create_app(config_name):
     login_manager.login_message = "You must be logged in to access this page."
     login_manager.login_view = "auth.login"
 
-    from .admin import admin as admin_blueprint
-    app.register_blueprint(admin_blueprint, url_prefix='/admin')
+    Bootstrap(app)
 
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    from hotel.routes import public as public_blueprint
+    from hotel.routes import auth as auth_blueprint
+    from hotel.routes import admin as admin_blueprint
 
-    from .public import public as public_blueprint
-    app.register_blueprint(public_blueprint)
-
-    @app.route('/')
-    def home():
-        return 'Welcome, Home!'
+    app.register_blueprint(public_blueprint.public)
+    app.register_blueprint(admin_blueprint.admin)
+    app.register_blueprint(auth_blueprint.auth)
 
     return app
