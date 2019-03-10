@@ -29,4 +29,8 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint.auth)
     app.register_blueprint(blog_blueprint.blog)
 
+    # Recreate database each time for demo
+    app.app_context().push()
+    db.drop_all()
+    db.create_all()
     return app

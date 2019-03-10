@@ -3,9 +3,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from hotel import db, login_manager
 
+roles_users = db.Table(
+    'roles_users',
+    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+    db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
 
 class User(db.Model, UserMixin):
-    __tablename__ = 'user'
+    """
+    Create a User table
+    """
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(), unique=True)
     email = db.Column(db.String(), nullable=False)
@@ -17,7 +24,9 @@ class User(db.Model, UserMixin):
     login_count = db.Column(db.Integer())
     active = db.Column(db.Boolean(), default=False)
     confirmed_at = db.Column(db.DateTime())
-    role_id = db.Column(db.Integer(), db.ForeignKey('role.id'))
+    roles = db.relationship('Role', secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
+    posts = db.relationship('Post', backref='users', lazy=True)
 
     @property
     def password(self):

@@ -1,15 +1,16 @@
 from werkzeug.security import generate_password_hash
 
-from hotel import db
+from hotel import app, db
 from hotel.models.user import User
 from hotel.models.role import Role
 
 
 def init_data():
-    if len(get_roles()) == 0:
-        create_roles()
-    if len(get_users()) == 0:
-        create_users()
+    with app.app_context():
+        if len(get_roles()) == 0:
+            create_roles()
+        if len(get_users()) == 0:
+            create_users()
 
 
 def get_roles():
