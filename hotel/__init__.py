@@ -19,6 +19,9 @@ def create_app():
     login_manager.login_view = "auth.login"
 
     Bootstrap(app)
+
+    import hotel.models
+
     from hotel.routes import public as public_blueprint
     from hotel.routes import auth as auth_blueprint
     from hotel.routes import admin as admin_blueprint
@@ -27,11 +30,5 @@ def create_app():
     app.register_blueprint(admin_blueprint.admin)
     app.register_blueprint(auth_blueprint.auth)
     app.register_blueprint(blog_blueprint.blog)
+
     return app
-
-
-if __name__ == '__main__':
-    app = create_app()
-    # app.app_context().push()
-    db.create_all()
-    app.run()
