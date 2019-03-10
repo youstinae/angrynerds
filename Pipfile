@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 autopep8 = "*"
+flake8 = "*"
 
 [packages]
 bcrypt = "*"
@@ -21,7 +22,6 @@ jinja2 = "*"
 sqlalchemy = "*"
 werkzeug = "*"
 wtforms = "*"
-flake8 = "*"
 
 [requires]
 python_version = "3.7"

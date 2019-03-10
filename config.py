@@ -28,4 +28,10 @@ class Develop(Base):
 
 class Testing(Base):
     DEBUG = False
-    TESTING = True    
+    TESTING = True
+
+
+app_config = {
+    'dev': Develop,
+    'prod': Testing
+}
