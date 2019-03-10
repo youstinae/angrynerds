@@ -22,9 +22,11 @@ def create_app(config_name):
     from hotel.routes import public as public_blueprint
     from hotel.routes import auth as auth_blueprint
     from hotel.routes import admin as admin_blueprint
+    from hotel.routes import blog as blog_blueprint
 
     app.register_blueprint(public_blueprint.public)
     app.register_blueprint(admin_blueprint.admin)
     app.register_blueprint(auth_blueprint.auth)
+    app.register_blueprint(blog_blueprint.blog)
 
     return app

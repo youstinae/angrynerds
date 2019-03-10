@@ -1,5 +1,4 @@
-from flask import render_template, request
-from flask import Blueprint
+from flask import Blueprint, render_template
 
 public = Blueprint('public', __name__, url_prefix='/')
 
