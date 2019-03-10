@@ -1,7 +1,8 @@
 from werkzeug.security import generate_password_hash
 
 from hotel import db
-from hotel.models import User, Role
+from hotel.models.user import User
+from hotel.models.role import Role
 
 
 def init_data():
