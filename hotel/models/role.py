@@ -1,6 +1,6 @@
 from flask_login import RoleMixin
 
-from hotel import db
+from hotel.models.db import db
 
 
 class Role(db.Model, RoleMixin):

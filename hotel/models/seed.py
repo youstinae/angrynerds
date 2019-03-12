@@ -1,6 +1,16 @@
 from flask_security.utils import encrypt_password
+
 from hotel import app
-from hotel import db
+
+
+def init_database():
+    data_store = app.security.datastore
+    with app.app_context():
+        app.db.drop_all()
+        app.db.create_all()
+
+    create_roles(data_store)
+    create_users(data_store)
 
 
 def create_roles(ctx):
@@ -31,12 +41,3 @@ def create_users(ctx):
         for role in roles:
             ctx.add_role_to_user(user, role)
         ctx.commit()
-
-
-data_store = app.security.datastore
-with app.app_context():
-    db.drop_all()
-    db.create_all()
-
-    create_roles(data_store)
-    create_users(data_store)

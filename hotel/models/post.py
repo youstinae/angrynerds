@@ -1,4 +1,4 @@
-from hotel import db
+from hotel.models.db import db
 
 
 class Post(db.Model):

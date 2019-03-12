@@ -1,5 +1,4 @@
-
-from hotel import db
+from hotel.models.db import db
 
 
 class Room(db.Model):

@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from hotel import db, login_manager
+from hotel.models.db import db, login_manager
 
 roles_users = db.Table(
     'roles_users',

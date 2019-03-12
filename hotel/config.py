@@ -28,7 +28,7 @@ class Base():
 
     # LOGGING
     LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    LOGGING_LOCATION = 'bookshelf.log'
+    LOGGING_LOCATION = 'hotel.log'
     LOGGING_LEVEL = logging.DEBUG
 
 
