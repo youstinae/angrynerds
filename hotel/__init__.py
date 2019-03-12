@@ -1,24 +1,28 @@
 from flask import Flask
-# from flask_login import LoginManager
-# from flask_sqlalchemy import SQLAlchemy
-
 from flask_bootstrap import Bootstrap
-from hotel.config import configure_app
-from hotel.models.db import db, login_manager
-# from hotel.models.seed import init_database
+
+from hotel.db import db, login_manager
 from hotel.routes import admin as admin_blueprint
 from hotel.routes import auth as auth_blueprint
 from hotel.routes import blog as blog_blueprint
 from hotel.routes import public as public_blueprint
 
-app = Flask(__name__)
-configure_app(app)
 
-# db = SQLAlchemy(app=app)
-# login_manager = LoginManager()
+app = Flask(__name__)
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'e4923b4f-b7f3-4127-aaeb-06b4e341a9f7'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///hotel.db'
+
 db.init_app(app)
 
-#  init_database()
+
+@app.before_first_request
+def init():
+    from hotel import models
+    db.drop_all()
+    db.create_all()
+
 
 login_manager.init_app(app)
 login_manager.login_message = "You must be logged in to access this page."

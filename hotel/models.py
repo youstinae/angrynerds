@@ -1,7 +1,6 @@
-from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from hotel.models.db import db, login_manager
+from hotel.db import db
 
 roles_users = db.Table(
     'roles_users',
@@ -9,11 +8,11 @@ roles_users = db.Table(
     db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
 
-class User(db.Model, UserMixin):
+class User(db.Model):
     """
     Create a User table
     """
-
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(), unique=True)
     email = db.Column(db.String(), nullable=False)
@@ -54,7 +53,46 @@ class User(db.Model, UserMixin):
         return '<User: {}>'.format(self.username)
 
 
-# Set up user_loader
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+class Role(db.Model):
+    """
+    Create a Role table
+    """
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(), unique=True)
+    description = db.Column(db.String())
+    users = db.relationship('User', backref='user', lazy='dynamic')
+
+    def __repr__(self):
+        return '<Role: {}>'.format(self.name)
+
+
+class Post(db.Model):
+    """
+    Create a Post table
+    """
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    title = db.Column(db.String(), nullable=False)
+    body = db.Column(db.String(), nullable=False)
+    image = db.Column(db.String())
+    created_on = db.Column(db.DateTime())
+    updated_on = db.Column(db.DateTime())
+    published_on = db.Column(db.DateTime())
+    author_id = db.Column(
+        db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User')
+
+    def __repr__(self):
+        return '<Post %r>' % (self.title)
+
+
+class Room(db.Model):
+    """
+    Create a Room table
+    """
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    open = db.Column(db.Boolean(), unique=False, default=True)
+    tenant_id = db.Column(
+        db.Integer(), db.ForeignKey('user.id'), nullable=False)

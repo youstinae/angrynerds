@@ -40,10 +40,8 @@ class Development(Base):
 
 
 config = {
-    "dev": "hotel.config.Development",
-    "staging": "hotel.config.Staging",
-    "prod": "hotel.config.Production",
-    "default": "hotel.config.Development"
+    "dev": Development,
+    "default": Development
 }
 
 

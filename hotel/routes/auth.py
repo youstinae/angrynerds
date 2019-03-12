@@ -4,10 +4,10 @@ from flask_login import login_required, login_user, logout_user
 from sqlalchemy.orm import exc
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from hotel.models.db import db
+from hotel import db
 from hotel.forms.login import LoginForm
 from hotel.forms.register import RegisterForm
-from hotel.models.user import User
+from hotel.models import User
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 

@@ -1,8 +1,8 @@
-from hotel.models.post import Post
-from hotel import db
-from flask import (Blueprint, flash, redirect, render_template,
-                   url_for, abort, request, g)
+from flask import (Blueprint, abort, flash, g, redirect, render_template,
+                   request, url_for)
 
+from hotel.db import db
+from hotel.models import Post
 
 blog = Blueprint('blog', __name__, url_prefix='/blog')
 
