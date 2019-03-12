@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from hotel.db import db
@@ -15,16 +17,16 @@ class User(db.Model):
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(), unique=True)
-    email = db.Column(db.String(), nullable=False)
     password_hash = db.Column(db.String(), nullable=False)
     first_name = db.Column(db.String(), index=True)
     last_name = db.Column(db.String(), index=True)
-    last_login_at = db.Column(db.DateTime())
-    current_login_at = db.Column(db.DateTime())
-    login_count = db.Column(db.Integer())
+    email = db.Column(db.String(), nullable=False)
     active = db.Column(db.Boolean(), default=False)
     confirmed_at = db.Column(db.DateTime())
-
+    last_login_at = db.Column(db.DateTime())
+    current_login_at = db.Column(db.DateTime(), default=datetime.utcnow())
+    login_count = db.Column(db.Integer())
+    created_on = db.Column(db.DateTime(), default=datetime.utcnow())
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
     posts = db.relationship('Post', backref='users', lazy=True)

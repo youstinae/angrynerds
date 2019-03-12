@@ -2,6 +2,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 
 from hotel.db import db, login_manager
+from hotel import config
 from hotel.routes import admin as admin_blueprint
 from hotel.routes import auth as auth_blueprint
 from hotel.routes import blog as blog_blueprint
@@ -15,6 +16,7 @@ app.config['SECRET_KEY'] = 'e4923b4f-b7f3-4127-aaeb-06b4e341a9f7'
 app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///hotel.db'
 
 db.init_app(app)
+app.config.from_object(config.Development)
 
 
 @app.before_first_request
