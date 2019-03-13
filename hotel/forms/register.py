@@ -11,11 +11,14 @@ class RegisterForm(FlaskForm):
     """
     username = StringField(
         'Username', [Email(), Required(), Length(min=6, max=50)])
+
     password = PasswordField(
-        'Password', [Required(), EqualTo('confirm_password')])
+        'Password', [Required(), EqualTo('confirm')])
+
     confirm = PasswordField('Repeat Password', [
         Required(), EqualTo('password', message='Passwords must match')
     ])
+
     submit = SubmitField('Register')
 
     def validate_email(self, field):

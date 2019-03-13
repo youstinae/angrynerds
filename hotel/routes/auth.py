@@ -1,13 +1,16 @@
+from urllib.parse import urlparse, urljoin
 from flask import (Blueprint, abort, flash, g, redirect, render_template,
-                   url_for)
-from flask_login import login_required, login_user, logout_user
+                   url_for, request)
+from flask_login import login_required, login_user, logout_user, current_user
 from sqlalchemy.orm import exc
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from hotel import db
+from hotel.db import db
+from hotel.email import notify_register_account
 from hotel.forms.login import LoginForm
 from hotel.forms.register import RegisterForm
 from hotel.models import User
+from hotel.models import Role
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -18,49 +21,60 @@ def register():
     Handle requests to the /register route
     Add an user to the database through the registration form
     """
+    if current_user.is_authenticated:
+        return redirect(url_for('public.index'))
+
     form = RegisterForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data,
-                    password=generate_password_hash(form.password.data))
+        username = form.username.data
+        password = generate_password_hash(form.password.data)
+
+        role_user = Role.query.filter_by(name='user').first()
+        user = User(username=username,
+                    password=generate_password_hash(password),
+                    email=username,
+                    roles=[role_user])
 
         # add user to the database
         db.session.add(user)
         db.session.commit()
+        notify_register_account()
         flash('You have successfully registered! You may now login.')
 
         # redirect to the login page
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('public.index'))
+    else:
+        flash('form is not valid: %s' % form.errors.items())
 
     # load registration template
     return render_template('auth/register.html', form=form, title='Register')
 
 
+def flash_errors(form):
+    """Flashes form errors"""
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ), 'error')
+
+
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    """
-    Handle requests to the /login route
-    Log an user in through the login form
-    """
     form = LoginForm()
     if form.validate_on_submit():
-
-        # check whether user exists in the database and whether
-        # the password entered matches the password in the database
+        # Login and validate the user.
         user = User.query.filter_by(email=form.email.data).first()
-        if user is not None and user.verify_password(
-                form.password.data):
-            # log user in
-            login_user(user)
+        login_user(user)
+        flash('Logged in successfully.')
 
-            # redirect to the dashboard page after login
-            return redirect(url_for('home.dashboard'))
+        next = request.args.get('next')
+        if not is_safe_url(next):
+            return abort(400)
 
-        # when login details are incorrect
-        else:
-            flash('Invalid email or password.')
-
-    # load login template
-    return render_template('auth/login.html', form=form, title='Login')
+        return redirect(next or url_for('public.index'))
+    return render_template('auth/login.html', form=form)
 
 
 @auth.route('/logout')
@@ -125,3 +139,10 @@ def verify_password(username, password):
     if verified is True:
         g.current_user = user
     return verified
+
+
+def is_safe_url(target):
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ('http', 'https') and \
+        ref_url.netloc == test_url.netloc

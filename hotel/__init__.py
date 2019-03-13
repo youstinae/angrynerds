@@ -1,11 +1,13 @@
 from flask import Flask
 # from flask_bootstrap import Bootstrap
-from flask_mail import Mail
+# from flask_mail import Mail
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
+from flask_wtf import CsrfProtect
 
 from hotel.db import db
 from hotel.db import login_manager
 from hotel.seed import init_data
+from hotel.email import mail
 from hotel.models import User, Role
 from hotel.routes import admin as admin_blueprint
 from hotel.routes import auth as auth_blueprint
@@ -13,12 +15,11 @@ from hotel.routes import blog as blog_blueprint
 from hotel.routes import public as public_blueprint
 from hotel.routes import error as error_blueprint
 
-mail = Mail()
-
 app = Flask(__name__)
 app.config.from_object('config.Development')
 db.init_app(app)
 mail.init_app(app)
+csrf = CsrfProtect(app)
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)

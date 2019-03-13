@@ -1,10 +1,26 @@
-from flask import current_app
-from flask_mail import Message
+from flask import current_app, flash, render_template
+from flask_mail import Mail, Message
+
+mail = Mail()
 
 
 def send_async_email(msg):
-    with current_app.app_context():
-        current_app.mail.send(msg)
+    try:
+        with current_app.app_context():
+            mail.send(msg)
+    except BaseException as e:
+        flash('error %s' % e)
+
+
+def send_mail(to, subject, template, **kwargs):
+    msg = Message(subject=subject,
+                  sender='royal.hotel@localhost.com', recipients=to)
+
+#     msg.body = render_template('email/%s.txt' % template, **kwargs)
+#     msg.html = render_template('email/%s.html' % template, **kwargs)
+    msg.body = 'Your account is registered'
+    msg.html = 'Your account is registered'
+    mail.send(msg)
 
 
 def send_email(subject, sender, recipients, text_body, html_body):
@@ -16,15 +32,11 @@ def send_email(subject, sender, recipients, text_body, html_body):
 
 def notify_register_account():
     subject = 'New account registration'
-    sender = 'royal.hotel@localhost.com'
     recipients = ["gharzedd@mail.usf.edu"]
-    text_body = 'your account is setup please confirm'
-    html_body = True
-    send_email(subject=subject,
-               sender=sender,
-               recipients=recipients,
-               text_body=text_body,
-               html_body=html_body)
+
+    send_mail(to=recipients,
+              subject=subject,
+              template='notify_register')
 
 
 def notify_confirm_account():
