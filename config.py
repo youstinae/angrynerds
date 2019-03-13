@@ -1,29 +1,28 @@
 import os
 import logging
 
+from flask import current_app
 from hotel.utils import get_app_base_path
 
 
 class Base():
     DEBUG = False
+    CSRF_ENABLED = True
 
     # DIRECTORIES
     APP_DIR = get_app_base_path()
-    STATIC_DIR = os.path.join(APP_DIR, 'static')
+    STATIC_DIR = os.path.join(APP_DIR, 'hotel/static')
     IMAGES_DIR = os.path.join(STATIC_DIR, 'images')
 
-    # DATABASE sqlite :memory: identifier is the default
+    # DATABASE sqlite :memory: identifier is th=
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECURITY_PASSWORD_SALT = 'angry813nerds'
     SECRET_KEY = 'e4923b4f-b7f3-4127-aaeb-06b4e341a9f7'
 
     # MAIL
-    MAIL_SERVER = 'smtp.example.com'
-    MAIL_PORT = 465
-    MAIL_USE_SSL = False
-    MAIL_USERNAME = 'username'
-    MAIL_PASSWORD = 'password'
+    MAIL_SERVER = 'localhost'
+    MAIL_PORT = 25
 
     # LOGGING
     LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -35,20 +34,3 @@ class Development(Base):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///hotel.db'
     SECRET_KEY = '2da1d68d-e48a-45aa-8a37-b2b9ce1ee91b'
-
-
-config = {
-    "dev": Development,
-    "default": Development
-}
-
-
-def configure_app(app):
-    app.config.from_object(config['dev'])
-
-    # Configure logging
-    handler = logging.FileHandler(app.config['LOGGING_LOCATION'])
-    handler.setLevel(app.config['LOGGING_LEVEL'])
-    formatter = logging.Formatter(app.config['LOGGING_FORMAT'])
-    handler.setFormatter(formatter)
-    app.logger.addHandler(handler)

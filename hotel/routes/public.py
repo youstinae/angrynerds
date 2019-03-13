@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-
+from hotel.email import mail
 
 public = Blueprint('public', __name__, url_prefix='/')
 
@@ -7,6 +7,7 @@ public = Blueprint('public', __name__, url_prefix='/')
 @public.route('/')
 @public.route('/home')
 def index():
+    
     return render_template('index.html')
 
 

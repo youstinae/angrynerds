@@ -1,8 +1,9 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_mail import Mail
 
-from hotel.db import db, login_manager
-from hotel import config
+from hotel.db import db
+from hotel.db import login_manager
 from hotel.routes import admin as admin_blueprint
 from hotel.routes import auth as auth_blueprint
 from hotel.routes import blog as blog_blueprint
@@ -10,13 +11,9 @@ from hotel.routes import public as public_blueprint
 
 
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'e4923b4f-b7f3-4127-aaeb-06b4e341a9f7'
-app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///hotel.db'
-
+app.config.from_object('config.Development')
+mail = Mail(app)
 db.init_app(app)
-app.config.from_object(config.Development)
 
 
 @app.before_first_request
