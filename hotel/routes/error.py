@@ -6,7 +6,7 @@ error = Blueprint('error', __name__, url_prefix='/error')
 
 
 @error.errorhandler(403)
-def error_404(error):
+def error_403(error):
     log.error('Forbidden: %s', (request.path, error))
     return render_template('error/error_403.html'), 403
 
@@ -24,6 +24,6 @@ def error_500(error):
 
 
 @error.errorhandler(Exception)
-def error(error):
+def error_ex(error):
     log.error('Unhandled Exception: %s', (error))
-    return render_template('error/error.html'), 500
+    return render_template('error/error_ex.html'), 500

@@ -10,6 +10,7 @@ flake8 = "*"
 [packages]
 bcrypt = "*"
 flask = "*"
+flask-bootstrap = "*"
 flask-caching = "*"
 flask-compress = "*"
 flask-login = "*"
@@ -22,7 +23,6 @@ jinja2 = "*"
 sqlalchemy = "*"
 werkzeug = "*"
 wtforms = "*"
-flask-bootstrap = "*"
 
 [requires]
 python_version = "3.7"

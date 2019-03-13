@@ -4,10 +4,19 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from hotel.db import db
 
-roles_users = db.Table(
-    'roles_users',
-    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-    db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+# roles_users = db.Table(
+#     'roles_users',
+#     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+#     db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
+
+class UserRoles(db.Model):
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey(
+        'user.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey(
+        'role.id', ondelete='CASCADE'))
 
 
 class User(db.Model):
@@ -29,27 +38,21 @@ class User(db.Model):
     created_on = db.Column(db.DateTime(), default=datetime.utcnow())
     posts = db.relationship('Post', backref='user', lazy=True)
     rooms = db.relationship('Room', backref='room', lazy=True)
-    roles = db.relationship('Role', secondary=roles_users, lazy='subquery',
+    roles = db.relationship('Role', secondary='user_roles', lazy='subquery',
                             backref=db.backref('user', lazy=True))
 
     @property
     def password(self):
-        """
-        Prevent pasword from being accessed
-        """
+        """ Prevent pasword from being accessed """
         raise AttributeError('password is not a readable attribute.')
 
     @password.setter
     def password(self, password):
-        """
-        Set password to a hashed password
-        """
+        """ Set password to a hashed password """
         self.password_hash = generate_password_hash(password)
 
     def verify_password(self, password):
-        """
-        Check if hashed password matches actual password
-        """
+        """ Check if hashed password matches actual password """
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):

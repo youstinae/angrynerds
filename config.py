@@ -31,5 +31,5 @@ class Base():
 
 class Development(Base):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///hotel.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///database/hotel.db'
     SECRET_KEY = '2da1d68d-e48a-45aa-8a37-b2b9ce1ee91b'

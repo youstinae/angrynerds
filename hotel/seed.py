@@ -2,21 +2,14 @@ from flask import current_app
 from werkzeug.security import generate_password_hash
 
 from hotel.db import db
-from hotel.models import Role, User
+from hotel.models import User
+from hotel.models import Role
 
 
 def init_data():
     with current_app.app_context():
-        if len(get_roles()) == 0:
-            create_roles()
-        if len(get_users()) == 0:
-            create_users()
-
-
-def get_roles():
-    roles = db.session.query(Role)
-    db.session.close()
-    return roles.all()
+        create_roles()
+        create_users()
 
 
 def create_roles():
@@ -25,22 +18,13 @@ def create_roles():
         Role(name='user')
     ])
     db.session.commit()
-    db.session.close()
-
-
-def get_users():
-    users = db.session.query(User)
-    db.session.close()
-    return users.all()
 
 
 def create_users():
-    role = db.session.query(Role).filter_by(name='admin').first()
-    db.session.add_all([
-        User(username='gharzedd@mail.usf.edu',
-             password=generate_password_hash('admin'),
-             email='gharzedd@mail.usf.edu',
-             roles=[role])
-    ])
+    admin = Role.query.filter_by(name='admin').first()
+    user = User(username='gharzedd@mail.usf.edu',
+                password=generate_password_hash('admin'),
+                email='gharzedd@mail.usf.edu',
+                roles=[admin])
+    db.session.add(user)
     db.session.commit()
-    db.session.close()
