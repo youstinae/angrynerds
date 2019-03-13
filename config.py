@@ -1,7 +1,6 @@
 import os
 import logging
 
-from flask import current_app
 from hotel.utils import get_app_base_path
 
 
@@ -14,7 +13,7 @@ class Base():
     STATIC_DIR = os.path.join(APP_DIR, 'hotel/static')
     IMAGES_DIR = os.path.join(STATIC_DIR, 'images')
 
-    # DATABASE sqlite :memory: identifier is th=
+    # DATABASE sqlite :memory: is default
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECURITY_PASSWORD_SALT = 'angry813nerds'

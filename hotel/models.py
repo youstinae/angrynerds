@@ -27,9 +27,10 @@ class User(db.Model):
     current_login_at = db.Column(db.DateTime(), default=datetime.utcnow())
     login_count = db.Column(db.Integer())
     created_on = db.Column(db.DateTime(), default=datetime.utcnow())
-    roles = db.relationship('Role', secondary=roles_users,
-                            backref=db.backref('users', lazy='dynamic'))
-    posts = db.relationship('Post', backref='users', lazy=True)
+    posts = db.relationship('Post', backref='user', lazy=True)
+    rooms = db.relationship('Room', backref='room', lazy=True)
+    roles = db.relationship('Role', secondary=roles_users, lazy='subquery',
+                            backref=db.backref('user', lazy=True))
 
     @property
     def password(self):
@@ -63,7 +64,6 @@ class Role(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), unique=True)
     description = db.Column(db.String())
-    users = db.relationship('User', backref='user', lazy='dynamic')
 
     def __repr__(self):
         return '<Role: {}>'.format(self.name)
@@ -83,7 +83,6 @@ class Post(db.Model):
     published_on = db.Column(db.DateTime())
     author_id = db.Column(
         db.Integer(), db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User')
 
     def __repr__(self):
         return '<Post %r>' % (self.title)

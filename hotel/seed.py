@@ -1,13 +1,12 @@
+from flask import current_app
 from werkzeug.security import generate_password_hash
 
-from hotel import app
 from hotel.db import db
-from hotel.models.user import User
-from hotel.models.role import Role
+from hotel.models import Role, User
 
 
 def init_data():
-    with app.app_context():
+    with current_app.app_context():
         if len(get_roles()) == 0:
             create_roles()
         if len(get_users()) == 0:
