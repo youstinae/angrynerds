@@ -1,4 +1,4 @@
-from flask import current_app, flash, render_template
+from flask import current_app, flash
 from flask_mail import Mail, Message
 
 mail = Mail()
