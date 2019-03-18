@@ -1,16 +1,16 @@
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urljoin, urlparse
+
 from flask import (Blueprint, abort, flash, g, redirect, render_template,
-                   url_for, request)
-from flask_login import login_required, login_user, logout_user, current_user
+                   request, url_for)
+from flask_login import current_user, login_user, logout_user
+from flask_security.utils import encrypt_password, verify_and_update_password
 from sqlalchemy.orm import exc
-from werkzeug.security import check_password_hash, generate_password_hash
 
 from hotel.db import db
 from hotel.email import notify_register_account
 from hotel.forms.login import LoginForm
 from hotel.forms.register import RegisterForm
-from hotel.models import User
-from hotel.models import Role
+from hotel.models import Role, User
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -27,11 +27,11 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         username = form.username.data
-        password = generate_password_hash(form.password.data)
+        password = encrypt_password(form.password.data)
 
         role_user = Role.query.filter_by(name='user').first()
         user = User(username=username,
-                    password=generate_password_hash(password),
+                    password=encrypt_password(password),
                     email=username,
                     roles=[role_user])
 
@@ -62,32 +62,26 @@ def flash_errors(form):
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('public.index'))
+
     form = LoginForm()
     if form.validate_on_submit():
-        # Login and validate the user.
-        user = User.query.filter_by(email=form.email.data).first()
-        login_user(user)
-        flash('Logged in successfully.')
-
-        next = request.args.get('next')
-        if not is_safe_url(next):
-            return abort(400)
-
-        return redirect(next or url_for('public.index'))
-    return render_template('auth/login.html', form=form)
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data, user):
+            flash('Invalid username or password')
+            return redirect(url_for('auth.login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or urlparse(next_page).netloc != '':
+            next_page = url_for('public.index')
+        return redirect(next_page)
+    return render_template('auth/login.html', title='Sign In', form=form)
 
 
 @auth.route('/logout')
-@login_required
 def logout():
-    """
-    Handle requests to the /logout route
-    Log an user out through the logout link
-    """
     logout_user()
-    flash('You have successfully been logged out.')
-
-    # redirect to the login page
     return redirect(url_for('auth.login'))
 
 
@@ -125,7 +119,7 @@ def create_user(user):
     return data, 201
 
 
-def verify_password(username, password):
+def verify_password(username, secret):
     """Verify a username/hashed password tuple."""
 
     try:
@@ -135,7 +129,7 @@ def verify_password(username, password):
         return False
 
     # Perform password hash comparison in time-constant manner.
-    verified = check_password_hash(user.password, password)
+    verified = verify_and_update_password(secret, user)
     if verified is True:
         g.current_user = user
     return verified

@@ -1,5 +1,5 @@
 from flask import current_app
-from werkzeug.security import generate_password_hash
+from flask_security.utils import encrypt_password
 
 from hotel.db import db
 from hotel.models import User
@@ -23,7 +23,7 @@ def create_roles():
 def create_users():
     admin = Role.query.filter_by(name='admin').first()
     user = User(username='gharzedd@mail.usf.edu',
-                password=generate_password_hash('admin'),
+                password=encrypt_password('admin'),
                 email='gharzedd@mail.usf.edu',
                 roles=[admin])
     db.session.add(user)

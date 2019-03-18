@@ -1,6 +1,5 @@
-from flask import Flask
+from flask import Flask, g
 # from flask_bootstrap import Bootstrap
-# from flask_mail import Mail
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_wtf import CsrfProtect
 
@@ -36,7 +35,8 @@ def init():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.get(user_id)
+    user = User.query.get(user_id)
+    return user
 
 
 @app.context_processor
