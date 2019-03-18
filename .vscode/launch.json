@@ -54,8 +54,8 @@
             },
             "args": [
                 "run",
-                "--no-debugger",
-                "--no-reload"
+                // "--no-debugger",
+                // "--no-reload"
             ],
             "jinja": true
         },

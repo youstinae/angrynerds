@@ -10,7 +10,6 @@ flake8 = "*"
 [packages]
 bcrypt = "*"
 flask = "*"
-flask-bootstrap = "*"
 flask-caching = "*"
 flask-compress = "*"
 flask-login = "*"

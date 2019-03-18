@@ -1,5 +1,4 @@
-from flask import Flask, g
-# from flask_bootstrap import Bootstrap
+from flask import Flask
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_wtf import CsrfProtect
 

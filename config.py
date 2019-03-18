@@ -11,7 +11,7 @@ class Base():
     # DIRECTORIES
     APP_DIR = get_app_base_path()
     STATIC_DIR = os.path.join(APP_DIR, 'hotel/static')
-    IMAGES_DIR = os.path.join(STATIC_DIR, 'images')
+    IMAGES_DIR = os.path.join(STATIC_DIR, 'image')
 
     # DATABASE sqlite :memory: is default
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
