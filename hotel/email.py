@@ -39,8 +39,14 @@ def notify_register_account():
               template='notify_register')
 
 
-def notify_confirm_account():
-    pass
+def notify_confirm_account(to, subject, template):
+    msg = Message(
+        subject,
+        recipients=[to],
+        html=template,
+        sender=current_app.config['MAIL_DEFAULT_SENDER']
+    )
+    mail.send(msg)
 
 
 def notify_recover_username():

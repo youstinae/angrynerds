@@ -20,6 +20,7 @@ class Base():
     SECRET_KEY = 'e4923b4f-b7f3-4127-aaeb-06b4e341a9f7'
 
     # MAIL
+    MAIL_DEFAULT_SENDER = 'royal.hotel@localhost.local'
     MAIL_SERVER = 'localhost'
     MAIL_PORT = 25
 

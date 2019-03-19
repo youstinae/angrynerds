@@ -1,13 +1,15 @@
+from datetime import datetime
 from urllib.parse import urljoin, urlparse
 
-from flask import (Blueprint, abort, flash, g, redirect, render_template,
-                   request, url_for)
-from flask_login import current_user, login_user, logout_user
+from flask import (current_app, Blueprint, abort, flash, g, redirect,
+                   render_template, request, url_for)
+from flask_login import current_user, login_user, logout_user, login_required
 from flask_security.utils import encrypt_password, verify_and_update_password
 from sqlalchemy.orm import exc
+from itsdangerous import URLSafeTimedSerializer
 
 from hotel.db import db
-from hotel.email import notify_register_account
+from hotel.email import notify_register_account, notify_confirm_account
 from hotel.forms.login import LoginForm
 from hotel.forms.register import RegisterForm
 from hotel.models import Role, User
@@ -33,12 +35,19 @@ def register():
         user = User(username=username,
                     password=encrypt_password(password),
                     email=username,
+                    registered_on=datetime.utcnow(),
                     roles=[role_user])
 
         # add user to the database
         db.session.add(user)
         db.session.commit()
-        notify_register_account()
+        token = generate_confirmation_token(user.email)
+        confirm_url = url_for('auth.confirm_email',
+                              token=token, _external=True)
+        html = render_template('email/email_confirm.html',
+                               confirm_url=confirm_url)
+        subject = "Royal Hotel - Please confirm your email"
+        notify_confirm_account(user.email, subject, html)
         flash('You have successfully registered! You may now login.')
 
         # redirect to the login page
@@ -48,6 +57,25 @@ def register():
 
     # load registration template
     return render_template('auth/register.html', form=form, title='Register')
+
+
+@auth.route('/confirm/<token>')
+@login_required
+def confirm_email(token):
+    try:
+        email = confirm_token(token)
+    except:
+        flash('The confirmation link is invalid or has expired.', 'danger')
+    user = User.query.filter_by(email=email).first_or_404()
+    if user.confirmed:
+        flash('Account already confirmed. Please login.', 'success')
+    else:
+        user.confirmed = True
+        user.confirmed_on = datetime.datetime.now()
+        db.session.add(user)
+        db.session.commit()
+        flash('You have confirmed your account. Thanks!', 'success')
+    return redirect(url_for('auth.login'))
 
 
 def flash_errors(form):
@@ -140,3 +168,19 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and \
         ref_url.netloc == test_url.netloc
+
+
+def generate_confirmation_token(email):
+    serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    return serializer.dumps(email,
+                            salt=current_app.config['SECURITY_PASSWORD_SALT'])
+
+
+def confirm_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    email = serializer.loads(
+        token,
+        salt=current_app.config['SECURITY_PASSWORD_SALT'],
+        max_age=expiration
+    )
+    return email

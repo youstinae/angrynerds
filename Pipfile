@@ -22,6 +22,7 @@ jinja2 = "*"
 sqlalchemy = "*"
 werkzeug = "*"
 wtforms = "*"
+itsdangerous = "*"
 
 [requires]
 python_version = "3.7"

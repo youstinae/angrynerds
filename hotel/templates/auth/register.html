@@ -51,6 +51,11 @@
                                 <label for="password">Confirm Password</label>
                                 <input type="password" class="form-control" id="cofirm" name="confirm"
                                     placeholder="Confirm Password">
+                                <div>
+                                    {% for error in form.confirm.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                </div>
                             </div>
                             <button type="submit" value="submit" class="genric-btn primary">Register</button>
                         </form>
