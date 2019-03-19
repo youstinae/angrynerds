@@ -27,4 +27,9 @@ def create_users():
                 email='gharzedd@mail.usf.edu',
                 roles=[admin])
     db.session.add(user)
+    user = User(username='schultz7@mail.usf.edu',
+                password=encrypt_password('admin'),
+                email='schultz7@mail.usf.edu',
+                roles=[admin])
+    db.session.add(user)
     db.session.commit()
