@@ -8,9 +8,9 @@
 # java -jar fakeSMTP-2.0.jar -o output_directory_name
 
 # to output email in memory
-java -jar ./tools/fakeSMTP-2.0.jar -m -s &
+java -jar ./tools/fakeSMTP-2.0.jar -m -s -p 2525 &
 
 # Start Flask
-export FLASK_CONFIG=dev
+# export FLASK_CONFIG=dev
 export FLASK_DEBUG=1
 flask run
