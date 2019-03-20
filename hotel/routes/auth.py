@@ -10,9 +10,43 @@ from hotel.db import db
 from hotel.email import notify_register_account
 from hotel.forms.login import LoginForm
 from hotel.forms.register import RegisterForm
-from hotel.models import Role, User
+from hotel.forms.contactus import ContactForm
+from hotel.models import Role, User, Contact
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
+
+
+
+@auth.route('/contactus', methods=['GET', 'POST'])
+def contactus():
+    """
+    Handle requests to the /contactus route
+    Add an user to the database through the registration form
+    """
+
+    form = ContactForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        subject = form.subject.data
+        message = form.message.data
+
+        contact = Contact(name=name,
+                          email=email,
+                          subject=subject,
+                          message=message)
+
+        # add contact message to the database
+        db.session.add(contact)
+        db.session.commit()
+        flash('Your message has been sent!')
+
+        # redirect to the login page
+        return redirect(url_for('public.index'))
+    else:
+        flash('form is not valid: %s' % form.errors.items())
+    # load contact template
+    return render_template('auth/register.html', form=form, title='Register')
 
 
 @auth.route('/register', methods=['GET', 'POST'])

@@ -96,3 +96,15 @@ class Room(db.Model):
     open = db.Column(db.Boolean(), unique=False, default=True)
     tenant_id = db.Column(
         db.Integer(), db.ForeignKey('user.id'), nullable=False)
+
+
+class Contact(db.Model):
+    """
+    Create a Contact Message table
+    """
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String())
+    email = db.Column(db.String())
+    subject = db.Column(db.String())
+    message = db.Column(db.String())
