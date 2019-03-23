@@ -18,7 +18,6 @@ from hotel.models import Role, User, Contact
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 
-
 @auth.route('/contactus', methods=['GET', 'POST'])
 def contactus():
     """
@@ -81,10 +80,10 @@ def register():
         html = render_template('email/email_confirm.html',
                                confirm_url=confirm_url)
         subject = "Royal Hotel - Please confirm your email"
-        notify_confirm_account(user.email, subject, html)
-        flash('You have successfully registered! You may now login.')
 
-        # redirect to the login page
+        if(current_app.config['EMAIL_ENABLED']):
+            notify_confirm_account(user.email, subject, html)
+        flash('You have successfully registered! You may now login.')
         return redirect(url_for('public.index'))
     else:
         flash('form is not valid: %s' % form.errors.items())

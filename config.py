@@ -23,6 +23,7 @@ class Base():
     MAIL_DEFAULT_SENDER = 'royal.hotel@localhost.local'
     MAIL_SERVER = 'localhost'
     MAIL_PORT = 25
+    MAIL_ENABLED = False
 
     # LOGGING
     LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

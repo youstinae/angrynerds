@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import current_app
 from flask_security.utils import encrypt_password
 
@@ -24,17 +25,24 @@ def create_roles():
 
 def create_users():
     admin = Role.query.filter_by(name='admin').first()
-    user = User(username='gharzedd@mail.usf.edu',
-                password=encrypt_password('admin'),
-                email='gharzedd@mail.usf.edu',
-                roles=[admin])
-    db.session.add(user)
-    user = User(username='schultz7@mail.usf.edu',
-                password=encrypt_password('admin'),
-                email='schultz7@mail.usf.edu',
-                roles=[admin])
-    db.session.add(user)
+    db.session.add(create_user(username='gharzedd@mail.usf.edu',
+                               password=encrypt_password('admin'),
+                               roles=[admin]))
+    db.session.add(create_user(username='schultz7@mail.usf.edu',
+                               password=encrypt_password('admin'),
+                               roles=[admin]))
     db.session.commit()
+
+
+def create_user(username, password, roles):
+    return User(username=username,
+                password=encrypt_password(password),
+                email=username,
+                active=True,
+                confirmed=True,
+                confirmed_on=datetime.utcnow(),
+                registered_on=datetime.utcnow(),
+                roles=roles)
 
 
 # def create_posts():
