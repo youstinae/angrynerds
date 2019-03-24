@@ -39,7 +39,6 @@ def contact():
     Handle requests to the /contactus route
     Add an user to the database through the registration form
     """
-
     form = ContactForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -53,7 +52,5 @@ def contact():
         db.session.add(contact)
         db.session.commit()
         flash('Your message has been sent!')
-        return redirect(url_for('public.index'))
-    else:
-        flash('form is not valid: %s' % form.errors.items())
-    return render_template('contact.html', form=form, title='Register')
+        return redirect(url_for('public.contact'))
+    return render_template('contact.html', form=form, title='Contact')

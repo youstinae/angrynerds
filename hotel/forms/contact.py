@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField
+from wtforms import StringField, SubmitField
 from wtforms.validators import Email, Length, Required
 
 
@@ -10,7 +10,7 @@ class ContactForm(FlaskForm):
     name = StringField(
         'Name', [Required(), Length(min=2, max=50)])
 
-    email = PasswordField(
+    email = StringField(
         'Email', [Email(), Required(), Length(min=6, max=100)])
 
     subject = StringField(
@@ -19,4 +19,4 @@ class ContactForm(FlaskForm):
     message = StringField(
         'Message', [Required(), Length(min=10, max=500)])
 
-    submit = SubmitField('SendMessage')
+    submit = SubmitField('Send Message')

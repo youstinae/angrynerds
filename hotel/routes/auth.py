@@ -68,6 +68,15 @@ def confirm_email(token):
     return redirect(url_for('auth.login'))
 
 
+@auth.route('/unconfirmed')
+@login_required
+def unconfirmed():
+    if current_user.confirmed:
+        return redirect('main.home')
+    flash('Please confirm your account!', 'warning')
+    return render_template('emails/unconfirmed.html')
+
+
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()

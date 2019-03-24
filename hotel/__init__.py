@@ -1,6 +1,6 @@
-from flask import Flask, g
+from flask import Flask, g, render_template, request
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
-from flask_wtf import CsrfProtect
+from flask_wtf.csrf import CsrfProtect
 
 from hotel.db import db
 from hotel.db import login_manager
@@ -11,17 +11,26 @@ from hotel.routes import admin as admin_blueprint
 from hotel.routes import auth as auth_blueprint
 from hotel.routes import blog as blog_blueprint
 from hotel.routes import public as public_blueprint
-from hotel.routes import error as error_blueprint
 
 app = Flask(__name__)
 app.config.from_object('config.Development')
 db.init_app(app)
 mail.init_app(app)
-CsrfProtect(app)
+csrf = CsrfProtect(app)
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
+
+login_manager.init_app(app)
+login_manager.login_message = "You must be logged in to access this page."
+login_manager.login_message_category = "info"
+login_manager.login_view = "auth.login"
+
+app.register_blueprint(public_blueprint.public)
+app.register_blueprint(admin_blueprint.admin)
+app.register_blueprint(auth_blueprint.auth)
+app.register_blueprint(blog_blueprint.blog)
 
 
 @app.before_first_request
@@ -47,13 +56,26 @@ def inject_user():
     return dict(user=current_user)
 
 
-login_manager.init_app(app)
-login_manager.login_message = "You must be logged in to access this page."
-login_manager.login_message_category = "info"
-login_manager.login_view = "auth.login"
+@csrf.error_handler
+def csrf_error(reason):
+    return render_template('error/error_csrf.html', reason=reason), 400
 
-app.register_blueprint(public_blueprint.public)
-app.register_blueprint(admin_blueprint.admin)
-app.register_blueprint(auth_blueprint.auth)
-app.register_blueprint(blog_blueprint.blog)
-app.register_blueprint(error_blueprint.error)
+
+@app.errorhandler
+def error_403(error):
+    return render_template('error/error_403.html', error=error), 403
+
+
+@app.errorhandler
+def error_404(error):
+    return render_template('error/error_404.html', error=error), 404
+
+
+@app.errorhandler
+def error_500(error):
+    return render_template('error/error_500.html', error=error), 500
+
+
+@app.errorhandler(Exception)
+def error_ex(error):
+    return render_template('error/error_ex.html', error=error), 500
