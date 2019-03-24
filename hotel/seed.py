@@ -24,23 +24,38 @@ def create_roles():
 
 
 def create_users():
-    admin = Role.query.filter_by(name='admin').first()
-    db.session.add(create_user(username='gharzedd@mail.usf.edu',
-                               password=encrypt_password('admin'),
-                               roles=[admin]))
-    db.session.add(create_user(username='schultz7@mail.usf.edu',
-                               password=encrypt_password('admin'),
-                               roles=[admin]))
+    role_admin = Role.query.filter_by(name='admin').first()
+    role_user = Role.query.filter_by(name='user').first()
+
+    db.session.add(create_admin(username='gharzedd@mail.usf.edu',
+                                password=encrypt_password('admin'),
+                                roles=[role_admin]))
+    db.session.add(create_admin(username='schultz7@mail.usf.edu',
+                                password=encrypt_password('admin'),
+                                roles=[role_admin]))
+    db.session.add(create_admin(username='user@test.com',
+                                password=encrypt_password('test'),
+                                roles=[role_user]))
     db.session.commit()
 
 
-def create_user(username, password, roles):
+def create_admin(username, password, roles):
     return User(username=username,
                 password=encrypt_password(password),
                 email=username,
                 active=True,
                 confirmed=True,
                 confirmed_on=datetime.utcnow(),
+                registered_on=datetime.utcnow(),
+                roles=roles)
+
+
+def create_user(username, password, roles):
+    return User(username=username,
+                password=encrypt_password(password),
+                email=username,
+                active=False,
+                confirmed=False,
                 registered_on=datetime.utcnow(),
                 roles=roles)
 

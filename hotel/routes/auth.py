@@ -68,23 +68,23 @@ def register():
         user = User(username=username,
                     password=encrypt_password(password),
                     email=username,
+                    active=False,
+                    confirmed=False,
                     registered_on=datetime.utcnow(),
                     roles=[role_user])
 
         # add user to the database
         db.session.add(user)
         db.session.commit()
-        token = generate_confirmation_token(user.email)
-        confirm_url = url_for('auth.confirm_email',
-                              token=token, _external=True)
-        html = render_template('email/email_confirm.html',
-                               confirm_url=confirm_url)
-        subject = "Royal Hotel - Please confirm your email"
-
-        if(current_app.config['EMAIL_ENABLED']):
-            notify_confirm_account(user.email, subject, html)
+        if (current_app.config['MAIL_ENABLED']):
+            token = generate_confirmation_token(user.email)
+            confirm_url = url_for('auth.confirm_email',
+                                  token=token, _external=True)
+            html = render_template('email/email_confirm.html',
+                                   confirm_url=confirm_url)
+            notify_confirm_account(user.email, html)
         flash('You have successfully registered! You may now login.')
-        return redirect(url_for('public.index'))
+        return redirect(url_for('auth.login'))
     else:
         flash('form is not valid: %s' % form.errors.items())
 
@@ -109,16 +109,6 @@ def confirm_email(token):
         db.session.commit()
         flash('You have confirmed your account. Thanks!', 'success')
     return redirect(url_for('auth.login'))
-
-
-def flash_errors(form):
-    """Flashes form errors"""
-    for field, errors in form.errors.items():
-        for error in errors:
-            flash(u"Error in the %s field - %s" % (
-                getattr(form, field).label.text,
-                error
-            ), 'error')
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -217,3 +207,13 @@ def confirm_token(token, expiration=3600):
         max_age=expiration
     )
     return email
+
+
+def flash_errors(form):
+    """Flashes form errors"""
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ), 'error')

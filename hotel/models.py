@@ -23,22 +23,19 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(), unique=True)
     password = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), nullable=False)
+    registered_on = db.Column(db.DateTime, nullable=False)
+    confirmed = db.Column(db.Boolean(), nullable=False)
+    active = db.Column(db.Boolean(), nullable=False)
+
+    # nullable columns
     first_name = db.Column(db.String(), nullable=True)
     last_name = db.Column(db.String(), nullable=True)
-    email = db.Column(db.String(), nullable=False)
-    active = db.Column(db.Boolean(), nullable=False, default=False)
-    registered_on = db.Column(db.DateTime, nullable=False)
-    confirmed = db.Column(db.Boolean(), nullable=False, default=False)
     confirmed_on = db.Column(db.DateTime(), nullable=True)
     posts = db.relationship('Post', backref='user', lazy=True)
     rooms = db.relationship('Room', backref='room', lazy=True)
     roles = db.relationship('Role', secondary='user_roles', lazy='subquery',
                             backref=db.backref('user', lazy=True))
-
-    # @property
-    # def password(self):
-    #     """ Prevent pasword from being accessed """
-    #     raise AttributeError('password is not a readable attribute.')
 
     def set_password(self, secret):
         """ Set password to a hashed password """

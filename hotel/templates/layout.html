@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    {% block head %}
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,11 +20,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='vendors/linericon/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendors/nice-select/css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendors/owl-carousel/owl.carousel.min.css') }}">
-    {% endblock %}
+    {% block head %}{% endblock %}
 </head>
 
 <body>
-
     <!--================Header Area =================-->
     <header class="header_area">
         <div class="container">
@@ -96,25 +94,6 @@
         </div>
     </header>
     <!--================Header Area =================-->
-
-    <!--================Messages Area =================-->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-6 col-sm-6">
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                <ul class="flashes">
-                    {% for message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-                {% endwith %}
-            </div>
-        </div>
-    </div>
-
-    <!--================Messages Area =================-->
 
     <!--================Content Area =================-->
     {% block content %}{% endblock %}

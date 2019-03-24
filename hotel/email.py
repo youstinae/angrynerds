@@ -39,9 +39,9 @@ def notify_register_account():
               template='notify_register')
 
 
-def notify_confirm_account(to, subject, template):
+def notify_confirm_account(to, template):
     msg = Message(
-        subject,
+        subject='Royal Hotel - Please confirm your email',
         recipients=[to],
         html=template,
         sender=current_app.config['MAIL_DEFAULT_SENDER']

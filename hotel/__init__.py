@@ -48,8 +48,6 @@ login_manager.login_message = "You must be logged in to access this page."
 login_manager.login_message_category = "info"
 login_manager.login_view = "auth.login"
 
-# Bootstrap(app)
-
 app.register_blueprint(public_blueprint.public)
 app.register_blueprint(admin_blueprint.admin)
 app.register_blueprint(auth_blueprint.auth)
