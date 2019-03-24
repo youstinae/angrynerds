@@ -1,6 +1,6 @@
-from flask import Flask, g, render_template, request
+from flask import Flask, g, render_template
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
-from flask_wtf.csrf import CsrfProtect
+from flask_wtf.csrf import CsrfProtect, CSRFError
 
 from hotel.db import db
 from hotel.db import login_manager
@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config.from_object('config.Development')
 db.init_app(app)
 mail.init_app(app)
-csrf = CsrfProtect(app)
+CsrfProtect(app)
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
@@ -56,26 +56,26 @@ def inject_user():
     return dict(user=current_user)
 
 
-@csrf.error_handler
-def csrf_error(reason):
-    return render_template('error/error_csrf.html', reason=reason), 400
+# @app.error_handler()
+# def csrf_error(reason):
+#     return render_template('error/error_csrf.html', reason=reason), 400
 
 
-@app.errorhandler
-def error_403(error):
-    return render_template('error/error_403.html', error=error), 403
+# @app.errorhandler(403)
+# def error_403(error):
+#     return render_template('error/error_403.html', error=error), 403
 
 
-@app.errorhandler
-def error_404(error):
-    return render_template('error/error_404.html', error=error), 404
+# @app.errorhandler
+# def error_404(error):
+#     return render_template('error/error_404.html', error=error), 404
 
 
-@app.errorhandler
-def error_500(error):
-    return render_template('error/error_500.html', error=error), 500
+# @app.errorhandler
+# def error_500(error):
+#     return render_template('error/error_500.html', error=error), 500
 
 
-@app.errorhandler(Exception)
-def error_ex(error):
-    return render_template('error/error_ex.html', error=error), 500
+# @app.errorhandler(Exception)
+# def error_ex(error):
+#     return render_template('error/error_ex.html', error=error), 500
