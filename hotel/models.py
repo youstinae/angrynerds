@@ -1,7 +1,4 @@
-from datetime import datetime
-
 from flask_login import UserMixin
-from flask_security.utils import encrypt_password, verify_and_update_password
 
 from hotel.db import db
 
@@ -37,14 +34,17 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary='user_roles', lazy='subquery',
                             backref=db.backref('user', lazy=True))
 
-    def set_password(self, secret):
-        """ Set password to a hashed password """
-        self.password = encrypt_password(secret)
+    def is_authenticated(self):
+        return self.authenticated
 
-    def check_password(self, secret, user):
-        """ Check if hashed password matches actual password """
-        result = verify_and_update_password(secret, user)
-        return result
+    def get_id(self):
+        return self.id
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
 
     def __repr__(self):
         return '<User: {}>'.format(self.username)
@@ -99,7 +99,7 @@ class Contact(db.Model):
     """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String())
-    email = db.Column(db.String())
+    name = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), nullable=False)
     subject = db.Column(db.String())
-    message = db.Column(db.String())
+    message = db.Column(db.String(), nullable=False)

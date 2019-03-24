@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, g
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_wtf import CsrfProtect
 
@@ -17,7 +17,7 @@ app = Flask(__name__)
 app.config.from_object('config.Development')
 db.init_app(app)
 mail.init_app(app)
-csrf = CsrfProtect(app)
+CsrfProtect(app)
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
@@ -26,10 +26,14 @@ security = Security(app, user_datastore)
 
 @app.before_first_request
 def init():
-    from hotel import models
     db.drop_all()
     db.create_all()
     init_data()
+
+
+@app.before_request
+def before_request():
+    g.user = current_user
 
 
 @login_manager.user_loader

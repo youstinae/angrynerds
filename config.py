@@ -16,7 +16,7 @@ class Base():
     # DATABASE sqlite :memory: is default
     SQLALCHEMY_DATABASE_URI = 'sqlite://'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECURITY_PASSWORD_SALT = 'angry813nerds'
+    SECURITY_PASSWORD_SALT = 'angry5nerds'
     SECRET_KEY = 'e4923b4f-b7f3-4127-aaeb-06b4e341a9f7'
 
     # MAIL

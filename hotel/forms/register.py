@@ -6,9 +6,7 @@ from hotel.models import User
 
 
 class RegisterForm(FlaskForm):
-    """
-    Form for users to create new account
-    """
+    """ Form for users to create new account """
     username = StringField(
         'Username', [Email(), Required(), Length(min=6, max=50)])
 
@@ -24,7 +22,3 @@ class RegisterForm(FlaskForm):
     def validate_username(self, field):
         if User.query.filter_by(username=field.data).first():
             raise ValidationError('Username is already in use.')
-
-    def validate_email(self, field):
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('Email is already in use.')
