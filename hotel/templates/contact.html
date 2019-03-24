@@ -22,7 +22,7 @@
 <section class="contact_area section_gap">
     <div class="container">
         <form class="row contact_form" action="/auth/contactus" method="POST" id="contactForm" novalidate="novalidate">
-            <!--======== form..hidden_tag()     Needs this but it makes the page not load. With it the form will not submit=========-->
+            {{form..hidden_tag() }}
             <div class="col-md-6">
                 <div class="form-group">
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">

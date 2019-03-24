@@ -11,12 +11,12 @@ class ContactForm(FlaskForm):
         'Name', [Required(), Length(min=2, max=50)])
 
     email = PasswordField(
-        'Email', [Email(), Required(), Length(min=6, max=50)])
+        'Email', [Email(), Required(), Length(min=6, max=100)])
 
     subject = StringField(
-        'Subject', [Required(), Length(min=2, max=50)])
+        'Subject', [Required(), Length(min=2, max=200)])
 
     message = StringField(
-        'Message', [Required(), Length(min=10, max=250)])
+        'Message', [Required(), Length(min=10, max=500)])
 
     submit = SubmitField('SendMessage')
