@@ -1,9 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import Email, Required
-from wtforms import (StringField, SubmitField, TextAreaField)
+from wtforms import (StringField, SubmitField)
 
 
-class EditProfileForm(FlaskForm):
+class ProfileForm(FlaskForm):
     username = StringField('Username', validators=[Required(), Email()])
-    about_me = TextAreaField('About me', validators=[Length(min=0, max=140)])
+    first_name = StringField('First Name', validators=[])
+    last_name = StringField('Last Name', validators=[])
+
     submit = SubmitField('Submit')
