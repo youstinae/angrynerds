@@ -6,9 +6,7 @@ from wtforms import (StringField, BooleanField, PasswordField,
 
 
 class LoginForm(FlaskForm):
-    """
-    Form for users to login
-    """
+    """ Form for users to login """
     username = StringField('Username', [Required(), Email()])
     password = PasswordField('Password', [Required()])
     remember_me = BooleanField('Remember me')

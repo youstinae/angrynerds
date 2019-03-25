@@ -23,6 +23,7 @@ sqlalchemy = "*"
 werkzeug = "*"
 wtforms = "*"
 itsdangerous = "*"
+passlib = "*"
 
 [requires]
 python_version = "3.7"

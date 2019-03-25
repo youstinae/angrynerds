@@ -1,6 +1,6 @@
-from flask import Flask, g, render_template
+from flask import Flask, g
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
-from flask_wtf.csrf import CsrfProtect, CSRFError
+from flask_wtf.csrf import CsrfProtect
 
 from hotel.db import db
 from hotel.db import login_manager

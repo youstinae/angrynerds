@@ -1,4 +1,6 @@
 from flask_login import UserMixin
+# from flask_security.utils import verify_and_update_password
+# from passlib.hash import pbkdf2_sha256 as sha
 
 from hotel.db import db
 
@@ -13,9 +15,7 @@ class UserRoles(db.Model):
 
 
 class User(db.Model, UserMixin):
-    """
-    Create a User table
-    """
+    """ Create a User table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(), unique=True)
@@ -29,22 +29,28 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(), nullable=True)
     last_name = db.Column(db.String(), nullable=True)
     confirmed_on = db.Column(db.DateTime(), nullable=True)
+
+    # relations
     posts = db.relationship('Post', backref='user', lazy=True)
     rooms = db.relationship('Room', backref='room', lazy=True)
     roles = db.relationship('Role', secondary='user_roles', lazy='subquery',
                             backref=db.backref('user', lazy=True))
 
-    def is_authenticated(self):
-        return self.authenticated
+    # def is_authenticated(self):
+    #     return self.authenticated
 
-    def get_id(self):
-        return self.id
+    # def get_id(self):
+    #     return self.id
 
-    def is_active(self):
-        return True
+    # def is_active(self):
+    #     return True
 
-    def is_anonymous(self):
-        return False
+    # def is_anonymous(self):
+    #     return False
+
+    def validate(self, password):
+        return password == self.password
+        # return sha.verify(password, self.password)
 
     def __repr__(self):
         return '<User: {}>'.format(self.username)

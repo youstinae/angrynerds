@@ -45,7 +45,7 @@
                         <h3>Welcome back!</h3>
                         <br />
                         <form method="POST" action="/auth/login">
-                            {{ form.hidden_tag() }}
+                            {{ form.csrf_token }}
                             <div class="form-group">
                                 <label for="emailAddress">Email address</label>
                                 <input type="email" class="form-control" id="emailAddress" name="username"
