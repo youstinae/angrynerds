@@ -12,6 +12,7 @@ from hotel.db import db
 from hotel.email import notify_confirm_account
 from hotel.forms.login import LoginForm
 from hotel.forms.register import RegisterForm, ReconfirmForm
+from hotel.forms.profile import PasswordResetForm
 from hotel.models import Role, User
 from hotel.utils import is_safe_url
 
@@ -73,6 +74,26 @@ def register():
             notify_confirm_account(user.email, html)
         return redirect(url_for('auth.confirm'))
     return render_template('auth/register.html', form=form, title='Register')
+
+
+@auth.route('/reset', methods=["GET", "POST"])
+def reset():
+    form = PasswordResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first_or_404()
+        if not user:
+            flash('Invalid email address!', 'error')
+            return render_template('mail/pass_reset.html', form=form)
+        if user.email_confirmed:
+            # send_password_reset_email(user.email)
+            flash('Please check your email for a password reset link.',
+                  'success')
+        else:
+            flash("Your email address must be confirmed before attempting a "
+                  "password reset.", 'error')
+        return redirect(url_for('auth.login'))
+
+    return render_template('auth/pass_reset.html', form=form)
 
 
 @auth.route('/confirm/<token>')
