@@ -36,18 +36,6 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary='user_roles', lazy='subquery',
                             backref=db.backref('user', lazy=True))
 
-    # def is_authenticated(self):
-    #     return self.authenticated
-
-    # def get_id(self):
-    #     return self.id
-
-    # def is_active(self):
-    #     return True
-
-    # def is_anonymous(self):
-    #     return False
-
     def validate(self, password):
         return password == self.password
         # return sha.verify(password, self.password)

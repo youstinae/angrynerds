@@ -31,3 +31,12 @@ Note: if your ```python``` command shows v2.7 then use ```python3``` instead
 * [sqlalchemy](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html)
 * [flask-sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)
 * [flask-security](https://pythonhosted.org/Flask-Security/index.html)
+* [fakeSMTP](http://nilhcem.com/FakeSMTP/)
+* [smtp4dev](https://github.com/rnwood/smtp4dev)
+
+## smtp4dev
+
+To run use these commands:
+
+```chmod +x Rnwood.Smtp4dev```
+```./Rnwood.Smtp4dev --server.urls "http://0.0.0.0:5001/"```

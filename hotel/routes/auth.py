@@ -2,7 +2,7 @@ from datetime import datetime
 
 from flask import (Blueprint, abort, current_app, flash, g, redirect,
                    render_template, request, url_for)
-from flask_login import current_user, login_required, login_user, logout_user
+from flask_login import current_user, login_user, logout_user
 # from flask_security.utils import hash_password
 from itsdangerous import URLSafeTimedSerializer
 from sqlalchemy.orm import exc
@@ -11,7 +11,7 @@ from sqlalchemy.orm import exc
 from hotel.db import db
 from hotel.email import notify_confirm_account
 from hotel.forms.login import LoginForm
-from hotel.forms.register import RegisterForm
+from hotel.forms.register import RegisterForm, ReconfirmForm
 from hotel.models import Role, User
 from hotel.utils import is_safe_url
 
@@ -28,6 +28,8 @@ def login():
         if user is None or not user.validate(secret):
             flash('Invalid username or password')
             return redirect(url_for('auth.login'))
+        elif not user.confirmed:
+            return redirect(url_for('auth.noconfirm'))
         login_user(user)
         flash('Logged in successfully.')
         next = request.args.get('next')
@@ -46,6 +48,7 @@ def register():
     """
     if current_user.is_authenticated:
         return redirect(url_for('public.index'))
+
     form = RegisterForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -55,7 +58,7 @@ def register():
         user = User(username=username,
                     password=password,
                     email=username,
-                    active=False,
+                    active=True,
                     confirmed=False,
                     registered_on=datetime.utcnow(),
                     roles=[role_user])
@@ -65,38 +68,63 @@ def register():
             token = generate_confirmation_token(user.email)
             confirm_url = url_for('auth.confirm_email',
                                   token=token, _external=True)
-            html = render_template('email/email_confirm.html',
+            html = render_template('mail/mail_confirm.html',
                                    confirm_url=confirm_url)
             notify_confirm_account(user.email, html)
-        flash('You have successfully registered! You may now login.')
-        return redirect(url_for('auth.login'))
-
+        return redirect(url_for('auth.confirm'))
     return render_template('auth/register.html', form=form, title='Register')
 
 
 @auth.route('/confirm/<token>')
-@login_required
 def confirm_email(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('public.index'))
+
     email = confirm_token(token)
     user = User.query.filter_by(email=email).first_or_404()
     if user.confirmed:
-        flash('Account already confirmed. Please login.', 'success')
+        return redirect(url_for('auth.confirm'))
     else:
         user.confirmed = True
-        user.confirmed_on = datetime.datetime.now()
+        user.confirmed_on = datetime.utcnow()
         db.session.add(user)
         db.session.commit()
-        flash('You have confirmed your account. Thanks!', 'success')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth.confirmed'))
 
 
-@auth.route('/unconfirmed')
-@login_required
-def unconfirmed():
-    if current_user.confirmed:
-        return redirect('main.home')
-    flash('Please confirm your account!', 'warning')
-    return render_template('emails/unconfirmed.html')
+@auth.route('/reconfirm', methods=['GET', 'POST'])
+def reconfirm():
+    if current_user.is_authenticated:
+        return redirect(url_for('public.index'))
+
+    form = ReconfirmForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        user = User.query.filter_by(username=username).first_or_404()
+        if user and not user.confirmed:
+            token = generate_confirmation_token(username)
+            confirm_url = url_for('auth.confirm_email',
+                                  token=token, _external=True)
+            html = render_template('mail/mail_confirm.html',
+                                   confirm_url=confirm_url)
+            notify_confirm_account(username, html)
+            return redirect(url_for('auth.confirm'))
+    return render_template('auth/account_reconfirm.html', form=form)
+
+
+@auth.route('/confirm')
+def confirm():
+    return render_template('auth/account_confirm.html')
+
+
+@auth.route('/confirmed')
+def confirmed():
+    return render_template('auth/account_confirmed.html')
+
+
+@auth.route('/noconfirm')
+def noconfirm():
+    return render_template('auth/account_noconfirm.html')
 
 
 @auth.route('/logout')

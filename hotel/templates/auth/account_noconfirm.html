@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% set active_page = "auth.login" %}
+
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Login</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                <li class="active">Confirmation</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================ About History Area  =================-->
+<section class="login_area" style="margin: 60px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <h3>Account Unconfirmed!</h3>
+                <p style="font-size: 1.2em;">
+                    You have not confirmed your account yet.
+                    If you did not receive an activation link you can request
+                    a new one below. Make sure the email is not in your junk box.
+                </p>
+                <br />
+                <p>
+                    <a href="/auth/reconfirm" class="genric-btn primary e-large">Resend Activation Link</a>
+                </p>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+    </div>
+</section>
+<!--================ About History Area  =================-->
+
+{% endblock %}
