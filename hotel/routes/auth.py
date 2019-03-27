@@ -9,10 +9,10 @@ from sqlalchemy.orm import exc
 # from passlib.hash import pbkdf2_sha256 as sha
 
 from hotel.db import db
-from hotel.email import notify_confirm_account
+from hotel.email import send_email
 from hotel.forms.login import LoginForm
 from hotel.forms.register import RegisterForm, ReconfirmForm
-from hotel.forms.profile import PasswordResetForm
+from hotel.forms.profile import UsernameForm, PasswordForm
 from hotel.models import Role, User
 from hotel.utils import is_safe_url
 
@@ -32,7 +32,6 @@ def login():
         elif not user.confirmed:
             return redirect(url_for('auth.noconfirm'))
         login_user(user)
-        flash('Logged in successfully.')
         next = request.args.get('next')
         if not is_safe_url(next):
             return abort(400)
@@ -67,37 +66,53 @@ def register():
         db.session.commit()
         if (current_app.config['MAIL_ENABLED']):
             token = generate_confirmation_token(user.email)
-            confirm_url = url_for('auth.confirm_email',
+            confirm_url = url_for('auth.confirm_with_token',
                                   token=token, _external=True)
             html = render_template('mail/mail_confirm.html',
                                    confirm_url=confirm_url)
-            notify_confirm_account(user.email, html)
+            send_email(user.email,
+                       'Royal Hotel - Please confirm your email',
+                       html)
         return redirect(url_for('auth.confirm'))
     return render_template('auth/register.html', form=form, title='Register')
 
 
 @auth.route('/reset', methods=["GET", "POST"])
 def reset():
-    form = PasswordResetForm()
+    form = UsernameForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first_or_404()
+        username = form.username.data
+        user = User.query.filter_by(username=username).first_or_404()
         if not user:
-            flash('Invalid email address!', 'error')
-            return render_template('mail/pass_reset.html', form=form)
-        if user.email_confirmed:
-            # send_password_reset_email(user.email)
+            flash('Account doesn\'t exist!', 'error')
+            return render_template('auth/pass_reset.html', form=form)
+        else:
+            send_password_reset_email(username)
             flash('Please check your email for a password reset link.',
                   'success')
-        else:
-            flash("Your email address must be confirmed before attempting a "
-                  "password reset.", 'error')
         return redirect(url_for('auth.login'))
-
     return render_template('auth/pass_reset.html', form=form)
 
 
+@auth.route('/reset/<token>', methods=["GET", "POST"])
+def reset_with_token(token):
+    ts = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    salt = current_app.config['SECURITY_PASSWORD_SALT']
+    username = ts.loads(token, salt=salt, max_age=86400)
+
+    form = PasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=username).first_or_404()
+        user.password = form.password.data
+        db.session.add(user)
+        db.session.commit()
+        flash('Your password has been reset!')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/pass_change.html', form=form, token=token)
+
+
 @auth.route('/confirm/<token>')
-def confirm_email(token):
+def confirm_with_token(token):
     if current_user.is_authenticated:
         return redirect(url_for('public.index'))
 
@@ -124,11 +139,11 @@ def reconfirm():
         user = User.query.filter_by(username=username).first_or_404()
         if user and not user.confirmed:
             token = generate_confirmation_token(username)
-            confirm_url = url_for('auth.confirm_email',
+            confirm_url = url_for('auth.confirm_with_token',
                                   token=token, _external=True)
             html = render_template('mail/mail_confirm.html',
                                    confirm_url=confirm_url)
-            notify_confirm_account(username, html)
+            send_email(username, 'Royal Hotel-confirm account', html)
             return redirect(url_for('auth.confirm'))
     return render_template('auth/account_reconfirm.html', form=form)
 
@@ -151,6 +166,7 @@ def noconfirm():
 @auth.route('/logout')
 def logout():
     logout_user()
+    flash('Logged out successfully.')
     return redirect(url_for('auth.login'))
 
 
@@ -171,6 +187,19 @@ def get_user(user_id):
         email=user.email,
         created_on=user.created_on)
     return data, 200
+
+
+def send_password_reset_email(user_email):
+    ts = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    salt = current_app.config['SECURITY_PASSWORD_SALT']
+    password_reset_url = url_for(
+        'auth.reset_with_token',
+        token=ts.dumps(user_email, salt=salt),
+        _external=True)
+
+    html = render_template('mail/pass_reset.html',
+                           password_reset_url=password_reset_url)
+    send_email(user_email, 'Royal Hotel - password reset', html)
 
 
 def generate_confirmation_token(email):

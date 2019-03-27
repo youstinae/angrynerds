@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, ValidationError
+from wtforms import StringField, SubmitField, ValidationError, PasswordField
 from wtforms.validators import Email, Length, Required
 
 from hotel.models import User
@@ -13,13 +13,17 @@ class ProfileForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-class PasswordResetForm(FlaskForm):
+class UsernameForm(FlaskForm):
     """ Form for password reset """
     username = StringField(
         'Username', [Email(), Required(), Length(min=6, max=50)])
-
     submit = SubmitField('Submit')
 
     def validate_username(self, field):
         if not User.query.filter_by(username=field.data).first():
             raise ValidationError("Account does not exist!")
+
+
+class PasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[Required()])
+    submit = SubmitField('Submit')

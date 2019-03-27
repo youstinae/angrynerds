@@ -28,7 +28,7 @@ def create_users():
     role_admin = Role.query.filter_by(name='admin').first()
     role_user = Role.query.filter_by(name='user').first()
 
-    db.session.add(create_admin(username='gharzed@mail.usf.edu',
+    db.session.add(create_admin(username='gharzedd@mail.usf.edu',
                                 password=enc_password('admin'),
                                 roles=[role_admin]))
     db.session.add(create_admin(username='schultz7@mail.usf.edu',

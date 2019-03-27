@@ -37,7 +37,6 @@ def elements():
 
 @public.route('/feedback', methods=['GET', 'POST'])
 def feedback():
-
     form = FeedbackForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -45,15 +44,14 @@ def feedback():
         subject = form.subject.data
         message = form.message.data
         feedback = Feedback(name=name,
-                          email=email,
-                          subject=subject,
-                          message=message)
+                            email=email,
+                            subject=subject,
+                            message=message)
         db.session.add(feedback)
         db.session.commit()
         flash('Your message has been sent!')
         return redirect(url_for('public.feedback'))
     return render_template('feedback.html', form=form, title='Feedback')
-
 
 
 @public.route('/contact', methods=['GET', 'POST'])
