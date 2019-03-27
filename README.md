@@ -27,7 +27,7 @@ Note: if your ```python``` command shows v2.7 then use ```python3``` instead
 * [git the simple guide](http://rogerdudler.github.io/git-guide/)
 * [explore flask](http://exploreflask.com)
 * [jinja](http://jinja.pocoo.org)
-* [bootstrap](url://something)
+* [bootstrap](https://getbootstrap.com)
 * [sqlalchemy](https://docs.sqlalchemy.org/en/latest/orm/tutorial.html)
 * [flask-sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)
 * [flask-security](https://pythonhosted.org/Flask-Security/index.html)
