@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% set active_page = "public.feedback" %}
+
+{% block title %}Feedback{% endblock %}
+{% block content %}
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Feedback</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('public.index') }}">Home</a></li>
+                <li class="active">Feedback</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================Contact Area =================-->
+<br><br>
+    <div class="container">
+        
+    
+
+        <br>
+        <br>
+        {% for message in get_flashed_messages() %}
+        <div class="row">
+            <div class="col-lg-1 col-md-1"></div>
+            <div class="col-lg-9 col-md-9">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1"></div>
+        </div>
+        {% endfor %}
+        <div class="section_title text-center">
+                <h2 class="title_color">Help Us Improve!</h2>
+                <p>We value your feedback greatly! Please help us build a better experience by leaving construcitve critisim. Our admins will see this
+                    and be sure to listen carefully.
+                </p>
+        </div>
+        <div class="row">
+          
+            
+            
+            <div class="col-md-9">
+                    <form class="row contact_form" action="/feedback" method="POST" id="feedbackForm">
+                        {{ form.csrf_token }}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                                <div>
+                                    {% for error in form.name.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Enter email address">
+                                <div>
+                                    {% for error in form.email.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control id="subject" name="subject"
+                                    placeholder="Enter Subject">
+
+
+
+                                    
+                                <div>
+                                    {% for error in form.subject.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" id="message" rows="1"
+                                    placeholder="Enter Feedback Message"></textarea>
+                                <div>
+                                    {% for error in form.message.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <button type="submit" value="submit" class="btn theme_btn button_hover">Submit Feedback</button>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+    <br><br><br><br>
+<!--================Contact Area =================-->
+
+{% endblock %}
+
+{%block scirpts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='vendors/imagesloaded/imagesloaded.pkgd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/isotope/isotope-min.js') }}"></script>
+<!--gmaps Js-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+<script src="{{ url_for('static', filename='js/gmaps.min.js') }}"></script>
+
+<!-- contact js -->
+<script src="{{ url_for('static', filename='js/jquery.form.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
+{% endblock %}
