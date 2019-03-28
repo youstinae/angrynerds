@@ -1,7 +1,14 @@
-{% extends "layout_map.html" %}
+{% extends "layout.html" %}
 {% set active_page = "public.contact" %}
 
 {% block title %}Contact{% endblock %}
+{% block head %}
+<style>
+    #container-map {
+        padding: 0;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <!--================Breadcrumb Area =================-->
 <section class="breadcrumb_area">
@@ -19,102 +26,99 @@
 <!--================Breadcrumb Area =================-->
 
 <!--================Contact Area =================-->
-<br><br>
-    <div class="container">
-        
-        
-        <div class="mapouter"><div class="gmap_canvas">
-        <iframe width="1000" height="400" id="map" src="https://maps.google.com/maps?q=usf&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.crocothemes.net"></a></div>
-        <style>.mapouter{position:relative;text-align:right;}.gmap_canvas 
-        {overflow:hidden;background:none!important;}</style></div>
-
-        <br>
-        <br>
-        {% for message in get_flashed_messages() %}
-        <div class="row">
-            <div class="col-lg-1 col-md-1"></div>
-            <div class="col-lg-9 col-md-9">
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<div id="container-map" class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style="height: 600px;">
+            <iframe id="map" src="https://maps.google.com/maps?q=usf&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                style="width: 100%; height: 100%" frameborder="0" scrolling="no" marginheight="0"
+                marginwidth="0"></iframe>
+            <a href="https://www.crocothemes.net"></a></div>
+    </div>
+</div>
+<div class="container" style="padding-top: 50px;">
+    {% for message in get_flashed_messages() %}
+    <div class="row">
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-lg-9 col-md-9">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="col-lg-1 col-md-1"></div>
         </div>
-        {% endfor %}
-        <div class="row">
-            <div class="col-md-3">
-                <div class="contact_info">
-                    <div class="info_item">
-                        <i class="lnr lnr-home"></i>
-                        <h6>Tampa, United States</h6>
-                        <p>4202 E Fowler Ave, Tampa, FL 33620</p>
-                    </div>
-                    <div class="info_item">
-                        <i class="lnr lnr-phone-handset"></i>
-                        <h6><a href="#">(813) 974-2011</a></h6>
-                        <p>Mon to Fri 9am to 6 pm</p>
-                    </div>
-                    <div class="info_item">
-                        <i class="lnr lnr-envelope"></i>
-                        <h6><a href="#">MajesticHotels@majestic.com</a></h6>
-                        
-                    </div>
+        <div class="col-lg-1 col-md-1"></div>
+    </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="contact_info">
+                <div class="info_item">
+                    <i class="lnr lnr-home"></i>
+                    <h6>Tampa, United States</h6>
+                    <p>4202 E Fowler Ave, Tampa, FL 33620</p>
+                </div>
+                <div class="info_item">
+                    <i class="lnr lnr-phone-handset"></i>
+                    <h6><a href="#">(813) 974-2011</a></h6>
+                    <p>Mon to Fri 9am to 6 pm</p>
+                </div>
+                <div class="info_item">
+                    <i class="lnr lnr-envelope"></i>
+                    <h6><a href="#">MajesticHotels@majestic.com</a></h6>
+
                 </div>
             </div>
-            <div class="col-md-9">
-                <form class="row contact_form" action="/contact" method="POST" id="contactForm">
-                    {{ form.csrf_token }}
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
-                            <div>
-                                {% for error in form.name.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="email" name="email"
-                                placeholder="Enter email address">
-                            <div>
-                                {% for error in form.email.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="subject" name="subject"
-                                placeholder="Enter Subject">
-                            <div>
-                                {% for error in form.subject.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
+        </div>
+        <div class="col-md-9">
+            <form class="row contact_form" action="/contact" method="POST" id="contactForm">
+                {{ form.csrf_token }}
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                        <div>
+                            {% for error in form.name.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <textarea class="form-control" name="message" id="message" rows="1"
-                                placeholder="Enter Message"></textarea>
-                            <div>
-                                {% for error in form.message.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                                {% endfor %}
-                            </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" name="email"
+                            placeholder="Enter email address">
+                        <div>
+                            {% for error in form.email.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
                         </div>
                     </div>
-                    <div class="col-md-12 text-right">
-                        <button type="submit" value="submit" class="btn theme_btn button_hover">Send Message</button>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject">
+                        <div>
+                            {% for error in form.subject.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" id="message" rows="1"
+                            placeholder="Enter Message"></textarea>
+                        <div>
+                            {% for error in form.message.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button type="submit" value="submit" class="btn theme_btn button_hover">Send Message</button>
+                </div>
+            </form>
         </div>
     </div>
-    <br><br><br><br>
+</div>
+<br><br><br><br>
 <!--================Contact Area =================-->
 
 {% endblock %}
