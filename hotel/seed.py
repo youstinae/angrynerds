@@ -7,6 +7,7 @@ from hotel.db import db
 from hotel.models import User
 from hotel.models import Role
 # from hotel.models import Post
+from hotel.models import Room
 
 
 def init_data():
@@ -14,6 +15,7 @@ def init_data():
         create_roles()
         create_users()
         # create_posts()
+        create_rooms()
 
 
 def create_roles():
@@ -37,6 +39,19 @@ def create_users():
     db.session.add(create_admin(username='user@test.com',
                                 password=enc_password('test'),
                                 roles=[role_user]))
+    db.session.commit()
+
+
+def create_rooms():
+    i = 1
+    while i <= 10:
+        db.session.add_all([
+            Room(roomtype='Single', tenant_id=0),
+            Room(roomtype='Double', tenant_id=0),
+            Room(roomtype='Honeymoon', tenant_id=0),
+            Room(roomtype='Economy', tenant_id=0)
+        ])
+        i = i+1
     db.session.commit()
 
 

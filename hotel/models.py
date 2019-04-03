@@ -85,6 +85,7 @@ class Room(db.Model):
     open = db.Column(db.Boolean(), unique=False, default=True)
     tenant_id = db.Column(
         db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    roomtype = db.Column(db.String(), nullable=False)
 
 
 class Contact(db.Model):
