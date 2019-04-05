@@ -28,6 +28,10 @@ class User(db.Model, UserMixin):
     # nullable columns
     first_name = db.Column(db.String(), nullable=True)
     last_name = db.Column(db.String(), nullable=True)
+    address = db.Column(db.String(), nullable=True)
+    city = db.Column(db.String(), nullable=True)
+    state = db.Column(db.String(), nullable=True)
+    zipcode = db.Column(db.String(), nullable=True)
     confirmed_on = db.Column(db.DateTime(), nullable=True)
 
     # relations
@@ -45,9 +49,7 @@ class User(db.Model, UserMixin):
 
 
 class Role(db.Model):
-    """
-    Create a Role table
-    """
+    """ Create a Role table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), unique=True)
@@ -58,9 +60,7 @@ class Role(db.Model):
 
 
 class Post(db.Model):
-    """
-    Create a Post table
-    """
+    """ Create a Post table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     title = db.Column(db.String(), nullable=False)
@@ -77,9 +77,7 @@ class Post(db.Model):
 
 
 class Room(db.Model):
-    """
-    Create a Room table
-    """
+    """ Create a Room table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     open = db.Column(db.Boolean(), unique=False, default=True)
@@ -89,9 +87,7 @@ class Room(db.Model):
 
 
 class Contact(db.Model):
-    """
-    Create a Contact Message table
-    """
+    """ Create a Contact Message table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
@@ -101,9 +97,7 @@ class Contact(db.Model):
 
 
 class Feedback(db.Model):
-    """
-    Create a Feedback Message table
-    """
+    """ Create a Feedback Message table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), nullable=False)

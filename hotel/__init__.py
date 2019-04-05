@@ -1,6 +1,7 @@
 from flask import Flask, g
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_wtf.csrf import CsrfProtect
+from flask_bootstrap import Bootstrap
 
 from hotel.db import db
 from hotel.db import login_manager
@@ -17,6 +18,7 @@ app.config.from_object('config.Development')
 db.init_app(app)
 mail.init_app(app)
 CsrfProtect(app)
+Bootstrap(app)
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)

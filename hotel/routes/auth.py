@@ -35,7 +35,6 @@ def login():
         next = request.args.get('next')
         if not is_safe_url(next):
             return abort(400)
-
         return redirect(next or url_for('public.index'))
     return render_template('auth/login.html', form=form)
 

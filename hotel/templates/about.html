@@ -25,16 +25,20 @@
             <div class="col-md-6 d_flex align-items-center">
                 <div class="about_content ">
                     <h2 class="title title_color">About Us <br>Our Model<br>Mission & Vision</h2>
-                    <p>Majestic Hotels is focused on delivering the most effortless and efficent booking experience while also
-                        providing you with the best rooms, at incredibly affordable prices. We set out to create a model that
-                        was simple, yet capable of offering a vast ammount of customer control. We are pleased to say that after much work, we feel
+                    <p>Majestic Hotels is focused on delivering the most effortless and efficent booking experience
+                        while also
+                        providing you with the best rooms, at incredibly affordable prices. We set out to create a model
+                        that
+                        was simple, yet capable of offering a vast ammount of customer control. We are pleased to say
+                        that after much work, we feel
                         confident standing by the expereince we provide.
                     </p>
-                    <a href="{{ url_for('public.accomodation') }}" class="button_hover theme_btn_two">Book a Room Now</a>
+                    <a href="{{ url_for('public.accomodation') }}" class="button_hover theme_btn_two">Book a Room
+                        Now</a>
                 </div>
             </div>
             <div class="col-md-6">
-                <img class="img-fluid" src="../static/image/about_bg.jpg" alt="img">
+                <img class="img-fluid" src="{{ url_for('static', filename='image/about_bg.jpg')}}" alt="img">
             </div>
         </div>
 
@@ -55,28 +59,32 @@
             <div class="col-lg-4 col-md-6">
                 <div class="facilities_item">
                     <h4 class="sec_h4"><i class="lnr lnr-dinner"></i>Dinning</h4>
-                    <p>All of our locations provide a premium in house dinning expierence, alongside affordable room service.
+                    <p>All of our locations provide a premium in house dinning expierence, alongside affordable room
+                        service.
                     </p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="facilities_item">
                     <h4 class="sec_h4"><i class="lnr lnr-bicycle"></i>Private Gym</h4>
-                    <p>Keep yourself in shape with our gyms, fully outfitted with everything you could need stay in shape.
+                    <p>Keep yourself in shape with our gyms, fully outfitted with everything you could need stay in
+                        shape.
                     </p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="facilities_item">
                     <h4 class="sec_h4"><i class="lnr lnr-sun"></i>Swimming Pool</h4>
-                    <p>Care for a swim? At all Majestic locations, we offer full size swimming pool so you can cool off on a hot day.
+                    <p>Care for a swim? At all Majestic locations, we offer full size swimming pool so you can cool off
+                        on a hot day.
                     </p>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="facilities_item">
                     <h4 class="sec_h4"><i class="lnr lnr-car"></i>Rent a Car</h4>
-                    <p>Speak with the receptionist and we will be able to get you an afforadble rental car of your choice.
+                    <p>Speak with the receptionist and we will be able to get you an afforadble rental car of your
+                        choice.
                     </p>
                 </div>
             </div>
@@ -104,35 +112,39 @@
     <div class="container">
         <div class="section_title text-center">
             <h2 class="title_color">Testimonial from our Clients</h2>
-            
+
         </div>
-        
-        
+
+
         <div class="section-top-border">
-			<h3 class="mb-30 title_color">Chris Hayward  <small>- CEO Horizon Investments</small></h3>
-			<div class="row">
-				<div class="col-lg-12">
-					<blockquote class="generic-blockquote">
-                        “I am a repeating visitor of Majesitc Hotels and have always had wonderfull experience in the many times I have stayed at one of their
-                        locations. It is alwyas a pleasant stay, and I would recommend choosing Majestic over anyone else out there. The customer 
+            <h3 class="mb-30 title_color">Chris Hayward <small>- CEO Horizon Investments</small></h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <blockquote class="generic-blockquote">
+                        “I am a repeating visitor of Majesitc Hotels and have always had wonderfull experience in the
+                        many times I have stayed at one of their
+                        locations. It is alwyas a pleasant stay, and I would recommend choosing Majestic over anyone
+                        else out there. The customer
                         service, quality, and affordability is truly second to none.”
-					</blockquote>
-				</div>
-			</div>
+                    </blockquote>
+                </div>
+            </div>
         </div>
-        
+
         <div class="section-top-border">
-			<h3 class="mb-30 title_color">Diane Jones  <small>- Senior Senator for New York</small></h3>
-			<div class="row">
-				<div class="col-lg-12">
-					<blockquote class="generic-blockquote">
-                        “It has been 15 years since my first stay with Majestic Hotels and I have been returning ever since. They have provided me a confortable stay 
-                        regardless of the location I find myself in on any given trip. When I am on the campaign trail I look forward to a good nights rest and I always have 
+            <h3 class="mb-30 title_color">Diane Jones <small>- Senior Senator for New York</small></h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <blockquote class="generic-blockquote">
+                        “It has been 15 years since my first stay with Majestic Hotels and I have been returning ever
+                        since. They have provided me a confortable stay
+                        regardless of the location I find myself in on any given trip. When I am on the campaign trail I
+                        look forward to a good nights rest and I always have
                         peace of mind in knowing that my hotel will always been exactly what I need.”
-					</blockquote>
-				</div>
-			</div>
-		</div>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
 
 
     </div>

@@ -30,9 +30,16 @@ def create_users():
     role_admin = Role.query.filter_by(name='admin').first()
     role_user = Role.query.filter_by(name='user').first()
 
-    db.session.add(create_admin(username='gharzedd@mail.usf.edu',
-                                password=enc_password('admin'),
-                                roles=[role_admin]))
+    user = create_admin(username='gharzedd@mail.usf.edu',
+                        password=enc_password('admin'),
+                        roles=[role_admin])
+    user.first_name = 'Marwan'
+    user.last_name = 'Gharzeddine'
+    user.address = '123 Tampa Rd'
+    user.city = 'Tampa'
+    user.state = 'FL'
+    user.zipcode = 33625
+    db.session.add(user)
     db.session.add(create_admin(username='schultz7@mail.usf.edu',
                                 password=enc_password('admin'),
                                 roles=[role_admin]))
