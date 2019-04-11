@@ -3,7 +3,16 @@
     "files.exclude": {
         "**/__pycache__": true
     },
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_flask",
+        "--enable=W0614"
+    ],
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "autopep8",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    }
 }

@@ -4,9 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pylint = "*"
 autopep8 = "*"
-flake8 = "*"
-autoflake = "*"
+pylint-flask = "*"
 
 [packages]
 bcrypt = "*"
@@ -26,6 +26,7 @@ passlib = "*"
 sqlalchemy = "*"
 werkzeug = "*"
 wtforms = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

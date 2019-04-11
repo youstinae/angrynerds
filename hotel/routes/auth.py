@@ -1,18 +1,18 @@
+""" auth routes """
+
 from datetime import datetime
 
 from flask import (Blueprint, abort, current_app, flash, g, redirect,
                    render_template, request, url_for)
 from flask_login import current_user, login_user, logout_user
-# from flask_security.utils import hash_password
 from itsdangerous import URLSafeTimedSerializer
 from sqlalchemy.orm import exc
-# from passlib.hash import pbkdf2_sha256 as sha
 
 from hotel.db import db
 from hotel.email import send_email
 from hotel.forms.login import LoginForm
-from hotel.forms.register import RegisterForm, ReconfirmForm
-from hotel.forms.profile import UsernameForm, PasswordForm
+from hotel.forms.profile import PasswordForm, UsernameForm
+from hotel.forms.register import ReconfirmForm, RegisterForm
 from hotel.models import Role, User
 from hotel.utils import is_safe_url
 
@@ -21,6 +21,7 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    """ login route """
     form = LoginForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -78,6 +79,7 @@ def register():
 
 @auth.route('/reset', methods=["GET", "POST"])
 def reset():
+    """ reset account route """
     form = UsernameForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -95,9 +97,10 @@ def reset():
 
 @auth.route('/reset/<token>', methods=["GET", "POST"])
 def reset_with_token(token):
-    ts = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    """ reset account with token """
+    time_serial = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     salt = current_app.config['SECURITY_PASSWORD_SALT']
-    username = ts.loads(token, salt=salt, max_age=86400)
+    username = time_serial.loads(token, salt=salt, max_age=86400)
 
     form = PasswordForm()
     if form.validate_on_submit():
@@ -112,6 +115,7 @@ def reset_with_token(token):
 
 @auth.route('/confirm/<token>')
 def confirm_with_token(token):
+    """ confirm account with token """
     if current_user.is_authenticated:
         return redirect(url_for('public.index'))
 
@@ -129,9 +133,9 @@ def confirm_with_token(token):
 
 @auth.route('/reconfirm', methods=['GET', 'POST'])
 def reconfirm():
+    """ reconfirm account with token """
     if current_user.is_authenticated:
         return redirect(url_for('public.index'))
-
     form = ReconfirmForm()
     if form.validate_on_submit():
         username = form.username.data
@@ -149,37 +153,40 @@ def reconfirm():
 
 @auth.route('/confirm')
 def confirm():
+    """ render confirm account template """
     return render_template('auth/account_confirm.html')
 
 
 @auth.route('/confirmed')
 def confirmed():
+    """ render confirmed account template """
     return render_template('auth/account_confirmed.html')
 
 
 @auth.route('/noconfirm')
 def noconfirm():
+    """ render noconfirm account template """
     return render_template('auth/account_noconfirm.html')
 
 
 @auth.route('/logout')
 def logout():
+    """ logout user """
     logout_user()
     flash('Logged out successfully.')
     return redirect(url_for('auth.login'))
 
 
-def get_user(user_id):
-    """Handling of creating a user."""
-    if g.current_user.id != user_id:
+def get_user():
+    """ get user information """
+    if g.current_user.id != id:
         # A user may only access their own user data.
         abort(403, message="You have insufficient permissions "
               "to access this resource.")
     try:
-        user = User.query.filter(User.id == user_id).one()
+        user = User.query.filter(User.id == id).one()
     except exc.NoResultFound:
         abort(404, message="No such user exists!")
-
     data = dict(
         id=user.id,
         username=user.username,
@@ -189,25 +196,27 @@ def get_user(user_id):
 
 
 def send_password_reset_email(user_email):
-    ts = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
+    """ send password reset email """
+    time_serial = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     salt = current_app.config['SECURITY_PASSWORD_SALT']
     password_reset_url = url_for(
         'auth.reset_with_token',
-        token=ts.dumps(user_email, salt=salt),
+        token=time_serial.dumps(user_email, salt=salt),
         _external=True)
-
     html = render_template('mail/pass_reset.html',
                            password_reset_url=password_reset_url)
     send_email(user_email, 'Royal Hotel - password reset', html)
 
 
 def generate_confirmation_token(email):
+    """ generate email confirmation token """
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return serializer.dumps(email,
                             salt=current_app.config['SECURITY_PASSWORD_SALT'])
 
 
 def confirm_token(token, expiration=3600):
+    """ confirm email token """
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     email = serializer.loads(
         token,
