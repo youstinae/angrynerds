@@ -1,17 +1,16 @@
 from flask import Flask, g
+from flask_bootstrap import Bootstrap
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_wtf.csrf import CsrfProtect
-from flask_bootstrap import Bootstrap
 
-from hotel.db import db
-from hotel.db import login_manager
-from hotel.seed import init_data
+from hotel.db import db, login_manager
 from hotel.email import mail
-from hotel.models import User, Role
+from hotel.models import Role, User
 from hotel.routes import admin as admin_blueprint
 from hotel.routes import auth as auth_blueprint
 from hotel.routes import blog as blog_blueprint
 from hotel.routes import public as public_blueprint
+from hotel.seed import init_data
 
 app = Flask(__name__)
 app.config.from_object('config.Development')

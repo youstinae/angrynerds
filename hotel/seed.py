@@ -14,6 +14,7 @@ def init_data():
     with current_app.app_context():
         create_roles()
         create_users()
+        create_tags()
         create_posts()
         create_rooms()
 
@@ -35,7 +36,7 @@ def create_users():
                         password=enc_password('admin'),
                         roles=[role_admin])
     user.first_name = 'Marwan'
-    user.last_name = 'Gharzeddine'
+    user.last_name = 'G.'
     user.address = '123 Tampa Rd'
     user.city = 'Tampa'
     user.state = 'FL'
@@ -94,61 +95,88 @@ def create_user(username, password, roles):
                 roles=roles)
 
 
+def create_tags():
+    """ create default tags """
+    db.session.add(Tag(name='Food'))
+    db.session.add(Tag(name='Technology'))
+    db.session.add(Tag(name='Lifestyle'))
+    db.session.add(Tag(name='Politics'))
+    db.session.commit()
+
+
 def create_posts():
     """ create default blogs """
     username = 'gharzedd@mail.usf.edu'
     user = User.query.filter_by(username=username).first()
 
-    content = create_blog_content('/ul/dl/bq/headers')
-    post = create_post(title='Title 1',
-                       summary='my summary 1',
-                       content=content,
-                       author_id=user.id)
-    db.session.add(post)
+    tags = Tag.query.all()
 
-    content = create_blog_content('/ol/bq/headers/allcaps')
-    post = create_post(title='Title 2',
-                       summary='my summary 2',
-                       content=content,
-                       author_id=user.id)
-    db.session.add(post)
+    db.session.add(
+        create_post(title='Astronomy Binoculars A Great Alternative',
+                    summary=('MCSE boot camps have its supporters and its detractors. '
+                             'Some people do not understand why you should have to spend '
+                             'money on boot camp when you can get the MCSE study materials '
+                             'yourself at a fraction.'),
+                    content='coming soon',
+                    image_path='../static/image/blog/main-blog/m-blog-1.jpg',
+                    view_count=128,
+                    tags=tags,
+                    author_id=user.id))
+    db.session.add(
+        create_post(title='The Basics Of Buying A Telescope',
+                    summary=('MCSE boot camps have its supporters and its detractors. '
+                             'Some people do not understand why you should have to spend '
+                             'money on boot camp when you can get the MCSE study materials '
+                             'yourself at a fraction.'),
+                    content='coming soon',
+                    image_path='../static/image/blog/main-blog/m-blog-2.jpg',
+                    view_count=76,
+                    tags=tags,
+                    author_id=user.id))
+    db.session.add(
+        create_post(title='The Basics Of Buying A Telescope',
+                    summary=('MCSE boot camps have its supporters and its detractors. '
+                             'Some people do not understand why you should have to spend '
+                             'money on boot camp when you can get the MCSE study materials '
+                             'yourself at a fraction.'),
+                    content='coming soon',
+                    image_path='../static/image/blog/main-blog/m-blog-3.jpg',
+                    view_count=2100,
+                    tags=tags,
+                    author_id=user.id))
+    db.session.add(
+        create_post(title='The Night Sky',
+                    summary=('MCSE boot camps have its supporters and its detractors. '
+                             'Some people do not understand why you should have to spend '
+                             'money on boot camp when you can get the MCSE study materials '
+                             'yourself at a fraction.'),
+                    content='coming soon',
+                    image_path='../static/image/blog/main-blog/m-blog-4.jpg',
+                    view_count=114,
+                    tags=tags,
+                    author_id=user.id))
+    db.session.add(
+        create_post(title='Telescopes 101',
+                    summary=('MCSE boot camps have its supporters and its detractors. '
+                             'Some people do not understand why you should have to spend '
+                             'money on boot camp when you can get the MCSE study materials '
+                             'yourself at a fraction.'),
+                    content='coming soon',
+                    image_path='../static/image/blog/main-blog/m-blog-5.jpg',
+                    view_count=374,
+                    tags=tags,
+                    author_id=user.id))
     db.session.commit()
 
 
-def create_blog_content(options='/10/medium/link'):
-    """
-    creates a lorem ipsum blog texts using https://loripsum.net
-    All options are turned on by default. Turn them off as needed.
-
-    API options:
-    (integer) - The number of paragraphs to generate.
-    short, medium, long, verylong - The average length of a paragraph.
-    decorate - Add bold, italic and marked text.
-    link - Add links.
-    ul - Add unordered lists.
-    ol - Add numbered lists.
-    dl - Add description lists.
-    bq - Add blockquotes.
-    code - Add code samples.
-    headers - Add headers.
-    allcaps - Use ALL CAPS.
-    prude - Prude version.
-    plaintext - Return plain text, no HTML.
-    """
-    api = 'https://loripsum.net/api'
-    api = '{}/{}'.format(api, options)
-
-    response = requests.get(api)
-    post = response.text.replace(" ", "")
-    post = response.text.replace("\n", "")
-    return post
-
-
-def create_post(title, summary, content, author_id):
+def create_post(title, summary, content, image_path, tags, view_count, author_id):
     """ create a post entity """
     post = Post(title=title,
                 summary=summary,
                 content=content,
+                image_path=image_path,
+                view_count=view_count,
+                tags=tags,
                 created=datetime.utcnow(),
                 published=True,
                 author_id=author_id)

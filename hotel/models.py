@@ -69,8 +69,9 @@ class Post(db.Model):
     title = db.Column(db.String(), nullable=False)
     summary = db.Column(db.String(), nullable=False)
     content = db.Column(db.String(), nullable=False)
+    image_path = db.Column(db.String(), nullable=True)
     published = db.Column(db.Boolean(), nullable=False, default=False)
-    views_count = db.Column(db.Integer(), nullable=False, default=0)
+    view_count = db.Column(db.Integer(), nullable=False, default=0)
     comment_count = db.Column(db.Integer(), nullable=False, default=0)
     created = db.Column(db.DateTime())
     updated = db.Column(db.DateTime(), default=datetime.utcnow())
@@ -115,8 +116,6 @@ class Tag(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
     date = db.Column(db.DateTime(), default=datetime.utcnow())
-    post_id = db.Column(
-        db.Integer(), db.ForeignKey('post.id'), nullable=False)
 
     def __repr__(self):
         return '<Tag %r>' % (self.name)
@@ -127,9 +126,12 @@ class Room(db.Model):
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     open = db.Column(db.Boolean(), unique=False, default=True)
+    roomtype = db.Column(db.String(), nullable=False)
     tenant_id = db.Column(
         db.Integer(), db.ForeignKey('user.id'), nullable=True)
-    roomtype = db.Column(db.String(), nullable=False)
+
+    def __repr__(self):
+        return '<Room %r>' % (self.roomtype)
 
 
 class Contact(db.Model):
