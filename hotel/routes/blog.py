@@ -4,7 +4,7 @@ from flask import (Blueprint, abort, flash, g, redirect, render_template,
                    request, url_for)
 
 from hotel.db import db
-from hotel.models import Post
+from hotel.models import Post, Tag
 
 blog = Blueprint('blog', __name__, url_prefix='/blog')
 
@@ -13,7 +13,22 @@ blog = Blueprint('blog', __name__, url_prefix='/blog')
 def index():
     """ Show all the posts, most recent first """
     posts = Post.query.all()
-    return render_template('blog/index.html', posts=posts)
+    tags = Tag.query.all()
+    return render_template('blog/index.html', posts=posts, tags=tags)
+
+
+@blog.route('/tag/<int:id>', methods=["GET"])
+def get_by_tag(id):
+    """ get a post by id """
+    posts = Post.query.filter(Post.tags.any(id=id)).all()
+    tags = Tag.query.all()
+    return render_template('blog/index.html', posts=posts, tags=tags)
+
+
+def udpate_view_count(id):
+    post = Post.query.filter_by(id=id).first()
+    post.view_count += 1
+    db.session.commit()
 
 
 @blog.route('/create', methods=('GET', 'POST'))
@@ -37,11 +52,22 @@ def create():
     return render_template('blog/create.html')
 
 
-@blog.route('/<int:id>')
+@blog.route('/<int:id>', methods=["GET"])
 def get(id):
     """ get a post by id """
-    post = get_post(id)
-    return render_template('blog/post.html', post=post)
+    post = Post.query.filter_by(id=id).first()
+    tags = Tag.query.all()
+    if not post:
+        flash('invalid post id')
+        render_template('blog/index.html')
+    udpate_view_count(id)
+    return render_template('blog/post.html', post=post, tags=tags)
+
+
+def udpate_view_count(id):
+    post = Post.query.filter_by(id=id).first()
+    post.view_count += 1
+    db.session.commit()
 
 
 @blog.route('/<int:id>/update', methods=('GET', 'POST'))

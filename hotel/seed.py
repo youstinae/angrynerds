@@ -2,7 +2,6 @@
 
 from datetime import datetime
 
-import requests
 from flask import current_app
 
 from hotel.db import db
@@ -97,87 +96,84 @@ def create_user(username, password, roles):
 
 def create_tags():
     """ create default tags """
-    db.session.add(Tag(name='Food'))
-    db.session.add(Tag(name='Technology'))
-    db.session.add(Tag(name='Lifestyle'))
-    db.session.add(Tag(name='Politics'))
+    db.session.add(Tag(name='Lifestyle'))  # 0
+    db.session.add(Tag(name='Fashion'))  # 1
+    db.session.add(Tag(name='Art'))  # 2
+    db.session.add(Tag(name='Adventure'))  # 3
+    db.session.add(Tag(name='Weddings'))  # 4
+    db.session.add(Tag(name='Outdoor'))  # 5
     db.session.commit()
 
 
 def create_posts():
     """ create default blogs """
-    username = 'gharzedd@mail.usf.edu'
-    user = User.query.filter_by(username=username).first()
-
     tags = Tag.query.all()
+    db.session.add(
+        create_post(title='Share Your Love of Travel',
+                    summary=get_summary(),
+                    content='coming soon',
+                    image_path='m-blog-1.jpg',
+                    view_count=128,
+                    tags=[tags[0], tags[3]]))
 
     db.session.add(
-        create_post(title='Astronomy Binoculars A Great Alternative',
-                    summary=('MCSE boot camps have its supporters and its detractors. '
-                             'Some people do not understand why you should have to spend '
-                             'money on boot camp when you can get the MCSE study materials '
-                             'yourself at a fraction.'),
+        create_post(title='Spring Discounts To Take Advantage Off',
+                    summary=get_summary(),
                     content='coming soon',
-                    image_path='../static/image/blog/main-blog/m-blog-1.jpg',
-                    view_count=128,
-                    tags=tags,
-                    author_id=user.id))
-    db.session.add(
-        create_post(title='The Basics Of Buying A Telescope',
-                    summary=('MCSE boot camps have its supporters and its detractors. '
-                             'Some people do not understand why you should have to spend '
-                             'money on boot camp when you can get the MCSE study materials '
-                             'yourself at a fraction.'),
-                    content='coming soon',
-                    image_path='../static/image/blog/main-blog/m-blog-2.jpg',
+                    image_path='m-blog-2.jpg',
                     view_count=76,
-                    tags=tags,
-                    author_id=user.id))
+                    tags=tags))
     db.session.add(
-        create_post(title='The Basics Of Buying A Telescope',
-                    summary=('MCSE boot camps have its supporters and its detractors. '
-                             'Some people do not understand why you should have to spend '
-                             'money on boot camp when you can get the MCSE study materials '
-                             'yourself at a fraction.'),
+        create_post(title='7 Ingenious Tips For Hotel Weding',
+                    summary=get_summary(),
                     content='coming soon',
-                    image_path='../static/image/blog/main-blog/m-blog-3.jpg',
+                    image_path='m-blog-3.jpg',
                     view_count=2100,
-                    tags=tags,
-                    author_id=user.id))
+                    tags=[tags[0], tags[4]]))
     db.session.add(
-        create_post(title='The Night Sky',
-                    summary=('MCSE boot camps have its supporters and its detractors. '
-                             'Some people do not understand why you should have to spend '
-                             'money on boot camp when you can get the MCSE study materials '
-                             'yourself at a fraction.'),
+        create_post(title='Top Five Trends In Outdoor To Watch',
+                    summary=get_summary(),
                     content='coming soon',
-                    image_path='../static/image/blog/main-blog/m-blog-4.jpg',
+                    image_path='m-blog-4.jpg',
                     view_count=114,
-                    tags=tags,
-                    author_id=user.id))
+                    tags=[tags[0], tags[3], tags[5]]))
     db.session.add(
-        create_post(title='Telescopes 101',
-                    summary=('MCSE boot camps have its supporters and its detractors. '
-                             'Some people do not understand why you should have to spend '
-                             'money on boot camp when you can get the MCSE study materials '
-                             'yourself at a fraction.'),
+        create_post(title='Get Social With A Custom Hashtag',
+                    summary=get_summary(),
                     content='coming soon',
-                    image_path='../static/image/blog/main-blog/m-blog-5.jpg',
+                    image_path='m-blog-5.jpg',
                     view_count=374,
-                    tags=tags,
-                    author_id=user.id))
+                    tags=[tags[0], tags[3], tags[5]]))
     db.session.commit()
 
 
-def create_post(title, summary, content, image_path, tags, view_count, author_id):
+def create_post(title, summary, content, image_path,
+                tags, view_count):
     """ create a post entity """
+    user = User.query.filter_by(username='gharzedd@mail.usf.edu').first()
     post = Post(title=title,
                 summary=summary,
                 content=content,
-                image_path=image_path,
+                image_path='/static/image/blog/main-blog/{}'.format(
+                    image_path),
+                image_feature1='https://picsum.photos/750/350/?random',
+                image_feature2='https://picsum.photos/360/350/?random',
+                image_feature3='https://picsum.photos/g/360/350/?random',
                 view_count=view_count,
                 tags=tags,
                 created=datetime.utcnow(),
-                published=True,
-                author_id=author_id)
+                published=datetime.utcnow(),
+                author_id=user.id)
+
+    # post.Comments.append(
+    #     Comment(name='name',
+    #             subject='',
+    #             content=''))
     return post
+
+
+def get_summary():
+    return ('MCSE boot camps have its supporters and its detractors. '
+            'Some people do not understand why you should have to spend '
+            'money on boot camp when you can get the MCSE study materials '
+            'yourself at a fraction.')

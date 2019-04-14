@@ -8,9 +8,9 @@
   <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
   <div class="container">
     <div class="banner_content text-center">
-      <h4>Dude You’re Getting <br />a Telescope</h4>
-      <p>There is a moment in the life of any aspiring astronomer that it is time to buy that first</p>
-      <a href="#" class="btn white_btn button_hover">View More</a>
+      <h4>A Romantic Weekend</h4>
+      <p>Ideas To Share Your Wedding Love Story</p>
+      <!-- <a href="" class="btn white_btn button_hover">View More</a> -->
     </div>
   </div>
 </section>
@@ -22,7 +22,7 @@
     <div class="row">
       <div class="col-lg-4">
         <div class="categories_post">
-          <img src="../static/image/blog/cat-post/cat-post-3.jpg" alt="post">
+          <img src="{{ url_for('static', filename='image/blog/cat-post/cat-post-3.jpg') }} " alt="post">
           <div class="categories_details">
             <div class="categories_text">
               <a href="#">
@@ -36,7 +36,7 @@
       </div>
       <div class="col-lg-4">
         <div class="categories_post">
-          <img src="../static/image/blog/cat-post/cat-post-2.jpg" alt="post">
+          <img src="{{ url_for('static', filename='image/blog/cat-post/cat-post-2.jpg') }}" alt="post">
           <div class="categories_details">
             <div class="categories_text">
               <a href="#">
@@ -50,7 +50,7 @@
       </div>
       <div class="col-lg-4">
         <div class="categories_post">
-          <img src="../static/image/blog/cat-post/cat-post-1.jpg" alt="post">
+          <img src="{{ url_for('static', filename='image/blog/cat-post/cat-post-1.jpg') }}" alt="post">
           <div class="categories_details">
             <div class="categories_text">
               <a href="#">
@@ -82,9 +82,11 @@
                   <a href="#">{{ tag.name }}</a>
                   {% endfor %}
                 </div>
-                <ul class="blog_meta list_style">
-                  <li><a href="#">Mark wiens<i class="lnr lnr-user"></i></a></li>
-                  <li><a href="#">{{ post.published }}<i class="lnr lnr-calendar-full"></i></a></li>
+                <ul class=" blog_meta list_style">
+                  <li><a href="#">{{ post.author.first_name }}, {{ post.author.last_name }}<i
+                        class="lnr lnr-user"></i></a></li>
+                  <li><a href="#">{{ post.published.strftime('%m/%d/%Y') }}<i class="lnr lnr-calendar-full"></i></a>
+                  </li>
                   <li><a href="#">{{ post.view_count }} Views<i class="lnr lnr-eye"></i></a></li>
                   <li><a href="#">{{ post.comment_count }} Comments<i class="lnr lnr-bubble"></i></a></li>
                 </ul>
@@ -94,7 +96,7 @@
               <div class="blog_post">
                 <img src="{{ post.image_path }}" alt="">
                 <div class="blog_details">
-                  <a href="#">
+                  <a href="{{ url_for('blog.get', id=post.id) }}">
                     <h2>{{ post.title }}</h2>
                   </a>
                   <p>{{ post.summary }}</p>
@@ -113,8 +115,8 @@
                   </span>
                 </a>
               </li>
-              <li class="page-item"><a href="#" class="page-link">01</a></li>
-              <li class="page-item active"><a href="#" class="page-link">02</a></li>
+              <li class="page-item active"><a href="#" class="page-link">01</a></li>
+              <li class="page-item"><a href="#" class="page-link">02</a></li>
               <li class="page-item"><a href="#" class="page-link">03</a></li>
               <li class="page-item"><a href="#" class="page-link">04</a></li>
               <li class="page-item"><a href="#" class="page-link">09</a></li>
@@ -141,7 +143,8 @@
             <div class="br"></div>
           </aside>
           <aside class="single_sidebar_widget author_widget">
-            <img class="author_img rounded-circle" src="../static/image/blog/author.png" alt="">
+            <img class="author_img rounded-circle" src="{{ url_for('static', filename='image/blog/author.png') }}"
+              alt="">
             <h4>Charlie Barber</h4>
             <p>Senior blog writer</p>
             <div class="social_icon">
@@ -157,7 +160,7 @@
           <aside class="single_sidebar_widget popular_post_widget">
             <h3 class="widget_title">Popular Posts</h3>
             <div class="media post_item">
-              <img src="../static/image/blog/post1.jpg" alt="post">
+              <img src="{{ url_for('static', filename='image/blog/post1.jpg') }}" alt="post">
               <div class="media-body">
                 <a href="#">
                   <h3>Space The Final Frontier</h3>
@@ -166,7 +169,7 @@
               </div>
             </div>
             <div class="media post_item">
-              <img src="../static/image/blog/post2.jpg" alt="post">
+              <img src="{{ url_for('static', filename='image/blog/post2.jpg') }}" alt="post">
               <div class="media-body">
                 <a href="#">
                   <h3>The Amazing Hubble</h3>
@@ -175,7 +178,7 @@
               </div>
             </div>
             <div class="media post_item">
-              <img src="../static/image/blog/post3.jpg" alt="post">
+              <img src="{{ url_for('static', filename='image/blog/post3.jpg') }}" alt="post">
               <div class="media-body">
                 <a href="#">
                   <h3>Astronomy Or Astrology</h3>
@@ -184,7 +187,7 @@
               </div>
             </div>
             <div class="media post_item">
-              <img src="../static/image/blog/post4.jpg" alt="post">
+              <img src="{{ url_for('static', filename='image/blog/post4.jpg') }}" alt="post">
               <div class="media-body">
                 <a href="#">
                   <h3>Asteroids telescope</h3>
@@ -195,54 +198,19 @@
             <div class="br"></div>
           </aside>
           <aside class="single_sidebar_widget ads_widget">
-            <a href="#"><img class="img-fluid" src="../static/image/blog/add.jpg" alt=""></a>
+            <a href="#"><img class="img-fluid" src="{{ url_for('static', filename='image/blog/add.jpg') }}" alt=""></a>
             <div class="br"></div>
           </aside>
           <aside class="single_sidebar_widget post_category_widget">
             <h4 class="widget_title">Post Catgories</h4>
             <ul class="list_style cat-list">
+              {% for tag in tags %}
               <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Technology</p>
-                  <p>37</p>
+                <a href="{{ url_for('blog.get_by_tag', id=tag.id)}}" class="d-flex justify-content-between">
+                  <p>{{ tag.name }}</p>
                 </a>
               </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Lifestyle</p>
-                  <p>24</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Fashion</p>
-                  <p>59</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Art</p>
-                  <p>29</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Food</p>
-                  <p>15</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Architecture</p>
-                  <p>09</p>
-                </a>
-              </li>
-              <li>
-                <a href="#" class="d-flex justify-content-between">
-                  <p>Adventure</p>
-                  <p>44</p>
-                </a>
-              </li>
+              {% endfor %}
             </ul>
             <div class="br"></div>
           </aside>
@@ -268,18 +236,13 @@
           <aside class="single-sidebar-widget tag_cloud_widget">
             <h4 class="widget_title">Tag Clouds</h4>
             <ul class="list_style">
-              <li><a href="#">Technology</a></li>
-              <li><a href="#">Fashion</a></li>
-              <li><a href="#">Architecture</a></li>
-              <li><a href="#">Fashion</a></li>
-              <li><a href="#">Food</a></li>
-              <li><a href="#">Technology</a></li>
-              <li><a href="#">Lifestyle</a></li>
-              <li><a href="#">Art</a></li>
-              <li><a href="#">Adventure</a></li>
-              <li><a href="#">Food</a></li>
-              <li><a href="#">Lifestyle</a></li>
-              <li><a href="#">Adventure</a></li>
+              {% for tag in tags %}
+              <li>
+                <a href="{{ url_for('blog.get_by_tag', id=tag.id)}}">
+                  <p>{{ tag.name }}</p>
+                </a>
+              </li>
+              {% endfor %}
             </ul>
           </aside>
         </div>

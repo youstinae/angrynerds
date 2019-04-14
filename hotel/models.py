@@ -70,7 +70,10 @@ class Post(db.Model):
     summary = db.Column(db.String(), nullable=False)
     content = db.Column(db.String(), nullable=False)
     image_path = db.Column(db.String(), nullable=True)
-    published = db.Column(db.Boolean(), nullable=False, default=False)
+    image_feature1 = db.Column(db.String(), nullable=True)
+    image_feature2 = db.Column(db.String(), nullable=True)
+    image_feature3 = db.Column(db.String(), nullable=True)
+    published = db.Column(db.DateTime(), nullable=False, default=False)
     view_count = db.Column(db.Integer(), nullable=False, default=0)
     comment_count = db.Column(db.Integer(), nullable=False, default=0)
     created = db.Column(db.DateTime())
@@ -80,6 +83,7 @@ class Post(db.Model):
                            backref=db.backref('post', lazy=True))
     author_id = db.Column(
         db.Integer(), db.ForeignKey('user.id'), nullable=False)
+    author = db.relationship('User')
 
     def __repr__(self):
         return '<Post %r>' % (self.title)
