@@ -93,10 +93,9 @@ class Comment(db.Model):
     """ Create a Comment table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
-    date = db.Column(db.DateTime(), default=datetime.utcnow())
     name = db.Column(db.String(), nullable=False)
-    subject = db.Column(db.String(), nullable=False)
     content = db.Column(db.String(), nullable=False)
+    date = db.Column(db.DateTime(), default=datetime.utcnow())
     post_id = db.Column(
         db.Integer(), db.ForeignKey('post.id'), nullable=False)
 

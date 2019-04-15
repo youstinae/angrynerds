@@ -165,10 +165,22 @@ def create_post(title, summary, content, image_path,
                 published=datetime.utcnow(),
                 author_id=user.id)
 
-    # post.Comments.append(
-    #     Comment(name='name',
-    #             subject='',
-    #             content=''))
+    post.comments.append(
+        Comment(name='Emilly Blunt',
+                content='Never say goodbye till the end comes!'))
+    post.comments.append(
+        Comment(name='Elsie Cunningham',
+                content='Never say goodbye till the end comes!'))
+    post.comments.append(
+        Comment(name='Annie Stephens',
+                content='Never say goodbye till the end comes!'))
+    post.comments.append(
+        Comment(name='Maria Luna',
+                content='Never say goodbye till the end comes!'))
+    post.comments.append(
+        Comment(name='Ina Hayes',
+                content='Never say goodbye till the end comes!'))
+    post.comment_count = 5
     return post
 
 

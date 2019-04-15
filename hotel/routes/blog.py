@@ -4,7 +4,8 @@ from flask import (Blueprint, abort, flash, g, redirect, render_template,
                    request, url_for)
 
 from hotel.db import db
-from hotel.models import Post, Tag
+from hotel.forms.comment import CommentForm
+from hotel.models import Comment, Post, Tag
 
 blog = Blueprint('blog', __name__, url_prefix='/blog')
 
@@ -17,7 +18,7 @@ def index():
     return render_template('blog/index.html', posts=posts, tags=tags)
 
 
-@blog.route('/tag/<int:id>', methods=["GET"])
+@blog.route('/tag/<int:id>', methods=['GET'])
 def get_by_tag(id):
     """ get a post by id """
     posts = Post.query.filter(Post.tags.any(id=id)).all()
@@ -31,7 +32,38 @@ def udpate_view_count(id):
     db.session.commit()
 
 
-@blog.route('/create', methods=('GET', 'POST'))
+@blog.route('/<int:id>', methods=['GET'])
+def get(id):
+    """ get a post by id """
+    form = CommentForm()
+    post = Post.query.filter_by(id=id).first()
+    tags = Tag.query.all()
+    if not post:
+        flash('invalid post id')
+        render_template('blog/index.html')
+    udpate_view_count(id)
+    return render_template('blog/post.html', form=form, post=post, tags=tags)
+
+
+@blog.route('/<int:id>/comment', methods=['POST'])
+def comment(id):
+    """ comment on a blog post """
+    form = CommentForm()
+    post = Post.query.filter_by(id=id).first()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        message = form.message.data
+        post.comments.append(
+            Comment(name=name,
+                    email=email,
+                    content=message))
+        db.session.commit()
+        return redirect(url_for('blog.get', id=id))
+    return render_template('blog/post.html', form=form, post=post)
+
+
+@blog.route('/create', methods=['GET', 'POST'])
 # @login_required
 def create():
     """ Create a new post for the current user """
@@ -52,25 +84,7 @@ def create():
     return render_template('blog/create.html')
 
 
-@blog.route('/<int:id>', methods=["GET"])
-def get(id):
-    """ get a post by id """
-    post = Post.query.filter_by(id=id).first()
-    tags = Tag.query.all()
-    if not post:
-        flash('invalid post id')
-        render_template('blog/index.html')
-    udpate_view_count(id)
-    return render_template('blog/post.html', post=post, tags=tags)
-
-
-def udpate_view_count(id):
-    post = Post.query.filter_by(id=id).first()
-    post.view_count += 1
-    db.session.commit()
-
-
-@blog.route('/<int:id>/update', methods=('GET', 'POST'))
+@blog.route('/<int:id>/update', methods=['GET', 'POST'])
 # @login_required
 def update():
     """ Update a post if the current user is the author """
@@ -98,7 +112,7 @@ def update():
     return render_template('blog/update.html', post=post)
 
 
-@blog.route('/<int:id>/delete', methods=('POST',))
+@blog.route('/<int:id>/delete', methods=['POST'])
 # @login_required
 def delete():
     """
@@ -130,3 +144,9 @@ def get_post(check_author=True):
     if check_author and post['author_id'] != g.user['id']:
         abort(403)
     return post
+
+
+def udpate_view_count(id):
+    post = Post.query.filter_by(id=id).first()
+    post.view_count += 1
+    db.session.commit()
