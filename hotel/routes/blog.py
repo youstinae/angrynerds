@@ -13,7 +13,7 @@ blog = Blueprint('blog', __name__, url_prefix='/blog')
 @blog.route('/')
 def index():
     """ Show all the posts, most recent first """
-    posts = Post.query.all()
+    posts = Post.query.filter_by(published=True).all()
     tags = Tag.query.all()
     return render_template('blog/index.html', posts=posts, tags=tags)
 
@@ -21,15 +21,10 @@ def index():
 @blog.route('/tag/<int:id>', methods=['GET'])
 def get_by_tag(id):
     """ get a post by id """
-    posts = Post.query.filter(Post.tags.any(id=id)).all()
+    posts = Post.query.filter_by(published=True).filter(
+        Post.tags.any(id=id)).all()
     tags = Tag.query.all()
     return render_template('blog/index.html', posts=posts, tags=tags)
-
-
-def udpate_view_count(id):
-    post = Post.query.filter_by(id=id).first()
-    post.view_count += 1
-    db.session.commit()
 
 
 @blog.route('/<int:id>', methods=['GET'])
@@ -54,10 +49,9 @@ def comment(id):
         name = form.name.data
         email = form.email.data
         message = form.message.data
-        post.comments.append(
-            Comment(name=name,
-                    email=email,
-                    content=message))
+        comm = Comment(name=name, email=email,
+                       content=message, post_id=post.id)
+        post.comments.append(comm)
         db.session.commit()
         return redirect(url_for('blog.get', id=id))
     return render_template('blog/post.html', form=form, post=post)

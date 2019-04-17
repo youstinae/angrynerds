@@ -1,7 +1,9 @@
 """ app modules  """
+
 from datetime import datetime
 
 from flask_login import UserMixin
+from sqlalchemy.types import Boolean
 
 from hotel.db import db
 
@@ -73,13 +75,18 @@ class Post(db.Model):
     image_feature1 = db.Column(db.String(), nullable=True)
     image_feature2 = db.Column(db.String(), nullable=True)
     image_feature3 = db.Column(db.String(), nullable=True)
-    published = db.Column(db.DateTime(), nullable=False, default=False)
     view_count = db.Column(db.Integer(), nullable=False, default=0)
     comment_count = db.Column(db.Integer(), nullable=False, default=0)
-    created = db.Column(db.DateTime())
+    published = db.Column(db.Boolean(), nullable=False, default=False)
+    deleted = db.Column(db.Boolean(), nullable=False, default=False)
+    publish_date = db.Column(db.DateTime())
+    created = db.Column(db.DateTime(), nullable=False)
     updated = db.Column(db.DateTime(), default=datetime.utcnow())
-    comments = db.relationship('Comment', backref='post', lazy=True)
-    tags = db.relationship('Tag', secondary='posts_tags', lazy='subquery',
+    comments = db.relationship(
+        'Comment', backref='post', lazy=True, cascade="all, delete-orphan")
+    tags = db.relationship('Tag',
+                           secondary='posts_tags',
+                           lazy='subquery',
                            backref=db.backref('post', lazy=True))
     author_id = db.Column(
         db.Integer(), db.ForeignKey('user.id'), nullable=False)
@@ -94,23 +101,22 @@ class Comment(db.Model):
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), nullable=False)
     content = db.Column(db.String(), nullable=False)
     date = db.Column(db.DateTime(), default=datetime.utcnow())
     post_id = db.Column(
         db.Integer(), db.ForeignKey('post.id'), nullable=False)
 
     def __repr__(self):
-        return '<Comment %r>' % (self.subject)
+        return '<Comment %r>' % (self.name)
 
 
 class PostsTags(db.Model):
     """ create a posts tags table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
-    post_id = db.Column(db.Integer(), db.ForeignKey(
-        'post.id', ondelete='CASCADE'))
-    tag_id = db.Column(db.Integer(), db.ForeignKey(
-        'tag.id', ondelete='CASCADE'))
+    post_id = db.Column(db.Integer(), db.ForeignKey('post.id'))
+    tag_id = db.Column(db.Integer(), db.ForeignKey('tag.id'))
 
 
 class Tag(db.Model):

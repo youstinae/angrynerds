@@ -3,7 +3,7 @@ from flask_security import current_user, login_required
 
 from hotel.db import db
 from hotel.forms.profile import ProfileForm
-
+from hotel.models import Post
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -31,3 +31,21 @@ def profile():
     form.state.data = current_user.state
     form.zipcode.data = current_user.zipcode
     return render_template('admin/profile.html', form=form)
+
+
+@admin.route('/posts')
+@login_required
+def posts():
+    posts = Post.query.all()
+    return render_template('admin/blog_posts.html', posts=posts)
+
+
+@admin.route('/posts/<int:id>/delete', methods=['POST'])
+@login_required
+def delete_post(id):
+    """ deletes a post """
+    post = Post.query.get(id)
+    post.published = False
+    post.deleted = True
+    db.session.commit()
+    return redirect(url_for('admin.posts'))

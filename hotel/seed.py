@@ -1,5 +1,6 @@
 """ seeder module """
 
+import random
 from datetime import datetime
 
 from flask import current_app
@@ -112,43 +113,47 @@ def create_posts():
         create_post(title='Share Your Love of Travel',
                     summary=get_summary(),
                     content='coming soon',
+                    published=True,
+                    deleted=False,
                     image_path='m-blog-1.jpg',
-                    view_count=128,
                     tags=[tags[0], tags[3]]))
 
     db.session.add(
         create_post(title='Spring Discounts To Take Advantage Off',
                     summary=get_summary(),
                     content='coming soon',
+                    published=True,
+                    deleted=False,
                     image_path='m-blog-2.jpg',
-                    view_count=76,
                     tags=tags))
     db.session.add(
         create_post(title='7 Ingenious Tips For Hotel Weding',
                     summary=get_summary(),
                     content='coming soon',
+                    published=True,
+                    deleted=False,
                     image_path='m-blog-3.jpg',
-                    view_count=2100,
                     tags=[tags[0], tags[4]]))
     db.session.add(
         create_post(title='Top Five Trends In Outdoor To Watch',
                     summary=get_summary(),
                     content='coming soon',
+                    published=True,
+                    deleted=False,
                     image_path='m-blog-4.jpg',
-                    view_count=114,
                     tags=[tags[0], tags[3], tags[5]]))
     db.session.add(
         create_post(title='Get Social With A Custom Hashtag',
                     summary=get_summary(),
                     content='coming soon',
+                    published=False,
+                    deleted=True,
                     image_path='m-blog-5.jpg',
-                    view_count=374,
                     tags=[tags[0], tags[3], tags[5]]))
     db.session.commit()
 
 
-def create_post(title, summary, content, image_path,
-                tags, view_count):
+def create_post(title, summary, content, published, deleted, image_path, tags):
     """ create a post entity """
     user = User.query.filter_by(username='gharzedd@mail.usf.edu').first()
     post = Post(title=title,
@@ -159,26 +164,33 @@ def create_post(title, summary, content, image_path,
                 image_feature1='https://picsum.photos/750/350/?random',
                 image_feature2='https://picsum.photos/360/350/?random',
                 image_feature3='https://picsum.photos/g/360/350/?random',
-                view_count=view_count,
+                view_count=random.randint(1, 3001),
                 tags=tags,
                 created=datetime.utcnow(),
-                published=datetime.utcnow(),
+                published=published,
+                deleted=deleted,
+                publish_date=datetime.utcnow(),
                 author_id=user.id)
 
     post.comments.append(
         Comment(name='Emilly Blunt',
+                email=user.username,
                 content='Never say goodbye till the end comes!'))
     post.comments.append(
         Comment(name='Elsie Cunningham',
+                email=user.username,
                 content='Never say goodbye till the end comes!'))
     post.comments.append(
         Comment(name='Annie Stephens',
+                email=user.username,
                 content='Never say goodbye till the end comes!'))
     post.comments.append(
         Comment(name='Maria Luna',
+                email=user.username,
                 content='Never say goodbye till the end comes!'))
     post.comments.append(
         Comment(name='Ina Hayes',
+                email=user.username,
                 content='Never say goodbye till the end comes!'))
     post.comment_count = 5
     return post

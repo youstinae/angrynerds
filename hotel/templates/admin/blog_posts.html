@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+{% set active_page = "admin.profile" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Blog Posts{% endblock %}
+{% block content %}
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Blog Posts</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('public.index') }}">Home</a></li>
+                <li class="active">Posts</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================ Profile Area  =================-->
+<section class="about_history_area">
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="row">
+            <div class="col-lg-1 col-md-1"></div>
+            <div class="col-lg-9 col-md-9">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1"></div>
+        </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="section-top-border">
+                    <h3 class="mb-30 title_color">Posts</h3>
+                    <h6>You can update a post by clicking on its title.</h6>
+                    <div class="progress-table-wrap">
+                        <div class="progress-table">
+                            <div class="table-head">
+                                <div class="serial">ID</div>
+                                <div class="country">Title</div>
+                                <div class="visit">User</div>
+                                <div class="visit">Published</div>
+                                <div class="visit">Deleted</div>
+                                <div class="percentage">Action</div>
+                            </div>
+                            {% for post in posts %}
+                            <div class="table-row">
+                                <div class="serial">{{ post.id }}</div>
+                                <div class="country"><a href="#">{{ post.title }}</a></div>
+                                <div class="visit">{{ post.author.first_name }}</div>
+                                {% if post.published is sameas true %}
+                                <div class="visit"><span style="color: sandybrown;">
+                                        <i class="fa fa-check" aria-hidden="true"></i></span></div>
+                                {% else %}
+                                <div class="visit"></div>
+                                {% endif %}
+                                {% if post.deleted is sameas true %}
+                                <div class="visit">
+                                    <span style="color:sandybrown;"><i class="fa fa-check"
+                                            aria-hidden="true"></span></i></div>
+                                {% else %}
+                                <div class="visit"></div>
+                                {% endif %}
+                                <div class="percentage">
+                                    <form action="{{ url_for('admin.delete_post', id=post.id)}}" method='POST'>
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                                        <a class="btn btn-danger" href="#" aria-label="Delete" data-toggle="modal"
+                                            data-target="#exampleModal" onclick="$(this).closest('form').submit()">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<!--================ Profile Area  =================-->
+
+{% endblock %}

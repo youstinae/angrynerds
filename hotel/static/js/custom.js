@@ -1,16 +1,34 @@
-;(function($){
+$('input').on('invalid', scrollToInvalid);
+function scrollToInvalid() {
+    // Height of your nav bar plus a bottom margin
+    var navHeight = 60;
+    // Offset of the first input element minus your nav height
+    var invalid_el = $('input:invalid').first().offset().top - navHeight;
+
+    // If the invalid element is already within the window view, return true. If you return false, the validation will stop.
+    if (invalid_el > (window.pageYOffset - navHeight) && invalid_el < (window.pageYOffset + window.innerHeight - navHeight)) {
+        return true;
+    } else {
+        // If the first invalid input is not within the current view, scroll to it.
+        $('html, body').scrollTop(invalid_el);
+    }
+}
+
+
+
+; (function ($) {
     "use strict"
-    var nav_offset_top = $('.header_area').height()+50; 
+    var nav_offset_top = $('.header_area').height() + 50;
     /*-------------------------------------------------------------------------------
 	  Navbar 
 	-------------------------------------------------------------------------------*/
 
-	//* Navbar Fixed  
-    function navbarFixed(){
-        if ( $('.header_area').length ){ 
-            $(window).scroll(function() {
-                var scroll = $(window).scrollTop();   
-                if (scroll >= nav_offset_top ) {
+    //* Navbar Fixed  
+    function navbarFixed() {
+        if ($('.header_area').length) {
+            $(window).scroll(function () {
+                var scroll = $(window).scrollTop();
+                if (scroll >= nav_offset_top) {
                     $(".header_area").addClass("navbar_fixed");
                 } else {
                     $(".header_area").removeClass("navbar_fixed");
@@ -19,14 +37,14 @@
         };
     };
     navbarFixed();
-    
-    function testimonialSlider(){
-        if ( $('.testimonial_slider').length ){
+
+    function testimonialSlider() {
+        if ($('.testimonial_slider').length) {
             $('.testimonial_slider').owlCarousel({
-                loop:true,
+                loop: true,
                 margin: 30,
                 items: 2,
-                nav:false,
+                nav: false,
                 autoplay: true,
                 dots: true,
                 smartSpeed: 1500,
@@ -43,32 +61,32 @@
         }
     }
     testimonialSlider();
-    
+
     //------- Mailchimp js --------//  
 
-    function mailChimp(){
+    function mailChimp() {
         $('#mc_embed_signup').find('form').ajaxChimp();
     }
     mailChimp();
-    
+
     /* ===== Parallax Effect===== */
-	
-	function parallaxEffect() {
-    	$('.bg-parallax').parallax();
-	}
-	parallaxEffect();
-    
-    
+
+    function parallaxEffect() {
+        $('.bg-parallax').parallax();
+    }
+    parallaxEffect();
+
+
     $('select').niceSelect();
     $('#datetimepicker11,#datetimepicker1').datetimepicker({
         daysOfWeekDisabled: [0, 6]
     });
-    
-     /*---------gallery isotope js-----------*/
-    function galleryMasonry(){
-        if ( $('#gallery').length ){
-            $('#gallery').imagesLoaded( function() {
-              // images have loaded
+
+    /*---------gallery isotope js-----------*/
+    function galleryMasonry() {
+        if ($('#gallery').length) {
+            $('#gallery').imagesLoaded(function () {
+                // images have loaded
                 // Activate isotope in container
                 $("#gallery").isotope({
                     itemSelector: ".gallery_item",
@@ -82,17 +100,17 @@
         }
     }
     galleryMasonry();
-	
-	/*----------------------------------------------------*/
+
+    /*----------------------------------------------------*/
     /*  Simple LightBox js
     /*----------------------------------------------------*/
     $('.imageGallery1 .light').simpleLightbox();
-    
+
     /*----------------------------------------------------*/
     /*  Google map js
     /*----------------------------------------------------*/
-    
-    if ( $('#mapBox').length ){
+
+    if ($('#mapBox').length) {
         var $lat = $('#mapBox').data('lat');
         var $lon = $('#mapBox').data('lon');
         var $zoom = $('#mapBox').data('zoom');
@@ -101,16 +119,16 @@
         var $markerLat = $('#mapBox').data('mlat');
         var $markerLon = $('#mapBox').data('mlon');
         var map = new GMaps({
-        el: '#mapBox',
-        lat: $lat,
-        lng: $lon,
-        scrollwheel: false,
-        scaleControl: true,
-        streetViewControl: false,
-        panControl: true,
-        disableDoubleClickZoom: true,
-        mapTypeControl: false,
-        zoom: $zoom,
+            el: '#mapBox',
+            lat: $lat,
+            lng: $lon,
+            scrollwheel: false,
+            scaleControl: true,
+            streetViewControl: false,
+            panControl: true,
+            disableDoubleClickZoom: true,
+            mapTypeControl: false,
+            zoom: $zoom,
             styles: [
                 {
                     "featureType": "water",
