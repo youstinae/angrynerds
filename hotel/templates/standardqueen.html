@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% set active_page = "public.accomodation" %}
+
+{% block title %}Standard Queen Room{% endblock %}
+{% block content %}
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Standard Queen Room</h2>
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">Hotel Accommodation</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================ Accomodation Area  =================-->
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h2 class="title_color">Accommodation</h2>
+            <p>A wonderful selection of rooms at Majestic Hotels.</p>
+        </div>
+        <div class="row mb_30">
+            <div class="col-lg-3 col-sm-6">
+                <div class="accomodation_item text-center">
+                    <div class="hotel_img">
+                        <img src="../static/image/room4.jpg" alt="">
+                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                    </div>
+                    <a href="#">
+                        <h4 class="sec_h4">Standard Queen Room</h4>
+                    </a>
+                    <h5>$200<small>/night</small></h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="accomodation_item text-center">
+                    <div class="hotel_img">
+                        <img src="../static/image/room7.jpg" alt="">
+                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                    </div>
+                    <a href="#">
+                        <h4 class="sec_h4">Deluxe Double Queen Room</h4>
+                    </a>
+                    <h5>$300<small>/night</small></h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="accomodation_item text-center">
+                    <div class="hotel_img">
+                        <img src="../static/image/room1.jpg" alt="">
+                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                    </div>
+                    <a href="#">
+                        <h4 class="sec_h4">Majestic King Suite</h4>
+                    </a>
+                    <h5>$350<small>/night</small></h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="accomodation_item text-center">
+                    <div class="hotel_img">
+                        <img src="../static/image/room3.jpg" alt="">
+                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                    </div>
+                    <a href="#">
+                        <h4 class="sec_h4">Majestic Family Suite</h4>
+                    </a>
+                    <h5>$500<small>/night</small></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div style="text-align:center"><a href="{{ url_for('public.index') }}" class="btn theme_btn button_hover">Book
+            Now</a></div>
+
+
+
+</section>
+<!--================ Accomodation Area  =================-->
+{% endblock %}

@@ -24,6 +24,9 @@ def about():
 def accomodation():
     return render_template('accomodation.html')
 
+@public.route('/standardqueen')
+def standardq():
+    return render_template('standardqueen.html')
 
 @public.route('/gallery')
 def gallery():
