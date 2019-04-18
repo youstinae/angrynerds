@@ -2,7 +2,7 @@
 {% set active_page = "public.accomodation" %}
 
 {% block title %}Accommodation{% endblock %}
-{% block content %}        
+{% block content %}
 <!--================Breadcrumb Area =================-->
 <section class="breadcrumb_area">
     <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
@@ -29,49 +29,58 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
-                        <img src="../static/image/room1.jpg" alt="">
-                        <button class="btn theme_btn button_hover" data-toggle="modal" data-target="#r1">Details</button>
+                        <img src="../static/image/room4.jpg" alt="">
+                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
                     </div>
-                    <a href="#"><h4 class="sec_h4">Double Deluxe Room</h4></a>
-                    <h5>$250<small>/night</small></h5>
+                    <a href="#">
+                        <h4 class="sec_h4">Standard Queen Room</h4>
+                    </a>
+                    <h5>$200<small>/night</small></h5>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
-                        <img src="../static/image/room2.jpg" alt="">
-                        <button class="btn theme_btn button_hover" data-toggle="modal" data-target="#r2">Details</button>
+                        <img src="../static/image/room7.jpg" alt="">
+                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
                     </div>
-                    <a href="#"><h4 class="sec_h4">Single Deluxe Room</h4></a>
-                    <h5>$200<small>/night</small></h5>
+                    <a href="#">
+                        <h4 class="sec_h4">Deluxe Double Queen Room</h4>
+                    </a>
+                    <h5>$300<small>/night</small></h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="accomodation_item text-center">
+                    <div class="hotel_img">
+                        <img src="../static/image/room1.jpg" alt="">
+                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                    </div>
+                    <a href="#">
+                        <h4 class="sec_h4">Majestic King Suite</h4>
+                    </a>
+                    <h5>$350<small>/night</small></h5>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
                         <img src="../static/image/room3.jpg" alt="">
-                        <button class="btn theme_btn button_hover" data-toggle="modal" data-target="#r3">Details</button>
+                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
                     </div>
-                    <a href="#"><h4 class="sec_h4">Honeymoon Suit</h4></a>
-                    <h5>$750<small>/night</small></h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="../static/image/room4.jpg" alt="">
-                        <button class="btn theme_btn button_hover" data-toggle="modal" data-target="#r4">Details</button>
-                    </div>
-                    <a href="#"><h4 class="sec_h4">Economy Double</h4></a>
-                    <h5>$200<small>/night</small></h5>
+                    <a href="#">
+                        <h4 class="sec_h4">Majestic Family Suite</h4>
+                    </a>
+                    <h5>$500<small>/night</small></h5>
                 </div>
             </div>
         </div>
     </div>
     <br><br>
-        <div style="text-align:center"><a href="{{ url_for('public.index') }}" class="btn theme_btn button_hover" >Book Now</a></div>
-                        
-                
+    <div style="text-align:center"><a href="{{ url_for('public.index') }}" class="btn theme_btn button_hover">Book
+            Now</a></div>
+
+
 
 </section>
 <!--================ Accomodation Area  =================-->
@@ -82,108 +91,112 @@
 <!--Room 1-->
 <div id="r1" class="modal fade" role="dialog">
     <div class="modal-dialog">
-  
-      <div class="modal-content">
-        <div class="modal-header">
+
+        <div class="modal-content">
+            <div class="modal-header">
                 <h4 class="modal-title">Double Deluxe Room</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <img class="embed-responsive-item" src="../static/image/floorplan/room1.png"
+                    alt="Floor Plan of the Double Deluxe room type." style="width:100%">
+                <br>Information about the room below<br>
+                2 Queen size beds<br>
+                1 Bath/Shower<br>
+                etc...<br>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                <h5>All Placeholder information</h5><br>
+                <h5>$250<small>/night</small></h5>
+            </div>
         </div>
-        <div class="modal-body">
-            <img class="embed-responsive-item" src="../static/image/floorplan/room1.png" alt="Floor Plan of the Double Deluxe room type." style="width:100%">
-            <br>Information about the room below<br>
-            2 Queen size beds<br>
-            1 Bath/Shower<br>
-            etc...<br>
-        </div>
-        <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-          <h5>All Placeholder information</h5><br>
-         <h5>$250<small>/night</small></h5>
-        </div>
-      </div>
-  
+
     </div>
-  </div>	
-  <!--Room 2-->
-  <div id="r2" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-      
-          <div class="modal-content">
+</div>
+<!--Room 2-->
+<div id="r2" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
             <div class="modal-header">
-                    <h4 class="modal-title">Single Deluxe Room</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              
+                <h4 class="modal-title">Single Deluxe Room</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
             </div>
             <div class="modal-body">
-                <img class="embed-responsive-item" src="../static/image/floorplan/room2.png" alt="Floor Plan of the Single Deluxe room type." style="width:100%">
+                <img class="embed-responsive-item" src="../static/image/floorplan/room2.png"
+                    alt="Floor Plan of the Single Deluxe room type." style="width:100%">
                 <br>Information about the room below<br>
                 2 Queen size beds<br>
                 1 Bath/Shower<br>
                 etc...<br>
             </div>
             <div class="modal-footer">
-              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-              <h5>All Placeholder information</h5><br>
-             <h5>$200<small>/night</small></h5>
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                <h5>All Placeholder information</h5><br>
+                <h5>$200<small>/night</small></h5>
             </div>
-          </div>
-      
         </div>
-      </div>	
-        <!--Room 3-->
-  <div id="r3" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-      
-          <div class="modal-content">
+
+    </div>
+</div>
+<!--Room 3-->
+<div id="r3" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
             <div class="modal-header">
-                    <h4 class="modal-title">Honeymoon Suite</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              
+                <h4 class="modal-title">Honeymoon Suite</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
             </div>
             <div class="modal-body">
-                <img class="embed-responsive-item" src="../static/image/floorplan/room3.png" alt="Floor Plan of the Honeymoon Suite room type." style="width:100%">
+                <img class="embed-responsive-item" src="../static/image/floorplan/room3.png"
+                    alt="Floor Plan of the Honeymoon Suite room type." style="width:100%">
                 <br>Information about the room below<br>
                 2 Queen size beds<br>
                 1 Bath/Shower<br>
                 etc...<br>
             </div>
             <div class="modal-footer">
-              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-              <h5>All Placeholder information</h5><br>
-             <h5>$750<small>/night</small></h5>
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                <h5>All Placeholder information</h5><br>
+                <h5>$750<small>/night</small></h5>
             </div>
-          </div>
-      
         </div>
-      </div>	
-        <!--Room 4-->
-  <div id="r4" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-      
-          <div class="modal-content">
+
+    </div>
+</div>
+<!--Room 4-->
+<div id="r4" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
             <div class="modal-header">
-                    <h4 class="modal-title">Economy Double</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              
+                <h4 class="modal-title">Economy Double</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
             </div>
             <div class="modal-body">
-                <img class="embed-responsive-item" src="../static/image/floorplan/room4.png" alt="Floor Plan of the Economy Double room type." style="width:100%">
+                <img class="embed-responsive-item" src="../static/image/floorplan/room4.png"
+                    alt="Floor Plan of the Economy Double room type." style="width:100%">
                 <br>Information about the room below<br>
                 2 Queen size beds<br>
                 1 Bath/Shower<br>
                 etc...<br>
             </div>
             <div class="modal-footer">
-              <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
-              <h5>All Placeholder information</h5><br>
-             <h5>$200<small>/night</small></h5>
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
+                <h5>All Placeholder information</h5><br>
+                <h5>$200<small>/night</small></h5>
             </div>
-          </div>
-      
         </div>
-      </div>	
-  
+
+    </div>
+</div>
+
 <!--================Modals=================-->
 <!--================Booking Tabel Area =================-->
 <!-- <section class="hotel_booking_area">
@@ -269,7 +282,9 @@
                         <img src="../static/image/ballroom.jpg" alt="">
                         <!-- <a href="#" class="btn theme_btn button_hover">Details</a> -->
                     </div>
-                    <a href="#"><h4 class="sec_h4">Ballroom</h4></a>
+                    <a href="#">
+                        <h4 class="sec_h4">Ballroom</h4>
+                    </a>
                     <!-- <h5>$250<small>/night</small></h5> -->
                 </div>
             </div>
@@ -279,7 +294,9 @@
                         <img src="../static/image/lgmeeting.jpg" alt="">
                         <!-- <a href="#" class="btn theme_btn button_hover">Details</a> -->
                     </div>
-                    <a href="#"><h4 class="sec_h4">Large Meeting Room</h4></a>
+                    <a href="#">
+                        <h4 class="sec_h4">Large Meeting Room</h4>
+                    </a>
                     <!-- <h5>$200<small>/night</small></h5> -->
                 </div>
             </div>
@@ -289,7 +306,9 @@
                         <img src="../static/image/smmeeting.jpg" alt="">
                         <!-- <a href="#" class="btn theme_btn button_hover">Details</a> -->
                     </div>
-                    <a href="#"><h4 class="sec_h4">Small Meeting Room</h4></a>
+                    <a href="#">
+                        <h4 class="sec_h4">Small Meeting Room</h4>
+                    </a>
                     <!-- <h5>$750<small>/night</small></h5> -->
                 </div>
             </div>
@@ -299,7 +318,9 @@
                         <img src="../static/image/banquet.jpg" alt="">
                         <!-- <a href="#" class="btn theme_btn button_hover">Details</a> -->
                     </div>
-                    <a href="#"><h4 class="sec_h4">Banquet Hall</h4></a>
+                    <a href="#">
+                        <h4 class="sec_h4">Banquet Hall</h4>
+                    </a>
                     <!-- <h5>$200<small>/night</small></h5> -->
                 </div>
             </div>
@@ -309,7 +330,9 @@
                         <img src="../static/image/waterfront.jpg" alt="">
                         <!-- <a href="#" class="btn theme_btn button_hover">Details</a> -->
                     </div>
-                    <a href="#"><h4 class="sec_h4">Waterfront Locations</h4></a>
+                    <a href="#">
+                        <h4 class="sec_h4">Waterfront Locations</h4>
+                    </a>
                     <!-- <h5>$250<small>/night</small></h5> -->
                 </div>
             </div>
@@ -319,16 +342,20 @@
                         <img src="../static/image/garden.jpg" alt="">
                         <!-- <a href="#" class="btn theme_btn button_hover">Details</a> -->
                     </div>
-                    <a href="#"><h4 class="sec_h4">Garden</h4></a>
+                    <a href="#">
+                        <h4 class="sec_h4">Garden</h4>
+                    </a>
                     <!-- <h5>$200<small>/night</small></h5> -->
                 </div>
             </div>
-            
+
         </div>
         <br>
         <div class="section_title text-center">
-            <p>Sign up for the newsletter to be the first to know when our Special Accommodations are open for booking!</p><br>
-            <div style="text-align:center"><a href="{{ url_for('public.index') }}" class="btn theme_btn button_hover" >Newsletter</a></div>
+            <p>Sign up for the newsletter to be the first to know when our Special Accommodations are open for booking!
+            </p><br>
+            <div style="text-align:center"><a href="{{ url_for('public.index') }}"
+                    class="btn theme_btn button_hover">Newsletter</a></div>
         </div>
     </div>
 </section>
