@@ -22,65 +22,39 @@
 <section class="accomodation_area section_gap">
     <div class="container">
         <div class="section_title text-center">
-            <h2 class="title_color">Accommodation</h2>
-            <p>A wonderful selection of rooms at Majestic Hotels.</p>
-        </div>
-        <div class="row mb_30">
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="../static/image/room4.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                    </div>
-                    <a href="#">
-                        <h4 class="sec_h4">Standard Queen Room</h4>
-                    </a>
-                    <h5>$200<small>/night</small></h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="../static/image/room7.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                    </div>
-                    <a href="#">
-                        <h4 class="sec_h4">Deluxe Double Queen Room</h4>
-                    </a>
-                    <h5>$300<small>/night</small></h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="../static/image/room1.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                    </div>
-                    <a href="#">
-                        <h4 class="sec_h4">Majestic King Suite</h4>
-                    </a>
-                    <h5>$350<small>/night</small></h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="../static/image/room3.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
-                    </div>
-                    <a href="#">
-                        <h4 class="sec_h4">Majestic Family Suite</h4>
-                    </a>
-                    <h5>$500<small>/night</small></h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br><br>
-    <div style="text-align:center"><a href="{{ url_for('public.index') }}" class="btn theme_btn button_hover">Book
-            Now</a></div>
+            <h2 class="title_color">Standard Queen Room</h2>
 
 
+            <div class="w3-content w3-display-container">
+                <img class="mySlides" src="../static/image/standardq1.jpg" style="width: 700px">
+                <img class="mySlides" src="../static/image/standardq2.jpg" style="width: 700px">
+                <img class="mySlides" src="../static/image/standardq3.jpg" style="width: 700px">
+                <img class="mySlides" src="../static/image/standardq4.jpg" style="width: 700px">
+
+                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+            </div>
+            <script>
+                var slideIndex = 1;
+                showDivs(slideIndex);
+
+                function plusDivs(n) {
+                    showDivs(slideIndex += n);
+                }
+
+                function showDivs(n) {
+                    var i;
+                    var x = document.getElementsByClassName("mySlides");
+                    if (n > x.length) { slideIndex = 1 }
+                    if (n < 1) { slideIndex = x.length }
+                    for (i = 0; i < x.length; i++) {
+                        x[i].style.display = "none";
+                    }
+                    x[slideIndex - 1].style.display = "block";
+                }
+            </script>
+
+        </div>
 
 </section>
 <!--================ Accomodation Area  =================-->
