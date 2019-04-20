@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{% set active_page = "admin.post_update" %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Post Update{% endblock %}
+{% block content %}
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">{{post.title}}</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('public.index') }}">Home</a></li>
+                <li class="active">Post Update</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================ Profile Area  =================-->
+<section class="about_history_area section_gap">
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="row">
+            <div class="col-lg-1 col-md-1"></div>
+            <div class="col-lg-9 col-md-9">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1"></div>
+        </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-md-3 col-lg-3">
+                <img class="img-fluid" src="{{ url_for('static', filename='image/avatar-grey2.png')}}" alt="img">
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <h3>My Profile</h3>
+                <form method="POST" action="{{ url_for('admin.post_update')}}" role="form">
+                    {{ form.csrf_token }}
+                    <div class="form-group">
+                        {{ form.title.label }}
+                        {{ form.title(class="form-control") }}
+                        <div>
+                            {% for error in form.title.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.summary.label }}
+                        {{ form.summary(class="form-control") }}
+                        <div>
+                            {% for error in form.summary.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.content.label }}
+                        {{ form.content(class="form-control") }}
+                        <div>
+                            {% for error in form.content.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.published.label }}
+                        {{ form.published(class="form-control") }}
+                        <div>
+                            {% for error in form.published.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.deleted.label }}
+                        {{ form.deleted(class="form-control") }}
+                        <div>
+                            {% for error in form.deleted.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button type="submit" value="submit" class="genric-btn primary">Update Post</button>
+                </form>
+            </div>
+        </div>
+</section>
+<!--================ Profile Area  =================-->
+
+{% endblock %}
