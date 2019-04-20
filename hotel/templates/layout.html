@@ -100,7 +100,7 @@
             <div class="row">
                 <div class="col-lg-3  col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        <h6 class="footer_title">About Agency</h6>
+                        <h6 class="footer_title">About Majestic Hotel</h6>
                         <p>The world has become so fast paced that people don’t want to stand by reading a page of
                             information, they would much rather look at a presentation and understand the message. It
                             has come to a point </p>
@@ -112,18 +112,18 @@
                         <div class="row">
                             <div class="col-4">
                                 <ul class="list_style">
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">Feature</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Portfolio</a></li>
+                                    <li><a href="{{ url_for('public.index') }}">Home</a></li>
+                                    <li><a href="{{ url_for('public.about') }}">About</a></li>
+                                    <li><a href="{{ url_for('public.accomodation') }}">Services</a></li>
+                                    <li><a href="{{ url_for('public.gallery') }}">Gallery</a></li>
                                 </ul>
                             </div>
                             <div class="col-4">
                                 <ul class="list_style">
-                                    <li><a href="#">Team</a></li>
-                                    <li><a href="#">Pricing</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="{{ url_for('blog.index') }}">Blog</a></li>
+                                    <li><a href="{{ url_for('public.feedback') }}">Feedback</a></li>
+                                    <li><a href="{{ url_for('public.contact') }}">Contact</a></li>
+                                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -135,11 +135,13 @@
                         <p>For business professionals caught between high OEM price and mediocre print and graphic
                             output, </p>
                         <div id="mc_embed_signup">
-                            <form target="_blank" action="/" method="get" class="subscribe_form relative">
+                            <form action="{{ url_for('public.newsletter')}}" method="post"
+                                class="subscribe_form relative">
                                 <div class="input-group d-flex flex-row">
-                                    <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
+                                    <input name="email" placeholder="Email Address" onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = 'Email Address '" required="" type="email">
-                                    <button class="btn sub-btn"><span class="lnr lnr-location"></span></button>
+                                    <button type="submit" class="btn sub-btn"><span
+                                            class="lnr lnr-location"></span></button>
                                 </div>
                                 <div class="mt-10 info"></div>
                             </form>

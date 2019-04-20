@@ -3,8 +3,8 @@ from flask import Blueprint, flash, redirect, render_template, url_for
 from hotel.db import db
 from hotel.forms.contact import ContactForm
 from hotel.forms.feedback import FeedbackForm
-from hotel.models import Contact, Feedback
-
+from hotel.forms.newsletter import NewsletterForm
+from hotel.models import Contact, Feedback, Newsletter
 
 public = Blueprint('public', __name__, url_prefix='/')
 
@@ -24,9 +24,11 @@ def about():
 def accomodation():
     return render_template('accomodation.html')
 
+
 @public.route('/standardqueen')
 def standardq():
     return render_template('standardqueen.html')
+
 
 @public.route('/gallery')
 def gallery():
@@ -38,19 +40,32 @@ def elements():
     return render_template('elements.html')
 
 
+@public.route('/newsletter', methods=['POST'])
+def newsletter():
+    """
+    newsletter sign up
+    """
+    form = NewsletterForm()
+    if form.validate_on_submit():
+        nl = Newsletter()
+        nl.email = form.email.data
+        db.session.add(nl)
+        db.session.commit()
+        flash('Congratulations on signing up for our newsletter!')
+        return redirect(url_for('public.index'))
+    return render_template('index.html')
+
+
 @public.route('/feedback', methods=['GET', 'POST'])
 def feedback():
     form = FeedbackForm()
     if form.validate_on_submit():
-        name = form.name.data
-        email = form.email.data
-        subject = form.subject.data
-        message = form.message.data
-        feedback = Feedback(name=name,
-                            email=email,
-                            subject=subject,
-                            message=message)
-        db.session.add(feedback)
+        fb = Feedback()
+        fb.name = form.name.data
+        fb.email = form.email.data
+        fb.subject = form.subject.data
+        fb.message = form.message.data
+        db.session.add(fb)
         db.session.commit()
         flash('Your message has been sent!')
         return redirect(url_for('public.feedback'))
@@ -65,15 +80,12 @@ def contact():
     """
     form = ContactForm()
     if form.validate_on_submit():
-        name = form.name.data
-        email = form.email.data
-        subject = form.subject.data
-        message = form.message.data
-        contact = Contact(name=name,
-                          email=email,
-                          subject=subject,
-                          message=message)
-        db.session.add(contact)
+        info = Contact()
+        info.name = form.name.data
+        info.email = form.email.data
+        info.subject = form.subject.data
+        info.message = form.message.data
+        db.session.add(info)
         db.session.commit()
         flash('Your message has been sent!')
         return redirect(url_for('public.contact'))
