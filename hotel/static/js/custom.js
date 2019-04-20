@@ -62,12 +62,8 @@ function scrollToInvalid() {
     }
     testimonialSlider();
 
-    //------- Mailchimp js --------//  
-
-    function mailChimp() {
-        $('#mc_embed_signup').find('form').ajaxChimp();
-    }
-    mailChimp();
+    //------- Newsletter --------//  
+    //     $('#mc_embed_signup').find('form');    
 
     /* ===== Parallax Effect===== */
 

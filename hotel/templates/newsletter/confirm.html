@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% set active_page = "auth.login" %}
+
+{% block title %}Login{% endblock %}
+{% block content %}
+
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Signup Confirmed</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('auth.login') }}">Newsletter</a></li>
+                <li class="active">Confirmation</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================ About History Area  =================-->
+<section class="login_area" style="margin: 60px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <h3>Congratulations!</h3>
+                <p style="font-size: 1.2em;">
+                    Congratulations on signing up for our newsletter!<br />
+                    Please remember to check your inbox if you don't
+                    see any emails from us.
+                </p>
+                <br />
+                <p>
+                    <a href="{{ url_for('public.index') }}" class="genric-btn primary e-large">Home Page</a>
+                </p>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+    </div>
+</section>
+<!--================ About History Area  =================-->
+
+{% endblock %}
