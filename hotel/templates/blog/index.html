@@ -220,16 +220,19 @@
               Here, I focus on a range of items and features that we use in life without
               giving them a second thought.
             </p>
-            <div class="form-group d-flex flex-row">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+            <form action="/newsletter" method="post">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <div class="form-group d-flex flex-row">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                  </div>
+                  <input type="text" name="email" class="form-control" id="inlineFormInputGroup"
+                    placeholder="Enter email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'">
                 </div>
-                <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email"
-                  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'">
+                <button type="submit" value="submit" class="bbtns">Subcribe</button>
               </div>
-              <a href="#" class="bbtns">Subcribe</a>
-            </div>
+            </form>
             <p class="text-bottom">You can unsubscribe at any time</p>
             <div class="br"></div>
           </aside>
