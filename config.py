@@ -29,10 +29,8 @@ class Base():
     MAIL_PORT = 25
     MAIL_ENABLED = True
 
-    # LOGGING
-    LOGGING_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    LOGGING_LOCATION = 'hotel.log'
-    LOGGING_LEVEL = logging.DEBUG
+    # PAGING
+    POSTS_PER_PAGE = 5
 
 
 class Development(Base):
