@@ -42,7 +42,7 @@
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
                         <img src="../static/image/room7.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                        <a href="{{ url_for('public.doubleq') }}" class="btn theme_btn button_hover">Book Now</a>
                     </div>
                     <a href="#">
                         <h4 class="sec_h4">Deluxe Double Queen Room</h4>
@@ -53,8 +53,8 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
-                        <img src="../static/image/room1.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                        <img src="../static/image/mjk1.jpg" alt="">
+                        <a href="{{ url_for('public.kingsuite') }}" class="btn theme_btn button_hover">Book Now</a>
                     </div>
                     <a href="#">
                         <h4 class="sec_h4">Majestic King Suite</h4>
@@ -66,7 +66,7 @@
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
                         <img src="../static/image/room3.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                        <a href="{{ url_for('public.familysuite') }}" class="btn theme_btn button_hover">Book Now</a>
                     </div>
                     <a href="#">
                         <h4 class="sec_h4">Majestic Family Suite</h4>
@@ -77,8 +77,7 @@
         </div>
     </div>
     <br><br>
-    <div style="text-align:center"><a href="{{ url_for('public.index') }}" class="btn theme_btn button_hover">Book
-            Now</a></div>
+
 
 
 

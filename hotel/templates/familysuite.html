@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% set active_page = "public.accomodation" %}
+
+{% block title %}Standard Queen Room{% endblock %}
+{% block content %}
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Majestic Family Suite</h2>
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">Hotel Accommodation</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================ Accomodation Area  =================-->
+<div class="whole-wrap">
+    <div class="container">
+        <div class="section-top-border">
+            <div class="section_title text-center">
+                <h2 class="title_color">Majestic Famliy Suite</h2>
+                <h5>$500<small>/night</small></h5>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="w3-content w3-display-container">
+                        <img class="mySlides" src="../static/image/fs2.jpg" style="width: 600px" height="400">
+                        <img class="mySlides" src="../static/image/fs3.jpg" style="width: 600px" height="400">
+                        <img class="mySlides" src="../static/image/fs4.jpg" style="width: 600px" height="400">
+                        <img class="mySlides" src="../static/image/fs5.jpg" style="width: 600px" height="400">
+                        <img class="mySlides" src="../static/image/fs6.jpg" style="width: 600px" height="400">
+                        <img class="mySlides" src="../static/image/mjk2.jpg" style="width: 600px" height="400">
+
+                        <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                        <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                    </div>
+                    <script>
+                        var slideIndex = 1;
+                        showDivs(slideIndex);
+
+                        function plusDivs(n) {
+                            showDivs(slideIndex += n);
+                        }
+
+                        function showDivs(n) {
+                            var i;
+                            var x = document.getElementsByClassName("mySlides");
+                            if (n > x.length) { slideIndex = 1 }
+                            if (n < 1) { slideIndex = x.length }
+                            for (i = 0; i < x.length; i++) {
+                                x[i].style.display = "none";
+                            }
+                            x[slideIndex - 1].style.display = "block";
+                        }
+                    </script>
+
+                    <div class="col-lg-4 col-sm-6 mt-sm-30 typo-sec">
+                        <div class="col-md-9">
+                            <h3 class="mb-20 title_color">Room Amenities</h3>
+
+                            <ul class="unordered-list">
+                                <li>Free Continental Breakfast</li>
+                                <li>Multi-purpose kitchen island</li>
+                                <li>Comfortable King Bed</li>
+                                <li>One Queen Bed or 2 Twin Beds</li>
+                                <li>42” flat screen HDTV</li>
+                                <li>Private Bathroom</li>
+                                <li>Compact fridge and freezer</li>
+                                <li>Seperate Workspace / office</li>
+                                <li>Wi-Fi</li>
+                                <li>Coffeemaker</li>
+                                <li>Alarm clock radio with bluetooth capability</li>
+                                <li>Microwave</li>
+                                <li>Hair Dryer</li>
+                                <li>Iron/ironing board</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+</section>
+<!--================ Accomodation Area  =================-->
+{% endblock %}
