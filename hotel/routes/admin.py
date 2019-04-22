@@ -4,7 +4,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_security import current_user, login_required
 
 from hotel.db import db
-from hotel.forms.blog import BlogUpdateForm
+from hotel.forms.post import PostUpdateForm
 from hotel.forms.profile import ProfileForm
 from hotel.models import Post
 
@@ -49,24 +49,12 @@ def delete_post(id):
     """ deletes a post """
     post = Post.query.get(id)
     post.published = False
-    post.deleted = True
-    db.session.commit()
-    return redirect(url_for('admin.posts'))
-
-
-@admin.route('/posts/<int:id>')
-@login_required
-def update_post(id):
-    """ updates a post """
-    post = Post.query.get(id)
-    post.published = False
-    post.deleted = True
     db.session.commit()
     return redirect(url_for('admin.posts'))
 
 
 @admin.route('/create', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def create():
     """ Create a new post for the current user """
     if request.method == 'POST':
@@ -86,18 +74,21 @@ def create():
     return render_template('blog/create.html')
 
 
-@admin.route('/posts/<int:id>/update', methods=['POST'])
+@admin.route('/posts/<int:id>/update', methods=['GET', 'POST'])
 # @login_required
 def post_update(id):
     """ Update a post """
     post = Post.query.get(id)
-    form = BlogUpdateForm()
+    form = PostUpdateForm()
     if form.validate_on_submit():
         post.title = form.title.data
         post.summary = form.summary.data
         post.content = form.content.data
         post.published = form.published.data
-        post.deleted = form.deleted.data
         db.session.commit()
         return redirect(url_for('admin.posts'))
-    return render_template('blog/blog_update.html', form=form, post=post)
+    form.title.data = post.title
+    form.summary.data = post.summary
+    form.content.data = post.content
+    form.published.data = post.published
+    return render_template('admin/blog_update.html', form=form, post=post)

@@ -7,6 +7,7 @@ from flask import current_app
 
 from hotel.db import db
 from hotel.models import Comment, Post, Role, Room, Tag, User
+from hotel.utils import get_random_date
 
 
 def init_data():
@@ -114,7 +115,6 @@ def create_posts():
                     summary=get_summary(),
                     content='coming soon',
                     published=True,
-                    deleted=False,
                     image_path='m-blog-1.jpg',
                     tags=[tags[0], tags[3]]))
 
@@ -123,7 +123,6 @@ def create_posts():
                     summary=get_summary(),
                     content='coming soon',
                     published=True,
-                    deleted=False,
                     image_path='m-blog-2.jpg',
                     tags=tags))
     db.session.add(
@@ -131,7 +130,6 @@ def create_posts():
                     summary=get_summary(),
                     content='coming soon',
                     published=True,
-                    deleted=False,
                     image_path='m-blog-3.jpg',
                     tags=[tags[0], tags[4]]))
     db.session.add(
@@ -139,7 +137,6 @@ def create_posts():
                     summary=get_summary(),
                     content='coming soon',
                     published=True,
-                    deleted=False,
                     image_path='m-blog-4.jpg',
                     tags=[tags[0], tags[3], tags[5]]))
     db.session.add(
@@ -147,56 +144,13 @@ def create_posts():
                     summary=get_summary(),
                     content='coming soon',
                     published=False,
-                    deleted=True,
-                    image_path='m-blog-5.jpg',
-                    tags=[tags[0], tags[3], tags[5]]))
-
-    db.session.add(
-        create_post(title='Share Your Love of Travel',
-                    summary=get_summary(),
-                    content='coming soon',
-                    published=True,
-                    deleted=False,
-                    image_path='m-blog-1.jpg',
-                    tags=[tags[0], tags[3]]))
-
-    db.session.add(
-        create_post(title='Spring Discounts To Take Advantage Off',
-                    summary=get_summary(),
-                    content='coming soon',
-                    published=True,
-                    deleted=False,
-                    image_path='m-blog-2.jpg',
-                    tags=tags))
-    db.session.add(
-        create_post(title='7 Ingenious Tips For Hotel Weding',
-                    summary=get_summary(),
-                    content='coming soon',
-                    published=True,
-                    deleted=False,
-                    image_path='m-blog-3.jpg',
-                    tags=[tags[0], tags[4]]))
-    db.session.add(
-        create_post(title='Top Five Trends In Outdoor To Watch',
-                    summary=get_summary(),
-                    content='coming soon',
-                    published=True,
-                    deleted=False,
-                    image_path='m-blog-4.jpg',
-                    tags=[tags[0], tags[3], tags[5]]))
-    db.session.add(
-        create_post(title='Get Social With A Custom Hashtag',
-                    summary=get_summary(),
-                    content='coming soon',
-                    published=False,
-                    deleted=True,
                     image_path='m-blog-5.jpg',
                     tags=[tags[0], tags[3], tags[5]]))
 
     db.session.commit()
 
 
-def create_post(title, summary, content, published, deleted, image_path, tags):
+def create_post(title, summary, content, published, image_path, tags):
     """ create a post entity """
     user = User.query.filter_by(username='gharzedd@mail.usf.edu').first()
     post = Post(title=title,
@@ -211,8 +165,7 @@ def create_post(title, summary, content, published, deleted, image_path, tags):
                 tags=tags,
                 created=datetime.utcnow(),
                 published=published,
-                deleted=deleted,
-                publish_date=datetime.utcnow(),
+                publish_date=get_random_date(2018),
                 author_id=user.id)
 
     post.comments.append(

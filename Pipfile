@@ -27,6 +27,7 @@ sqlalchemy = "*"
 werkzeug = "*"
 wtforms = "*"
 requests = "*"
+flask-ckeditor = "*"
 
 [requires]
 python_version = "3.7"

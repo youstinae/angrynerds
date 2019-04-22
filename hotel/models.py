@@ -78,7 +78,6 @@ class Post(db.Model):
     view_count = db.Column(db.Integer(), nullable=False, default=0)
     comment_count = db.Column(db.Integer(), nullable=False, default=0)
     published = db.Column(db.Boolean(), nullable=False, default=False)
-    deleted = db.Column(db.Boolean(), nullable=False, default=False)
     publish_date = db.Column(db.DateTime())
     created = db.Column(db.DateTime(), nullable=False)
     updated = db.Column(db.DateTime(), default=datetime.utcnow())

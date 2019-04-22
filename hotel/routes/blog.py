@@ -15,7 +15,7 @@ blog = Blueprint('blog', __name__, url_prefix='/blog')
 def index():
     """ Show all the posts, most recent first """
     posts = Post.query.filter_by(published=True).order_by(
-        Post.publish_date.desc()).paginate(per_page=3)
+        Post.publish_date.desc()).paginate(per_page=5)
     tags = Tag.query.all()
     return render_template('blog/index.html', posts=posts, tags=tags)
 
