@@ -1,0 +1,193 @@
+{% extends "layout.html" %}
+{% set active_page = "public.accomodation" %}
+
+{% block title %}Accommodation{% endblock %}
+{% block content %}
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Hotel Accommodation</h2>
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">Choose your Room</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================ Accomodation Area  =================-->
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h2 class="title_color">Choose your Room</h2>
+            <p>A wonderful selection of rooms at Majestic Hotels.</p>
+        </div>
+        <div class="section-top-border">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="../static/image/standardq1.jpg" alt="" class="img-fluid">
+                </div>
+                <div class="col-md-5">
+                    <div class="single-defination">
+                        <div class="col-md-9 mt-sm-20 left-align-p">
+                            <h4 class="mb-20">Standard Queen Room</h4>
+                            <p>Our spacious 252 sq ft Queen room features
+                                contemporary décor and comfortable furnishings,
+                                including one plush Queen sized Bed and one sofa</p>
+                            <p>Max. 2 Occupents</p>
+                            <details>
+                                <summary>Show Amenities</summary>
+                                <p>Free Continental Breakfast</p>
+                                <p>One Queen Bed</p>
+                                <p>42” flat screen HDTV</p>
+                                <p>Private Bathroom</p>
+                                <p>Wi-Fi</p>
+                                <p>Coffeemaker</p>
+                                <p>Alarm clock radio with bluetooth capability</p>
+                                <p>Mini Fridge</p>
+                                <p>Microwave</p>
+                                <p>Hair Dryer</p>
+                                <p>Iron/ironing board</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="single-defination align-items-right">
+                        <h4 class="text-right">$200</h4>
+                        <h4 class="text-right"><small>Avg/night</small></h4>
+                        <a href="{{ url_for('public.standardq') }}"
+                            class="btn theme_btn button_hover pull-right">Select</a>
+                    </div>
+                </div>
+            </div>
+            <div class="section-top-border">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="../static/image/standardq1.jpg" alt="" class="img-fluid">
+                    </div>
+                    <div class="col-md-5">
+                        <div class="single-defination">
+                            <div class="col-md-9 mt-sm-20 left-align-p">
+                                <h4 class="mb-20">Deluxe Double Room</h4>
+                                <p>Our spacious 280 sq ft Queen room features
+                                    contemporary décor and comfortable furnishings,
+                                    including two plush Queen sized Bed and one sofa</p>
+                                <p>Max. 4 Occupents</p>
+                                <details>
+                                    <summary>Show Amenities</summary>
+                                    <p>Free Continental Breakfast</p>
+                                    <p>Two Queen Bed</p>
+                                    <p>42” flat screen HDTV</p>
+                                    <p>Private Bathroom</p>
+                                    <p>Wi-Fi</p>
+                                    <p>Coffeemaker</p>
+                                    <p>Alarm clock radio with bluetooth capability</p>
+                                    <p>Mini Fridge</p>
+                                    <p>Microwave</p>
+                                    <p>Hair Dryer</p>
+                                    <p>Iron/ironing board</p>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="single-defination align-items-right">
+                            <h4 class="text-right">$250</h4>
+                            <h4 class="text-right"><small>Avg/night</small></h4>
+                            <a href="{{ url_for('public.standardq') }}"
+                                class="btn theme_btn button_hover pull-right">Select</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-top-border">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="../static/image/standardq1.jpg" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-md-5">
+                            <div class="single-defination">
+                                <div class="col-md-9 mt-sm-20 left-align-p">
+                                    <h4 class="mb-20">Majestic King Suite</h4>
+                                    <p>Our spacious 325 sq ft King Suite is the perfect room
+                                        for a couples getaway featuring a Plush King Sized Bed,
+                                        Full Kitchen and Private Bathroom. </p>
+                                    <p>Max. 2 Occupents</p>
+                                    <details>
+                                        <summary>Show Amenities</summary>
+                                        <p>Free Continental Breakfast</p>
+                                        <p>Multi-purpose kitchen island</p>
+                                        <p>One King Bed </p>
+                                        <p>48” flat screen HDTV</p>
+                                        <p>Private Bathroom</p>
+                                        <p>Comfortable Sofa</p>
+                                        <p>Wi-Fi</p>
+                                        <p>Coffeemaker</p>
+                                        <p>Alarm clock radio with bluetooth capability</p>
+                                        <p>Mini Fridge</p>
+                                        <p>Microwave</p>
+                                        <p>Hair Dryer</p>
+                                        <p>Iron/ironing board</p>
+                                    </details>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single-defination align-items-right">
+                                <h4 class="text-right">$350</h4>
+                                <h4 class="text-right"><small>Avg/night</small></h4>
+                                <a href="{{ url_for('public.standardq') }}"
+                                    class="btn theme_btn button_hover pull-right">Select</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-top-border">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img src="../static/image/standardq1.jpg" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-md-5">
+                            <div class="single-defination">
+                                <div class="col-md-9 mt-sm-20 left-align-p">
+                                    <h4 class="mb-20">Majestic Family Suite</h4>
+                                    <p>Our spacious 450 sq ft Family Suite is the perfect room
+                                        for fun with the family featuring a Plush King Sized Bed, Queen Bed, pull out
+                                        sofa,
+                                        Full Kitchen and Private Bathroom. </p>
+                                    <p>Max. 5 Occupents</p>
+                                    <details>
+                                        <summary>Show Amenities</summary>
+                                        <p>Free Continental Breakfast</p>
+                                        <p>Multi-purpose kitchen island</p>
+                                        <p>One King Bed </p>
+                                        <p>One Queen Bed/ Two Twin Beds</p>
+                                        <p>48” flat screen HDTV</p>
+                                        <p>Private Bathroom</p>
+                                        <p>Comfortable pullout Sofa</p>
+                                        <p>Wi-Fi</p>
+                                        <p>Coffeemaker</p>
+                                        <p>Alarm clock radio with bluetooth capability</p>
+                                        <p>Mini Fridge</p>
+                                        <p>Microwave</p>
+                                        <p>Hair Dryer</p>
+                                        <p>Iron/ironing board</p>
+                                    </details>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="single-defination align-items-right">
+                                <h4 class="text-right">$500</h4>
+                                <h4 class="text-right"><small>Avg/night</small></h4>
+                                <a href="{{ url_for('public.standardq') }}"
+                                    class="btn theme_btn button_hover pull-right">Select</a>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    {% endblock %}

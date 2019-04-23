@@ -24,10 +24,26 @@ def about():
 def accomodation():
     return render_template('accomodation.html')
 
+@public.route('/accomodation2')
+def accomodation2():
+    return render_template('accomodation2.html')
+
 
 @public.route('/standardqueen')
 def standardq():
     return render_template('standardqueen.html')
+
+@public.route('/deluxedouble')
+def doubleq():
+    return render_template('deluxedouble.html')
+
+@public.route('/kingsuite')
+def kingsuite():
+    return render_template('kingsuite.html')
+
+@public.route('/familysuite')
+def familysuite():
+    return render_template('familysuite.html')
 
 
 @public.route('/gallery')
@@ -100,3 +116,22 @@ def contact():
         flash('Your message has been sent!')
         return redirect(url_for('public.contact'))
     return render_template('contact.html', form=form, title='Contact')
+
+@public.route('/booking', methods=['GET', 'POST'])
+def booking():
+    """
+    Handle requests to the /booking route
+    Add a booking to the database
+    """
+    form = BookingForm()
+    if form.validate_on_submit():
+        bf = Booking()
+        bf.arrival = form.datetimepicker11.data
+        bf.departure = form.datetimepicker1.data
+        bf.adults = form.adult.data
+        bf.child = form.child.data
+        bf.rooms = form.room.data
+        db.session.add(bf)
+        db.session.commit()
+        return redirect(url_for('public.standardq'))
+    return render_template('standardqueen.html', form=form, title='Booking')

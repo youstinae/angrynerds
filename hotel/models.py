@@ -170,3 +170,13 @@ class Newsletter(db.Model):
     first_name = db.Column(db.String(), nullable=True)
     last_name = db.Column(db.String(), nullable=True)
     email = db.Column(db.String(), nullable=False)
+
+class Booking(db.Model):
+    """ Create a Booking table """
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    arrival = db.Column(db.DateTime(), default=datetime.utcnow())
+    departure = db.Column(db.DateTime(), default=datetime.utcnow())
+    adults = db.Column(db.String(), nullable=False)
+    child = db.Column(db.String(), nullable=False)
+    rooms = db.Column(db.String(), nullable=False)
