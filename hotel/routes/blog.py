@@ -2,6 +2,7 @@
 
 from flask import (Blueprint, abort, flash, g, redirect, render_template,
                    request, url_for)
+from flask.globals import current_app
 
 from hotel.db import db
 from hotel.forms.comment import CommentForm
@@ -13,7 +14,8 @@ blog = Blueprint('blog', __name__, url_prefix='/blog')
 @blog.route('/')
 def index():
     """ Show all the posts, most recent first """
-    posts = Post.query.filter_by(published=True).all()
+    posts = Post.query.filter_by(published=True).order_by(
+        Post.publish_date.desc()).paginate(per_page=3)
     tags = Tag.query.all()
     return render_template('blog/index.html', posts=posts, tags=tags)
 

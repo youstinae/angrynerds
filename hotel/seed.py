@@ -150,6 +150,49 @@ def create_posts():
                     deleted=True,
                     image_path='m-blog-5.jpg',
                     tags=[tags[0], tags[3], tags[5]]))
+
+    db.session.add(
+        create_post(title='Share Your Love of Travel',
+                    summary=get_summary(),
+                    content='coming soon',
+                    published=True,
+                    deleted=False,
+                    image_path='m-blog-1.jpg',
+                    tags=[tags[0], tags[3]]))
+
+    db.session.add(
+        create_post(title='Spring Discounts To Take Advantage Off',
+                    summary=get_summary(),
+                    content='coming soon',
+                    published=True,
+                    deleted=False,
+                    image_path='m-blog-2.jpg',
+                    tags=tags))
+    db.session.add(
+        create_post(title='7 Ingenious Tips For Hotel Weding',
+                    summary=get_summary(),
+                    content='coming soon',
+                    published=True,
+                    deleted=False,
+                    image_path='m-blog-3.jpg',
+                    tags=[tags[0], tags[4]]))
+    db.session.add(
+        create_post(title='Top Five Trends In Outdoor To Watch',
+                    summary=get_summary(),
+                    content='coming soon',
+                    published=True,
+                    deleted=False,
+                    image_path='m-blog-4.jpg',
+                    tags=[tags[0], tags[3], tags[5]]))
+    db.session.add(
+        create_post(title='Get Social With A Custom Hashtag',
+                    summary=get_summary(),
+                    content='coming soon',
+                    published=False,
+                    deleted=True,
+                    image_path='m-blog-5.jpg',
+                    tags=[tags[0], tags[3], tags[5]]))
+
     db.session.commit()
 
 

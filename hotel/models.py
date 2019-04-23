@@ -167,6 +167,8 @@ class Newsletter(db.Model):
     """ Create a newsletter sign up table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
+    first_name = db.Column(db.String(), nullable=True)
+    last_name = db.Column(db.String(), nullable=True)
     email = db.Column(db.String(), nullable=False)
 
 class Booking(db.Model):

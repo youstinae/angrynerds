@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from hotel.db import db
 from hotel.forms.contact import ContactForm
@@ -56,20 +56,27 @@ def elements():
     return render_template('elements.html')
 
 
-@public.route('/newsletter', methods=['POST'])
+@public.route('/newsletter', methods=['GET', 'POST'])
 def newsletter():
-    """
-    newsletter sign up
-    """
+    """ newsletter sign up """
     form = NewsletterForm()
-    if form.validate_on_submit():
-        nl = Newsletter()
-        nl.email = form.email.data
-        db.session.add(nl)
-        db.session.commit()
-        flash('Congratulations on signing up for our newsletter!')
-        return redirect(url_for('public.index'))
-    return render_template('index.html')
+    if request.method == 'POST':
+        # result = request.form
+        if form.validate_on_submit():
+            newsl = Newsletter()
+            newsl.first_name = form.first_name.data
+            newsl.last_name = form.last_name.data
+            newsl.email = form.email.data
+            db.session.add(newsl)
+            db.session.commit()
+            return redirect(url_for('public.newsletter_confirm'))
+
+    return render_template('newsletter/index.html', form=form)
+
+
+@public.route('/newsletter/confirm')
+def newsletter_confirm():
+    return render_template('newsletter/confirm.html')
 
 
 @public.route('/feedback', methods=['GET', 'POST'])
