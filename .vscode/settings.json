@@ -10,7 +10,6 @@
         "pylint_flask",
         "--enable=W0614"
     ],
-    "editor.formatOnSave": true,
     "python.formatting.provider": "autopep8",
     "editor.codeActionsOnSave": {
         "source.organizeImports": true

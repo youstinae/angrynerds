@@ -34,6 +34,9 @@ def standardq():
 def gallery():
     return render_template('gallery.html')
 
+@public.route('/payment')
+def payment():
+    return render_template('payment.html')
 
 @public.route('/elements')
 def elements():
