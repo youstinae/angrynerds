@@ -32,24 +32,29 @@
             <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
             <i class="fa fa-credit-card"></i> Credit Card</a></li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#nav-tab-paypal">
-            <i class="fab fa-paypal"></i>  Paypal</a></li>
+            <a class="nav-link" data-toggle="">
+              $0.00</a></li>
 
     </ul>
     
     <div class="tab-content">
     <div class="tab-pane fade show active" id="nav-tab-card">
-        <p class="alert alert-success">Some text success or error</p>
-        <form role="form">
+        {% for message in get_flashed_messages() %}
+        <p class="alert alert-success">                {{ message }}<br><br>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button></p>{% endfor %}
+        <form action="/payment" method="POST" id="paymentForm">
+        {{ form.csrf_token }}
         <div class="form-group">
             <label for="username">Full name (on the card)</label>
-            <input type="text" class="form-control" name="username" placeholder="" required="">
+            <input type="text" class="form-control" name="name" id ="name" placeholder="" required="">
         </div> <!-- form-group.// -->
-    
+        
         <div class="form-group">
             <label for="cardNumber">Card number</label>
             <div class="input-group">
-                <input type="text" class="form-control" name="cardNumber" placeholder="">
+                <input type="text" class="form-control" name="cardNumber" id ="cardNumber" placeholder="" required="">
                 <div class="input-group-append">
                     <span class="input-group-text text-muted">
                         <i class="fab fa-cc-visa"></i>   <i class="fab fa-cc-amex"></i>   
@@ -64,19 +69,19 @@
                 <div class="form-group">
                     <label><span class="hidden-xs">Expiration</span> </label>
                     <div class="input-group">
-                        <input type="number" class="form-control" placeholder="MM" name="">
-                        <input type="number" class="form-control" placeholder="YY" name="">
+                        <input type="number" class="form-control" placeholder="MM" name="month" id="month" required="">
+                        <input type="number" class="form-control" placeholder="YY" name="year" id="year" required="">
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
-                    <input type="number" class="form-control" required="">
+                    <input type="number" class="form-control" name="cvv" id="cvv" required="">
                 </div> <!-- form-group.// -->
             </div>
         </div> <!-- row.// -->
-        <button class="subscribe btn btn-primary btn-block" type="button"> Confirm  </button>
+        <button class="subscribe btn btn-primary btn-block" type="submit" value="submit"> Confirm  </button>
         </form>
     </div> <!-- tab-pane.// -->
     <div class="tab-pane fade" id="nav-tab-paypal">

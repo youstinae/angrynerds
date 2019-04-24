@@ -2,9 +2,10 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from hotel.db import db
 from hotel.forms.contact import ContactForm
+from hotel.forms.payment import PaymentForm
 from hotel.forms.feedback import FeedbackForm
 from hotel.forms.newsletter import NewsletterForm
-from hotel.models import Contact, Feedback, Newsletter
+from hotel.models import Contact, Feedback, Newsletter, Payment
 
 public = Blueprint('public', __name__, url_prefix='/')
 
@@ -49,10 +50,6 @@ def familysuite():
 @public.route('/gallery')
 def gallery():
     return render_template('gallery.html')
-
-@public.route('/payment')
-def payment():
-    return render_template('payment.html')
 
 @public.route('/elements')
 def elements():
@@ -116,6 +113,33 @@ def contact():
         flash('Your message has been sent!')
         return redirect(url_for('public.contact'))
     return render_template('contact.html', form=form, title='Contact')
+
+
+@public.route('/payment', methods=['GET', 'POST'])
+def payment():
+    """
+    Handle requests to the /payments route
+    
+    """
+    form = PaymentForm()
+    if form.is_submitted():
+        if not form.validate_on_submit():
+            flash('Information Not Valid')
+    if form.validate_on_submit():
+        payinfo = Payment()
+        payinfo.name = form.name.data
+        payinfo.cardNumber = form.cardNumber.data
+        payinfo.month = form.month.data
+        payinfo.year = form.year.data
+        payinfo.cvv = form.cvv.data
+        db.session.add(payinfo)
+        db.session.commit()
+        flash('Payment Successful')
+        return redirect(url_for('public.payment'))
+        
+    return render_template('payment.html', form=form, title='Payment')
+    
+
 
 @public.route('/booking', methods=['GET', 'POST'])
 def booking():

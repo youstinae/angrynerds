@@ -153,6 +153,18 @@ class Contact(db.Model):
     message = db.Column(db.String(), nullable=False)
 
 
+class Payment(db.Model):
+    """ Create a Payment table """
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String())
+    cardNumber = db.Column(db.String())
+    month = db.Column(db.Integer())
+    year = db.Column(db.Integer())
+    cvv = db.Column(db.Integer())
+
+
+
 class Feedback(db.Model):
     """ Create a Feedback Message table """
     __table_args__ = {'extend_existing': True}
