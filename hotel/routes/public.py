@@ -3,10 +3,10 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from hotel.db import db
 from hotel.forms.booking import BookingForm
 from hotel.forms.contact import ContactForm
-from hotel.forms.feedback import FeedbackForm
+'''from hotel.forms.feedback import FeedbackForm'''
 from hotel.forms.newsletter import NewsletterForm
 from hotel.forms.payment import PaymentForm
-from hotel.models import Contact, Feedback, Newsletter, Payment
+from hotel.models import Contact, Newsletter, Payment
 
 public = Blueprint('public', __name__, url_prefix='/')
 
