@@ -1,7 +1,7 @@
-.authlinks a {
+a.h-links {
     color: #f3c300;
 }
 
-.authlinks a:hover {
-    color: #52c5fd;
+a.h-links:hover {
+    color: #594700;
 }

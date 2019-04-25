@@ -1,5 +1,6 @@
 """ module for blog posts """
 
+from flask_ckeditor.fields import CKEditorField
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.fields.core import BooleanField
@@ -19,9 +20,9 @@ class PostUpdateForm(FlaskForm):
     """ blog update form """
     title = StringField('Title',
                         validators=[Required(), Length(min=1, max=128)])
-    summary = TextAreaField('Summary',
+    summary = CKEditorField('Summary',
                             validators=[Required(), Length(min=1, max=500)])
-    content = TextAreaField('Content',
+    content = CKEditorField('Content',
                             validators=[Required(), Length(min=1, max=10000)])
     published = BooleanField('Published', validators=[Required()])
     submit = SubmitField('Update Post')

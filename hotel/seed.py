@@ -54,13 +54,10 @@ def create_users():
 
 def create_rooms():
     """ create default rooms """
-    for i in range(1, 61):
-        db.session.add_all([
-            Room(roomtype='Single'),
-            Room(roomtype='Double'),
-            Room(roomtype='Honeymoon'),
-            Room(roomtype='Economy')
-        ])
+    db.session.add(Room(type='Single', quantity=25))
+    db.session.add(Room(type='Double', quantity=25))
+    db.session.add(Room(type='Honeymoon', quantity=25))
+    db.session.add(Room(type='Economy', quantity=25))
     db.session.commit()
 
 

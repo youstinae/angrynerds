@@ -88,31 +88,32 @@
                         </div>
                         <div class="col-md-9">
 
-                            <form class="row contact_form" action="/booking" method="POST" id="bookingForm">
-                                {{ form.csrf_token }}
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker11'>
-                                            <input type='text' class="form-control" placeholder="Arrival Date" />
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class='input-group date' id='datetimepicker1'>
-                                            <input type='text' class="form-control" placeholder="Departure Date" />
-                                            <span class="input-group-addon">
-                                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                                            </span>
-                                        </div>
+                            {{ form.csrf_token }}
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class='input-group date' id='datetimepicker11'>
+                                        <input type='text' class="form-control" name="arrival"
+                                            placeholder="Arrival Date" />
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </span>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' class="form-control" name="departure"
+                                            placeholder="Departure Date" />
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="input-group" id='adult'>
-                                    <select class="wide">
+                                    <select class="wide" name="adults">
                                         <option data-display="Adults">Adult</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -120,7 +121,7 @@
                                         <option value="4">4</option>
                                     </select>
                                 </div>
-                                <div class="input-group" id='child'>
+                                <div class="input-group" id='child' name="children">
                                     <select class="wide">
                                         <option data-display="Children">Child</option>
                                         <option value="1">1</option>
@@ -134,7 +135,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="input-group" id='room'>
-                                    <select class="wide">
+                                    <select class="wide" name="rooms">
                                         <option data-display="Number of Rooms">Number of Rooms
                                         </option>
                                         <option value="1">1</option>
