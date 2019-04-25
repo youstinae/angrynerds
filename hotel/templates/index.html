@@ -35,6 +35,12 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('#datetimepicker11').datetimepicker('setDaysOfWeekDisabled', null);
+                                        });
+                                    </script>
+                                    
                                     <div class="form-group">
                                         <div class='input-group date' id='datetimepicker1'>
                                             <input type='text' class="form-control" placeholder="Departure Date" />
@@ -54,6 +60,10 @@
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
+                                            <option value="4">5</option>
+                                            <option value="4">6</option>
+                                            <option value="4">7</option>
+                                            <option value="4">8</option>
                                         </select>
                                     </div>
                                     <div class="input-group">
@@ -63,6 +73,8 @@
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
+                                            <option value="4">5</option>
+                                            <option value="4">6</option>
                                         </select>
                                     </div>
                                 </div>
@@ -75,6 +87,7 @@
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
+                                            <option value="3">4</option>
                                         </select>
                                     </div>
                                     <a class="book_now_btn button_hover"
@@ -97,12 +110,12 @@
             <h2 class="title_color">Hotel Accomodation</h2>
             <p>Breath in a new world with the best Majestic Hotel has to offer</p>
         </div>
-        <div class="row mb_30">
+        <<div class="row mb_30">
             <div class="col-lg-3 col-sm-6">
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
                         <img src="../static/image/room4.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                        <a href="{{ url_for('public.standardq') }}" class="btn theme_btn button_hover">More Info</a>
                     </div>
                     <a href="#">
                         <h4 class="sec_h4">Standard Queen Room</h4>
@@ -114,19 +127,19 @@
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
                         <img src="../static/image/room7.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                        <a href="{{ url_for('public.doubleq') }}" class="btn theme_btn button_hover">More Info</a>
                     </div>
                     <a href="#">
                         <h4 class="sec_h4">Deluxe Double Queen Room</h4>
                     </a>
-                    <h5>$300<small>/night</small></h5>
+                    <h5>$250<small>/night</small></h5>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-6">
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
-                        <img src="../static/image/room1.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                        <img src="../static/image/mjk1.jpg" alt="">
+                        <a href="{{ url_for('public.kingsuite') }}" class="btn theme_btn button_hover">More Info</a>
                     </div>
                     <a href="#">
                         <h4 class="sec_h4">Majestic King Suite</h4>
@@ -138,7 +151,7 @@
                 <div class="accomodation_item text-center">
                     <div class="hotel_img">
                         <img src="../static/image/room3.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Book Now</a>
+                        <a href="{{ url_for('public.familysuite') }}" class="btn theme_btn button_hover">More Info</a>
                     </div>
                     <a href="#">
                         <h4 class="sec_h4">Majestic Family Suite</h4>
