@@ -32,6 +32,9 @@ class Base():
     # PAGING
     POSTS_PER_PAGE = 5
 
+    # editor
+    CKEDITOR_PKG_TYPE = 'basic'
+
 
 class Development(Base):
     """ development configuration """

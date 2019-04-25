@@ -1,10 +1,11 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 
 from hotel.db import db
+from hotel.forms.booking import BookingForm
 from hotel.forms.contact import ContactForm
-from hotel.forms.payment import PaymentForm
 from hotel.forms.feedback import FeedbackForm
 from hotel.forms.newsletter import NewsletterForm
+from hotel.forms.payment import PaymentForm
 from hotel.models import Contact, Feedback, Newsletter, Payment
 
 public = Blueprint('public', __name__, url_prefix='/')
@@ -25,31 +26,36 @@ def about():
 def accomodation():
     return render_template('accomodation.html')
 
+
 @public.route('/accomodation2')
 def accomodation2():
     return render_template('accomodation2.html')
 
 
-@public.route('/standardqueen')
+@public.route('/standardq')
 def standardq():
-    return render_template('standardqueen.html')
+    return render_template('standard_queen.html')
 
-@public.route('/deluxedouble')
+
+@public.route('/rooms/deluxedouble')
 def doubleq():
-    return render_template('deluxedouble.html')
+    return render_template('public/deluxe_double.html')
+
 
 @public.route('/kingsuite')
 def kingsuite():
-    return render_template('kingsuite.html')
+    return render_template('public/king_suite.html')
+
 
 @public.route('/familysuite')
 def familysuite():
-    return render_template('familysuite.html')
+    return render_template('public/family_suite.html')
 
 
 @public.route('/gallery')
 def gallery():
     return render_template('gallery.html')
+
 
 @public.route('/elements')
 def elements():
@@ -81,13 +87,14 @@ def newsletter_confirm():
 
 @public.route('/feedback', methods=['GET', 'POST'])
 def feedback():
-    form = FeedbackForm()
+    form = ContactForm()
     if form.validate_on_submit():
-        fb = Feedback()
+        fb = Contact()
         fb.name = form.name.data
         fb.email = form.email.data
         fb.subject = form.subject.data
         fb.message = form.message.data
+        fb.type = 'FEED'
         db.session.add(fb)
         db.session.commit()
         flash('Your message has been sent!')
@@ -117,10 +124,7 @@ def contact():
 
 @public.route('/payment', methods=['GET', 'POST'])
 def payment():
-    """
-    Handle requests to the /payments route
-    
-    """
+    """ Handle requests to the /payments route """
     form = PaymentForm()
     if form.is_submitted():
         if not form.validate_on_submit():
@@ -136,9 +140,8 @@ def payment():
         db.session.commit()
         flash('Payment Successful')
         return redirect(url_for('public.payment'))
-        
+
     return render_template('payment.html', form=form, title='Payment')
-    
 
 
 @public.route('/booking', methods=['GET', 'POST'])
@@ -149,7 +152,7 @@ def booking():
     """
     form = BookingForm()
     if form.validate_on_submit():
-        bf = Booking()
+        bf = BookingForm()
         bf.arrival = form.datetimepicker11.data
         bf.departure = form.datetimepicker1.data
         bf.adults = form.adult.data
@@ -158,4 +161,4 @@ def booking():
         db.session.add(bf)
         db.session.commit()
         return redirect(url_for('public.standardq'))
-    return render_template('standardqueen.html', form=form, title='Booking')
+    return render_template('public/standard_queen.html', form=form, title='Booking')

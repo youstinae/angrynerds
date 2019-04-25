@@ -3,7 +3,6 @@
 from datetime import datetime
 
 from flask_login import UserMixin
-from sqlalchemy.types import Boolean
 
 from hotel.db import db
 
@@ -78,7 +77,6 @@ class Post(db.Model):
     view_count = db.Column(db.Integer(), nullable=False, default=0)
     comment_count = db.Column(db.Integer(), nullable=False, default=0)
     published = db.Column(db.Boolean(), nullable=False, default=False)
-    deleted = db.Column(db.Boolean(), nullable=False, default=False)
     publish_date = db.Column(db.DateTime())
     created = db.Column(db.DateTime(), nullable=False)
     updated = db.Column(db.DateTime(), default=datetime.utcnow())
@@ -130,19 +128,6 @@ class Tag(db.Model):
         return '<Tag %r>' % (self.name)
 
 
-class Room(db.Model):
-    """ Create a Room table """
-    __table_args__ = {'extend_existing': True}
-    id = db.Column(db.Integer(), primary_key=True)
-    open = db.Column(db.Boolean(), unique=False, default=True)
-    roomtype = db.Column(db.String(), nullable=False)
-    tenant_id = db.Column(
-        db.Integer(), db.ForeignKey('user.id'), nullable=True)
-
-    def __repr__(self):
-        return '<Room %r>' % (self.roomtype)
-
-
 class Contact(db.Model):
     """ Create a Contact Message table """
     __table_args__ = {'extend_existing': True}
@@ -151,6 +136,10 @@ class Contact(db.Model):
     email = db.Column(db.String(), nullable=False)
     subject = db.Column(db.String())
     message = db.Column(db.String(), nullable=False)
+    type = db.Column(db.String(), nullable=False, default='CONT')
+
+    def __repr__(self):
+        return '<Contact %r>' % (self.name)
 
 
 class Payment(db.Model):
@@ -164,17 +153,6 @@ class Payment(db.Model):
     cvv = db.Column(db.Integer())
 
 
-
-class Feedback(db.Model):
-    """ Create a Feedback Message table """
-    __table_args__ = {'extend_existing': True}
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(), nullable=False)
-    email = db.Column(db.String(), nullable=False)
-    subject = db.Column(db.String())
-    message = db.Column(db.String(), nullable=False)
-
-
 class Newsletter(db.Model):
     """ Create a newsletter sign up table """
     __table_args__ = {'extend_existing': True}
@@ -183,12 +161,35 @@ class Newsletter(db.Model):
     last_name = db.Column(db.String(), nullable=True)
     email = db.Column(db.String(), nullable=False)
 
+    def __repr__(self):
+        return '<Newsletter %r>' % (self.email)
+
+
 class Booking(db.Model):
     """ Create a Booking table """
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer(), primary_key=True)
-    arrival = db.Column(db.DateTime(), default=datetime.utcnow())
-    departure = db.Column(db.DateTime(), default=datetime.utcnow())
-    adults = db.Column(db.String(), nullable=False)
-    child = db.Column(db.String(), nullable=False)
-    rooms = db.Column(db.String(), nullable=False)
+    arrival = db.Column(db.DateTime(), nullable=False)
+    departure = db.Column(db.DateTime(), nullable=False)
+    adults = db.Column(db.Integer(), nullable=False)
+    children = db.Column(db.Integer(), nullable=False, default=0)
+    rooms = db.relationship(
+        'Room', backref='booking', lazy=True, cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return '<Booking %r>' % (self.id)
+
+
+class Room(db.Model):
+    """ Create a Room table """
+    __table_args__ = {'extend_existing': True}
+    id = db.Column(db.Integer(), primary_key=True)
+    type = db.Column(db.String(), nullable=False)
+    quantity = db.Column(db.Integer(), nullable=False, default=0)
+    tenant_id = db.Column(
+        db.Integer(), db.ForeignKey('user.id'), nullable=True)
+    booking_id = db.Column(
+        db.Integer(), db.ForeignKey('booking.id'), nullable=True)
+
+    def __repr__(self):
+        return '<Room %r>' % (self.roomtype)

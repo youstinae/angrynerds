@@ -1,22 +1,22 @@
 """ contact form """
 
+from flask_security.forms import Length
 from flask_wtf import FlaskForm
-from wtforms import Form, BooleanField,StringField, TextField, validators
-
+from wtforms import BooleanField, Form, StringField, TextField, validators
+from wtforms.fields.core import DateTimeField
+from wtforms.fields.simple import SubmitField
+from wtforms.validators import Required
 
 
 class BookingForm(FlaskForm):
-    
-    arrival = DateTimeField(
-        'Arrival', [Required(), format='%Y-%m-%d %H:%M:%S')
+    arrival = DateTimeField('Arrival', [Required()])
 
-    departure = DateTimeField(
-        'Departure', [Required(), format='%Y-%m-%d %H:%M:%S')
+    departure = DateTimeField('Departure', [Required()])
 
     adults = StringField(
         'Adults', [Required(), Length(min=0, max=1)])
 
-    child = StringField(
+    children = StringField(
         'Child', [Required(), Length(min=0, max=1)])
 
     rooms = StringField(

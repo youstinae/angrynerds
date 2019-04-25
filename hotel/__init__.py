@@ -1,5 +1,6 @@
 from flask import Flask, g
 from flask_bootstrap import Bootstrap
+from flask_ckeditor.fields import CKEditor
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_wtf.csrf import CsrfProtect
 
@@ -17,7 +18,9 @@ app.config.from_object('config.Development')
 db.init_app(app)
 mail.init_app(app)
 CsrfProtect(app)
+
 Bootstrap(app)
+ckeditor = CKEditor()
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
