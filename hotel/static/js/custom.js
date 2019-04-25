@@ -74,9 +74,7 @@ function scrollToInvalid() {
 
 
     $('select').niceSelect();
-    $('#datetimepicker11,#datetimepicker1').datetimepicker({
-        daysOfWeekDisabled: [0, 6]
-    });
+    $('#datetimepicker11,#datetimepicker1').datetimepicker();
 
     /*---------gallery isotope js-----------*/
     function galleryMasonry() {
