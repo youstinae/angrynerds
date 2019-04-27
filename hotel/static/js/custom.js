@@ -1,3 +1,8 @@
+
+$('textarea').each(function () {
+    var editor = new Jodit(this);
+});
+
 $('input').on('invalid', scrollToInvalid);
 function scrollToInvalid() {
     // Height of your nav bar plus a bottom margin
@@ -13,8 +18,6 @@ function scrollToInvalid() {
         $('html, body').scrollTop(invalid_el);
     }
 }
-
-
 
 ; (function ($) {
     "use strict"

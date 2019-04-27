@@ -1,8 +1,7 @@
 """ blog routes """
 
 from flask import (Blueprint, abort, flash, g, redirect, render_template,
-                   request, url_for)
-from flask.globals import current_app
+                   url_for)
 
 from hotel.db import db
 from hotel.forms.comment import CommentForm
