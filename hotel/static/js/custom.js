@@ -77,7 +77,14 @@ function scrollToInvalid() {
 
 
     $('select').niceSelect();
-    $('#datetimepicker11,#datetimepicker1').datetimepicker();
+    
+    $('#datetimepicker11').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
+
+    $('#datetimepicker1').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
 
     /*---------gallery isotope js-----------*/
     function galleryMasonry() {
