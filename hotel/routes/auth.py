@@ -27,7 +27,10 @@ def login():
         username = form.username.data
         secret = form.password.data
         user = User.query.filter_by(username=username).first()
-        if user is None or not user.validate(secret):
+        if user is None or user.cancelled:
+            flash('Your account is cancelled!')
+            return redirect(url_for('auth.login'))
+        if not user.validate(secret):
             flash('Invalid username or password')
             return redirect(url_for('auth.login'))
         elif not user.confirmed:

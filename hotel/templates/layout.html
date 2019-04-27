@@ -74,17 +74,20 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url_for('admin.profile') }}">Profile</a></li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('admin.posts') }}">Posts</a></li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Reservations</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
-                                </li>
-                            </ul>
+                                    <a class="nav-link" href="{{ url_for('admin.cancel') }}">Cancel Account</a></li>
                         </li>
-                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('admin.posts') }}">Posts</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Reservations</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                        </li>
+                    </ul>
+                    </li>
+                    {% endif %}
                     </ul>
                 </div>
             </nav>

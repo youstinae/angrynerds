@@ -27,6 +27,7 @@ class User(db.Model, UserMixin):
     registered_on = db.Column(db.DateTime, nullable=False)
     confirmed = db.Column(db.Boolean(), nullable=False)
     active = db.Column(db.Boolean(), nullable=False)
+    cancelled = db.Column(db.Boolean(), nullable=False, default=False)
 
     # nullable columns
     first_name = db.Column(db.String(), nullable=True)

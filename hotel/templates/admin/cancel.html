@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% set active_page = "auth.login" %}
+
+{% block title %}Account{% endblock %}
+{% block content %}
+
+<!--================Breadcrumb Area =================-->
+<section class="breadcrumb_area">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background=""></div>
+    <div class="container">
+        <div class="page-cover text-center">
+            <h2 class="page-cover-tittle">Account Cancellation</h2>
+            <ol class="breadcrumb">
+                <li><a href="{{ url_for('admin.profile') }}">Profile</a></li>
+                <li class="active">Cancel</li>
+            </ol>
+        </div>
+    </div>
+</section>
+<!--================Breadcrumb Area =================-->
+
+<!--================ About History Area  =================-->
+<section class="login_area" style="margin: 60px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <h3>Account Cancellation!</h3>
+                <p style="font-size: 1.2em;">
+                    We are sorry to see you go!
+                    If there is anything we can do on our part, please contact
+                    our customer service so we can assist you and resolve your
+                    matter. Thank you for being our customer.
+                </p>
+                <br />
+                <p>
+                    <form action="{{ url_for('admin.cancel_account')}}" method='POST'>
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                        <a class="btn genric-btn primary" href="#" onclick="$(this).closest('form').submit()">
+                            <i class="fa fa-2x fa-trash-o" aria-hidden="true"></i> Cancel My Account
+                        </a>
+                    </form>
+                </p>
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+    </div>
+</section>
+<!--================ About History Area  =================-->
+
+{% endblock %}

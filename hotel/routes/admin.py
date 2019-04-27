@@ -11,6 +11,22 @@ from hotel.models import Post
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
 
+@admin.route('/cancel')
+def cancel():
+    return render_template('admin/cancel.html')
+
+
+@admin.route('/cancel_account', methods=['POST'])
+@login_required
+def cancel_account():
+    """ cancel user account """
+    user = current_user
+    user.cancelled = True
+    db.session.commit()
+    flash('Your account has been cancelled!')
+    return redirect(url_for('auth.login'))
+
+
 @admin.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
