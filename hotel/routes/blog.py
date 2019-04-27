@@ -12,7 +12,7 @@ blog = Blueprint('blog', __name__, url_prefix='/blog')
 
 @blog.route('/')
 def index():
-    """ Show all the posts, most recent first """
+    """ Show all the posts, most recent published first """
     posts = Post.query.filter_by(published=True).order_by(
         Post.publish_date.desc()).paginate(per_page=5)
     tags = Tag.query.all()
