@@ -25,7 +25,7 @@
           <img src="{{ url_for('static', filename='image/blog/cat-post/cat-post-3.jpg') }} " alt="post">
           <div class="categories_details">
             <div class="categories_text">
-              <a href="#">
+              <a href="{{ url_for('blog.get_by_tag', id=7)}}">
                 <h5>Social Life</h5>
               </a>
               <div class="border_line"></div>
@@ -39,11 +39,11 @@
           <img src="{{ url_for('static', filename='image/blog/cat-post/cat-post-2.jpg') }}" alt="post">
           <div class="categories_details">
             <div class="categories_text">
-              <a href="#">
-                <h5>Politics</h5>
+              <a href="{{ url_for('blog.get_by_tag', id=8)}}">
+                <h5>Business</h5>
               </a>
               <div class="border_line"></div>
-              <p>Be a part of politics</p>
+              <p>Be a part of business</p>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <img src="{{ url_for('static', filename='image/blog/cat-post/cat-post-1.jpg') }}" alt="post">
           <div class="categories_details">
             <div class="categories_text">
-              <a href="#">
+              <a href="{{ url_for('blog.get_by_tag', id=9)}}">
                 <h5>Food</h5>
               </a>
               <div class="border_line"></div>
@@ -147,15 +147,6 @@
       </div>
       <div class="col-lg-4">
         <div class="blog_right_sidebar">
-          <aside class="single_sidebar_widget search_widget">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search Posts">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><i class="lnr lnr-magnifier"></i></button>
-              </span>
-            </div><!-- /input-group -->
-            <div class="br"></div>
-          </aside>
           <aside class="single_sidebar_widget author_widget">
             <img class="author_img rounded-circle" src="{{ url_for('static', filename='image/blog/author.png') }}"
               alt="">
@@ -175,7 +166,7 @@
             <h3 class="widget_title">Popular Posts</h3>
             {% for pop in pops %}
             <div class="media post_item">
-              <img src="/static/image/blog/post{{range(1, 5) | random}}.jpg" alt="post">
+              <img src="https://picsum.photos/100/60/?random={{range(1, 6) | random}}.jpg" alt="post">
               <div class="media-body">
                 <a href="#">
                   <h3>{{ pop.title }}</h3>

@@ -24,9 +24,11 @@ def index():
 def get_by_tag(id):
     """ get a post by id """
     posts = Post.query.filter_by(published=True).filter(
-        Post.tags.any(id=id)).all()
+        Post.tags.any(id=id)).order_by(
+        Post.publish_date.desc()).paginate(per_page=5)
     tags = Tag.query.all()
-    return render_template('blog/index.html', posts=posts, tags=tags)
+    pops = Post.query.order_by(Post.view_count.desc()).limit(5).all()
+    return render_template('blog/index.html', posts=posts, tags=tags, pops=pops)
 
 
 @blog.route('/<int:id>', methods=['GET'])

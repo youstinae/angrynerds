@@ -91,7 +91,7 @@ def create():
 
 
 @admin.route('/posts/<int:id>/update', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def post_update(id):
     """ Update a post """
     post = Post.query.get(id)
