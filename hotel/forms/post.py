@@ -19,6 +19,12 @@ class PostUpdateForm(FlaskForm):
     """ blog update form """
     title = StringField('Title',
                         validators=[Required(), Length(min=1, max=128)])
+    image_feature1 = StringField('Featured Image Path',
+                                 validators=[Length(min=1, max=512)])
+    image_feature2 = StringField('Post Image 1 Path',
+                                 validators=[Length(min=1, max=512)])
+    image_feature3 = StringField('Post Image 2 Path',
+                                 validators=[Length(min=1, max=512)])
     summary = TextAreaField('Summary',
                             validators=[Required(), Length(min=1, max=500)])
     content = TextAreaField('Content',

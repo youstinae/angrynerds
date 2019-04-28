@@ -38,10 +38,7 @@
         </div>
         {% endfor %}
         <div class="row">
-            <div class="col-md-3 col-lg-3">
-                <img class="img-fluid" src="{{ url_for('static', filename='image/avatar-grey2.png')}}" alt="img">
-            </div>
-            <div class="col-md-6 col-lg-6">
+            <div class="col-md-10 col-lg-10">
                 <h3>{{post.title}}</h3>
                 <form method="POST" action="{{ url_for('admin.post_update', id=post.id)}}" role="form">
                     {{ form.csrf_token }}
@@ -55,9 +52,36 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        {{ form.image_feature1.label }}
+                        {{ form.image_feature1(class="form-control") }}
+                        <div>
+                            {% for error in form.image_feature1.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.image_feature2.label }}
+                        {{ form.image_feature2(class="form-control") }}
+                        <div>
+                            {% for error in form.image_feature2.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form.image_feature3.label }}
+                        {{ form.image_feature3(class="form-control") }}
+                        <div>
+                            {% for error in form.image_feature3.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form-group">
                         {{ form.summary.label }}
-                        <textarea id="editor" rows="4" cols="50" name="summary" style="width: 100%;"></textarea>
-                        <!-- {{ form.summary(class="form-control", id="editor") }} -->
+                        {{ form.summary(class="form-control", id="ckeditor1", style="width: 100%") }}
+                        <script>CKEDITOR.replace('ckeditor1');</script>
                         <div>
                             {% for error in form.summary.errors %}
                             <span style="color: red;">[{{ error }}]</span>
@@ -66,7 +90,8 @@
                     </div>
                     <div class="form-group">
                         {{ form.content.label }}
-                        {{ form.content(class="form-control", id="editor") }}
+                        {{ form.content(class="form-control", id="ckeditor2", style="width: 100%") }}
+                        <script>CKEDITOR.replace('ckeditor2');</script>
                         <div>
                             {% for error in form.content.errors %}
                             <span style="color: red;">[{{ error }}]</span>

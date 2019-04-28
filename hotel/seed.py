@@ -2,6 +2,7 @@
 
 import random
 from datetime import datetime
+from random import randint
 
 from flask import current_app
 
@@ -101,6 +102,9 @@ def create_tags():
     db.session.add(Tag(name='Adventure'))  # 3
     db.session.add(Tag(name='Weddings'))  # 4
     db.session.add(Tag(name='Outdoor'))  # 5
+    db.session.add(Tag(name='Social Life'))  # 6
+    db.session.add(Tag(name='Business'))  # 7
+    db.session.add(Tag(name='Food'))  # 8
     db.session.commit()
 
 
@@ -112,39 +116,50 @@ def create_posts():
                     summary=get_summary(),
                     content='coming soon',
                     published=True,
-                    image_path='m-blog-1.jpg',
+                    image_path='/static/image/blog/main-blog/m-blog-1.jpg',
                     tags=[tags[0], tags[3]]))
-
     db.session.add(
         create_post(title='Spring Discounts To Take Advantage Off',
                     summary=get_summary(),
                     content='coming soon',
                     published=True,
-                    image_path='m-blog-2.jpg',
+                    image_path='/static/image/blog/main-blog/m-blog-2.jpg',
                     tags=tags))
     db.session.add(
-        create_post(title='7 Ingenious Tips For Hotel Weding',
+        create_post(title='7 Ingenious Tips For Hotel Wedding',
                     summary=get_summary(),
                     content='coming soon',
                     published=True,
-                    image_path='m-blog-3.jpg',
+                    image_path='/static/image/blog/main-blog/m-blog-3.jpg',
                     tags=[tags[0], tags[4]]))
     db.session.add(
         create_post(title='Top Five Trends In Outdoor To Watch',
                     summary=get_summary(),
                     content='coming soon',
                     published=True,
-                    image_path='m-blog-4.jpg',
+                    image_path='/static/image/blog/main-blog/m-blog-4.jpg',
                     tags=[tags[0], tags[3], tags[5]]))
     db.session.add(
         create_post(title='Get Social With A Custom Hashtag',
                     summary=get_summary(),
                     content='coming soon',
                     published=False,
-                    image_path='m-blog-5.jpg',
-                    tags=[tags[0], tags[3], tags[5]]))
-
+                    image_path='/static/image/blog/main-blog/m-blog-5.jpg',
+                    tags=[tags[0], tags[3], tags[5], tags[7]]))
     db.session.commit()
+
+    for i in range(1, 31):
+        db.session.add(
+            create_post(title='Lorem aut saepe recusandae aut dolore',
+                        summary=get_summary(),
+                        content='coming soon',
+                        published=True,
+                        image_path='https://picsum.photos/555/280/?random={}'.format(
+                            i),
+                        tags=[tags[randint(0, 7)],
+                              tags[randint(0, 7)]
+                              ]))
+        db.session.commit()
 
 
 def create_post(title, summary, content, published, image_path, tags):
@@ -153,8 +168,7 @@ def create_post(title, summary, content, published, image_path, tags):
     post = Post(title=title,
                 summary=summary,
                 content=content,
-                image_path='/static/image/blog/main-blog/{}'.format(
-                    image_path),
+                image_path=image_path,
                 image_feature1='https://picsum.photos/750/350/?random',
                 image_feature2='https://picsum.photos/360/350/?random',
                 image_feature3='https://picsum.photos/g/360/350/?random',
