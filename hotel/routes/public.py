@@ -30,7 +30,7 @@ def accomodation():
 
 @public.route('/accomodation2')
 def accomodation2():
-    return render_template('public/accomodation2.html')
+    return render_template('reservation/accomodation2.html')
 
 
 @public.route('/standardq')
